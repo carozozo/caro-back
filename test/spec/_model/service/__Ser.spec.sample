@@ -1,0 +1,6 @@
+describe(`SampleSer`, () => {
+  describe(``, () => {
+    it(``, async () => {
+    })
+  })
+})

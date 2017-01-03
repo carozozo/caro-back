@@ -1,0 +1,27 @@
+const version = ck.ck.APP_VERSION
+const group = `sample`
+const groupPath = ck.api.getGroupPath(group)
+describe(groupPath, () => {
+  it.skip(``, async () => {
+    ck.apiDoc.outputApi({
+      version,
+      api: {
+        title: ``,
+        method: `post`,
+        path,
+      },
+      name,
+      group,
+      param: [
+        {type: `string`, field: `sample`, desc: ``},
+      ],
+      use: ck.COMMON_USE,
+      success: [
+        {name: `result`, data: result},
+      ],
+      error: [
+        {name: `error`, data: errResult},
+      ],
+    })
+  })
+})

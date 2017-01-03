@@ -1,0 +1,7 @@
+class SampleDat extends ck.MongoData {
+  constructor (model) {
+    super(model)
+  }
+}
+
+module.exports = new SampleDat(ck.sampleSch.model)

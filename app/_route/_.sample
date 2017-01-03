@@ -1,0 +1,9 @@
+const group = `sample`
+const groupPath = ck.api.getGroupPath(group)
+const router = ck.api.createRouter(groupPath)
+
+router.get(`/xxx`, ck.auth.authRole(), ck.genRouteFn(async (req, res) => {
+  const args = req.args
+  const result = await new ck.SampleSer(req.reqUser)
+  res.suc(result)
+}))

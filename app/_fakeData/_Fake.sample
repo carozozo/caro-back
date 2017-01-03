@@ -1,0 +1,19 @@
+class SampleFake {
+  constructor () {
+    ck.sampleFakeData.regStack(async () => {
+    })
+  }
+
+  genCreate (data = {}) {
+    const _data = _.assign({
+    }, data)
+    return _data
+  }
+
+  async fake (data) {
+    const _data = this.genCreate(data)
+    return ck.sampleDat.create(_data)
+  }
+}
+
+module.exports =  new SampleFake()

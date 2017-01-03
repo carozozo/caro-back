@@ -1,0 +1,65 @@
+{
+  "name": "caro-back",
+  "version": "1.0.0",
+  "description": "後端 Web 開發用 framework",
+  "author": "Caro.Huang <carozozo@yahoo.com.tw>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carozozo/caro-back"
+  },
+  "license": "MIT",
+  "config": {},
+  "scripts": {
+    "start": "NODE_ENV=dev pm2 startOrRestart ecosystem.config.js;npm run log",
+    "start:beta": "NODE_ENV=beta pm2 startOrRestart ecosystem.config.js;npm run log:beta",
+    "start:alpha": "NODE_ENV=alpha pm2 startOrRestart ecosystem.config.js;npm run log:alpha",
+    "start:prod": "NODE_ENV=prod pm2 startOrRestart ecosystem.config.js;npm run log:prod",
+    "migrate": "VERSION=$VERSION NODE_PATH=./ NODE_ENV=dev node migration/index",
+    "log": "pm2 logs caro-back-dev",
+    "log:beta": "pm2 logs caro-back-beta",
+    "log:alpha": "pm2 logs caro-back-alpha",
+    "log:prod": "pm2 logs caro-back-prod",
+    "test": "TEST_MODE=true NODE_PATH=./ NODE_ENV=dev mocha test/app.js",
+    "test:doc": "DOC=true npm run test; apidoc -i docs -o public/apidoc/v$npm_package_version/",
+    "sample": "TARGET=$TARGET node ./sample.js",
+    "sample:delete": "TARGET=$TARGET IS_DELETE=true node ./sample.js",
+    "lint": "./node_modules/.bin/eslint --fix *.js"
+  },
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.15.2",
+    "caro": "^1.0.1",
+    "express": "^4.15.4",
+    "express-useragent": "^1.0.7",
+    "lodash": "^4.17.4",
+    "moment": "^2.18.1",
+    "mongoose": "^4.11.0",
+    "mysql2": "^1.4.0",
+    "passport": "^0.3.2",
+    "redis": "^2.8.0",
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1",
+    "sequelize": "^4.4.2",
+    "uniqid": "^4.1.1"
+  },
+  "devDependencies": {
+    "apidoc": "^0.17.5",
+    "babel-eslint": "^7.2.3",
+    "chai": "^4.0.0",
+    "eslint": "^4.5.0",
+    "pre-commit": "^1.2.2"
+  },
+  "apidoc": {
+    "name": "Caro Back",
+    "version": "1.0.0",
+    "description": "Caro backend service",
+    "title": "Caro API documentation",
+    "template": {
+      "withCompare": true,
+      "forceLanguage": "en"
+    }
+  },
+  "pre-commit": [
+    "lint"
+  ]
+}
