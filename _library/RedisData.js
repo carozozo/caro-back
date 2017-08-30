@@ -89,6 +89,15 @@ class RedisModel {
       })
     })
   }
+
+  scard (set) {
+    return new Promise((resolve, reject) => {
+      this.client.scard(set, (err, result) => {
+        if (err) return reject(err)
+        resolve(result)
+      })
+    })
+  }
 }
 
 /* 客製化 Redis 資料操作 */
@@ -111,31 +120,32 @@ class RedisData extends RedisModel {
     return `_index:${this._category}:${k}:${v}`
   }
 
-  // 建立可以用來搜尋的 key
-  _genKeyForSearch (data) {
-    if (!_.keys(data).includes(`id`)) {
-      const uniqid = require(`uniqid`)
-      data.id = uniqid()
+  // 把 id 從索引中移除
+  async _removeIdFromIndex (setName, id) {
+    await this.srem(setName, id)
+    if (await this.scard(setName) === 0) {
+      this.del(setName)
     }
-    const id = data.id
-    const key = this._genKey(id)
-    _.forEach(data, (v, k) => {
-      const setName = this._genSetForIndex(k, v)
-      // e.g. 設置 id 到 _index:Category:username:caro
-      this.sadd(setName, id)
-    })
-    return key
   }
 
-  // 更新資料以及重新設定搜尋 key
-  async _update (id, updateObj) {
+  // 把 id 從所有的索引中移除
+  async _removeIdFromAllIndex (id) {
+    const setNamesOfIndex = this._genSetForIndex(`*`, `*`)
+    const setNames = await this.keys(setNamesOfIndex)
+    for (const setName of setNames) {
+      this._removeIdFromIndex(setName, id)
+    }
+  }
+
+  // 更新資料以及重新設定索引
+  async _update (oldData, updateObj) {
+    const id = oldData.id
     const key = this._genKey(id)
-    const oldData = await this.hgetall(key)
     for (const k in updateObj) {
       if (!updateObj.hasOwnProperty(k)) continue
       // 把 id 從原本的 index set 中移除
       const oldSetName = this._genSetForIndex(k, oldData[k])
-      await this.srem(oldSetName, id)
+      await this._removeIdFromIndex(oldSetName, id)
       // 把 id 加進新的 index set
       const newSetName = this._genSetForIndex(k, updateObj[k])
       await this.sadd(newSetName, id)
@@ -144,6 +154,14 @@ class RedisData extends RedisModel {
     }
     // 模擬 update 後的資料
     return _.assign(oldData, updateObj)
+  }
+
+  // 移除資料和索引
+  async _remove (data) {
+    const id = data.id
+    const key = this._genKey(id)
+    await this.del(key)
+    await this._removeIdFromAllIndex(id)
   }
 
   // 用 where 去取得要抓取的資料 id
@@ -167,26 +185,65 @@ class RedisData extends RedisModel {
     return await this.sinter(arr)
   }
 
+  // 用要寫入的資料產生一組 key, 順便加入索引
+  _genKeyByData (data) {
+    if (!_.keys(data).includes(`id`)) {
+      const uniqid = require(`uniqid`)
+      data.id = uniqid()
+    }
+    // e.g. data = {id: 'xxx', username: 'caro'}
+    const id = data.id
+    // e.g. key = Category:xxx
+    const key = this._genKey(id)
+    _.forEach(data, (v, k) => {
+      const setName = this._genSetForIndex(k, v)
+      // 設置 id 到 _index:Category:username:caro
+      this.sadd(setName, id)
+    })
+    return key
+  }
+
   async create (data) {
-    const key = this._genKeyForSearch(data)
+    const key = this._genKeyByData(data)
     await this.hmset(key, data)
     return data
   }
 
-  async find (where) {
-    const ret = []
+  // 找出每一筆資料並直行 callback
+  async _findEach (where, cb) {
     const ids = await this._getIdsByWhere(where)
-    for (const id of ids) {
+    console.log(`_findEach ids=`, ids)
+    for (let i in ids) {
+      if (!ids.hasOwnProperty(i)) continue
+      i = Number(i)
+      const id = ids[i]
       const key = this._genKey(id)
       const data = await this.hgetall(key)
-      if (data) ret.push(data)
+      if (data) {
+        console.log(`find data=`, data)
+        if (await cb(data, i) === false) break
+      } else {
+        console.log(`remove id=`, id)
+        await this._removeIdFromAllIndex(id)
+      }
     }
+  }
+
+  async find (where) {
+    const ret = []
+    await this._findEach(where, (data) => {
+      ret.push(data)
+    })
     return ret
   }
 
   async findOne (where) {
-    const list = await this.find(where)
-    return list[0] || null
+    let ret = null
+    await this._findEach(where, (data) => {
+      ret = data
+      return false
+    })
+    return ret
   }
 
   async findById (id) {
@@ -195,20 +252,20 @@ class RedisData extends RedisModel {
 
   async update (where, updateObj) {
     const ret = []
-    const ids = await this._getIdsByWhere(where)
-    for (const id of ids) {
-      const newData = await this._update(id, updateObj)
+    await this._findEach(where, async (data) => {
+      const newData = await this._update(data, updateObj)
       ret.push(newData)
-    }
+    })
     return ret
   }
 
   async updateOne (where, updateObj) {
-    const ids = await this._getIdsByWhere(where)
-    if (_.isEmpty(ids)) return null
-
-    const id = ids[0]
-    return this._update(id, updateObj)
+    let ret = null
+    await this._findEach(where, async (data) => {
+      ret = await this._update(data, updateObj)
+      return false
+    })
+    return ret
   }
 
   async updateById (id, updateObj) {
@@ -217,20 +274,22 @@ class RedisData extends RedisModel {
   }
 
   async remove (where) {
-    const ids = await this._getIdsByWhere(where)
-    for (const id of ids) {
-      const key = this._genKey(id)
-      await this.del(key)
-    }
+    const ret = []
+    await this._findEach(where, async (data) => {
+      await this._remove(data)
+      ret.push(data)
+    })
+    return ret
   }
 
   async removeOne (where) {
-    const ids = await this._getIdsByWhere(where)
-    if (_.isEmpty(ids)) return
-
-    const id = ids[0]
-    const key = this._genKey(id)
-    return this.del(key)
+    let ret = null
+    await this._findEach(where, async (data) => {
+      await this._remove(data)
+      ret = data
+      return false
+    })
+    return ret
   }
 
   async removeById (id) {
