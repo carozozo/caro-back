@@ -19,7 +19,7 @@
     "log:beta": "pm2 logs caro-back-beta",
     "log:alpha": "pm2 logs caro-back-alpha",
     "log:prod": "pm2 logs caro-back-prod",
-    "test": "TEST_MODE=true NODE_PATH=./ NODE_ENV=dev mocha test/app.js",
+    "test": "TEST_MODE=true NODE_PATH=./ NODE_ENV=dev mocha --timeout 5000 test/app.js",
     "test:doc": "DOC=true npm run test; apidoc -i docs -o public/apidoc/v$npm_package_version/",
     "sample": "TARGET=$TARGET node ./sample.js",
     "sample:delete": "TARGET=$TARGET IS_DELETE=true node ./sample.js",

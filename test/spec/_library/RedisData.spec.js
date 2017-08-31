@@ -274,12 +274,40 @@ describe(`RedisData`, () => {
     it(async () => {
       const name = 'testExpired'
       await testDat.create({name})
-      await testDat.expired({name}, 1) // 設置 1 秒過期
+      await testDat.create({name})
+      await testDat.expired({name}, 1)
+      const count = await testDat.count({name})
+      assert.equal(count, 2)
+      await ck.waiting(1001)
+      const count2 = await testDat.count({name})
+      assert.equal(count2, 0)
+    })
+  })
+
+  describe(`expiredOne`, () => {
+    it(async () => {
+      const name = 'testExpiredOne'
+      await testDat.create({name})
+      await testDat.create({name})
+      await testDat.expiredOne({name}, 1)
+      const count = await testDat.count({name})
+      assert.equal(count, 2)
+      await ck.waiting(1001)
+      const count2 = await testDat.count({name})
+      assert.equal(count2, 1)
+    })
+  })
+
+  describe(`expiredById`, () => {
+    it(async () => {
+      const name = 'testExpiredById'
+      const test = await testDat.create({name})
+      await testDat.expiredById(test, 1)
       const count = await testDat.count({name})
       assert.equal(count, 1)
       await ck.waiting(1001)
       const count2 = await testDat.count({name})
-      assert.equal(count2, 0)
+      assert.equal(count2, 1)
     })
   })
 })
