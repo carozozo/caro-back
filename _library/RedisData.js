@@ -161,7 +161,12 @@ class RedisData extends RedisModel {
     const id = data.id
     const key = this._genKey(id)
     await this.del(key)
-    await this._removeIdFromAllIndex(id)
+    for(const k in data){
+      if(!data.hasOwnProperty(k)) continue
+      const v = data[k]
+      const setName = this._genSetForIndex(k, v)
+      await this._removeIdFromIndex(setName, id)
+    }
   }
 
   // 用 where 去取得要抓取的資料 id
@@ -212,7 +217,6 @@ class RedisData extends RedisModel {
   // 找出每一筆資料並直行 callback
   async _findEach (where, cb) {
     const ids = await this._getIdsByWhere(where)
-    console.log(`_findEach ids=`, ids)
     for (let i in ids) {
       if (!ids.hasOwnProperty(i)) continue
       i = Number(i)
@@ -220,10 +224,8 @@ class RedisData extends RedisModel {
       const key = this._genKey(id)
       const data = await this.hgetall(key)
       if (data) {
-        console.log(`find data=`, data)
         if (await cb(data, i) === false) break
       } else {
-        console.log(`remove id=`, id)
         await this._removeIdFromAllIndex(id)
       }
     }
