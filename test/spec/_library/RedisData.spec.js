@@ -269,4 +269,17 @@ describe(`RedisData`, () => {
       assert.equal(count, 2)
     })
   })
+
+  describe(`expired`, () => {
+    it(async () => {
+      const name = 'testExpired'
+      await testDat.create({name})
+      await testDat.expired({name}, 1) // 設置 1 秒過期
+      const count = await testDat.count({name})
+      assert.equal(count, 1)
+      await ck.waiting(1001)
+      const count2 = await testDat.count({name})
+      assert.equal(count2, 0)
+    })
+  })
 })

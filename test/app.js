@@ -6,7 +6,7 @@ require(`boot`)
 require(`./init`)
 
 before(function (done) {
-  this.timeout(30000)
+  this.timeout(50000)
   ck.boot.on(`runStacks`, () => {
     ck.poster.setApiUrl(`http://localhost:${ck.api.port}`)
     done()
