@@ -161,8 +161,8 @@ class RedisData extends RedisModel {
     const id = data.id
     const key = this._genKey(id)
     await this.del(key)
-    for(const k in data){
-      if(!data.hasOwnProperty(k)) continue
+    for (const k in data) {
+      if (!data.hasOwnProperty(k)) continue
       const v = data[k]
       const setName = this._genSetForIndex(k, v)
       await this._removeIdFromIndex(setName, id)
@@ -224,7 +224,7 @@ class RedisData extends RedisModel {
       const key = this._genKey(id)
       const data = await this.hgetall(key)
       if (data) {
-        if (await cb(data, i) === false) break
+        if (await cb(data, key, i) === false) break
       } else {
         await this._removeIdFromAllIndex(id)
       }
@@ -305,20 +305,22 @@ class RedisData extends RedisModel {
   }
 
   async expired (where, seconds) {
-    const ids = await this._getIdsByWhere(where)
-    for (const id of ids) {
-      const key = this._genKey(id)
+    const ret = []
+    await this._findEach(where, (data, key) => {
       this.expire(key, seconds)
-    }
+      ret.push(data)
+    })
+    return ret
   }
 
   async expiredOne (where, seconds) {
-    const ids = await this._getIdsByWhere(where)
-    if (_.isEmpty(ids)) return
-
-    const id = ids[0]
-    const key = this._genKey(id)
-    this.expire(key, seconds)
+    let ret = null
+    await this._findEach(where, (data, key) => {
+      this.expire(key, seconds)
+      ret = data
+      return false
+    })
+    return ret
   }
 
   async expiredById (id, seconds) {
