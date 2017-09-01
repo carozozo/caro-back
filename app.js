@@ -2,6 +2,7 @@ const cupLength = require(`os`).cpus().length
 const cluster = require(`cluster`)
 const useCluster = true
 const CaroBack = require(`ck`)
+global._ = require(`caro`)
 global.ck = new CaroBack({isWriteLog: true})
 
 if (useCluster && cluster.isMaster && !process.env.TEST_MODE) {

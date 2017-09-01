@@ -23,7 +23,7 @@
     "test:doc": "DOC=true npm run test; apidoc -i docs -o public/apidoc/v$npm_package_version/",
     "sample": "TARGET=$TARGET node ./sample.js",
     "sample:delete": "TARGET=$TARGET IS_DELETE=true node ./sample.js",
-    "lint": "./node_modules/.bin/eslint --fix *.js"
+    "lint": "./node_modules/.bin/eslint --fix '**/*.js'"
   },
   "dependencies": {
     "bcrypt": "^1.0.3",

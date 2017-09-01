@@ -1,5 +1,3 @@
-global._ = require(`caro`)
-
 const env = process.env.NODE_ENV
 
 ck.PROJECT_PATH = process.env.PWD

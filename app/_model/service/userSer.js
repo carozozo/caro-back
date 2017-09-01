@@ -1,4 +1,4 @@
-class UserSer extends ck.BaseSer {
+class UserSer {
   async register (data, profileData, authMethod) {
     const rolesNeedEmail = [`customer`, `stuff`, `manager`]
     const role = data.role
@@ -38,11 +38,6 @@ class UserSer extends ck.BaseSer {
     return {user, token}
   }
 
-  async logout () {
-    const username = this.reqUser.username
-    return ck.tokenDat.remove({username})
-  }
-
   async getById (id) {
     const user = await ck.userDat.findById(id)
     user && delete user.pwd
@@ -67,14 +62,15 @@ class UserSer extends ck.BaseSer {
     })
   }
 
+  async logout (username) {
+    return ck.tokenDat.remove({username})
+  }
+
   async updateById (id, data) {
-    if (this.reqUser.ifCustomer() && !this.reqUser.ifSameId(id)) {
-      throw `一般用戶只能更新自己的資料`
-    }
     const user = await ck.userDat.updateById(id, data, {new: true})
     user && delete user.pwd
     return user
   }
 }
 
-module.exports = UserSer
+module.exports = new UserSer()

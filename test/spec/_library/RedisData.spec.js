@@ -192,10 +192,10 @@ describe(`RedisData`, () => {
     })
 
     it(async () => {
-      await testDat.create({name: 'testRemove'})
-      await testDat.create({name: 'testRemove'})
+      await testDat.create({name: `testRemove`})
+      await testDat.create({name: `testRemove`})
 
-      const where = {name: 'testRemove'}
+      const where = {name: `testRemove`}
       const countBefRemove = await testDat.count(where)
       assert.equal(countBefRemove, 2)
       await testDat.remove(where)
@@ -215,10 +215,10 @@ describe(`RedisData`, () => {
     })
 
     it(async () => {
-      await testDat.create({name: 'testRemoveOne'})
-      await testDat.create({name: 'testRemoveOne'})
+      await testDat.create({name: `testRemoveOne`})
+      await testDat.create({name: `testRemoveOne`})
 
-      const where = {name: 'testRemoveOne'}
+      const where = {name: `testRemoveOne`}
       const countBefRemove = await testDat.count(where)
       assert.equal(countBefRemove, 2)
       await testDat.removeOne(where)
@@ -263,16 +263,16 @@ describe(`RedisData`, () => {
 
   describe(`count`, () => {
     it(async () => {
-      await testDat.create({name: 'testCount'})
-      await testDat.create({name: 'testCount'})
-      const count = await testDat.count({name: 'testCount'})
+      await testDat.create({name: `testCount`})
+      await testDat.create({name: `testCount`})
+      const count = await testDat.count({name: `testCount`})
       assert.equal(count, 2)
     })
   })
 
   describe(`expired`, () => {
     it(async () => {
-      const name = 'testExpired'
+      const name = `testExpired`
       await testDat.create({name})
       await testDat.create({name})
       await testDat.expired({name}, 1)
@@ -286,7 +286,7 @@ describe(`RedisData`, () => {
 
   describe(`expiredOne`, () => {
     it(async () => {
-      const name = 'testExpiredOne'
+      const name = `testExpiredOne`
       await testDat.create({name})
       await testDat.create({name})
       await testDat.expiredOne({name}, 1)
@@ -300,7 +300,7 @@ describe(`RedisData`, () => {
 
   describe(`expiredById`, () => {
     it(async () => {
-      const name = 'testExpiredById'
+      const name = `testExpiredById`
       const test = await testDat.create({name})
       await testDat.expiredById(test, 1)
       const count = await testDat.count({name})

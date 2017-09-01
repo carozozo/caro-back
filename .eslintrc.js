@@ -25,7 +25,7 @@ module.exports = {
       'error',
       'never'
     ],
-    'no-console': 0
+    'no-console': 0,
   },
   'globals': {
     'console': true,
@@ -36,5 +36,7 @@ module.exports = {
     'it': true,
     'before': true,
     'after': true,
+    'beforeEach': true,
+    'afterEach': true,
   }
 }

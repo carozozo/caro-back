@@ -1,4 +1,4 @@
-class SampleSer extends ck.BaseSer {
+class SampleSer {
 }
 
-module.exports = SampleSer
+module.exports = new SampleSer()

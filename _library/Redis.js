@@ -1,7 +1,7 @@
 /* 提供 Redis 客製化操作服務 */
 class Redis {
   constructor () {
-    this._redis = require('redis')
+    this._redis = require(`redis`)
     this._client = null
     this.host = null
     this.port = null
@@ -17,14 +17,14 @@ class Redis {
     return new Promise((resolve, reject) => {
       opt = _.merge(opt, {host, port})
       const client = this._client = this._redis.createClient.apply(this._redis, opt)
-      client.on('connect', async () => {
+      client.on(`connect`, async () => {
         await this.selectDb(database)
         this.host = host
         this.port = port
         this.database = database
         resolve()
       })
-      client.on('error', (err) => {
+      client.on(`error`, (err) => {
         reject(err)
       })
     })

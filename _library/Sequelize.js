@@ -119,7 +119,7 @@ class Sequelize {
   }
 
   async query (...args) {
-    return this.connection.query.apply(connection, args)
+    return this.connection.query.apply(this.connection, args)
   }
 }
 
