@@ -94,7 +94,7 @@ describe(`userSer`, () => {
       const username = `admin`
       const userList = await ck.userSer.getList({username})
       assert.isAtLeast(userList.length, 1)
-      assert.equal(userList[0].username, username)
+      assert.isTrue(userList[0].username.includes(username))
     })
     it(`by limit and skip`, async () => {
       const userList = await ck.userSer.getList()
