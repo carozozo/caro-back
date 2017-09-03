@@ -1,16 +1,12 @@
 class UserSer {
   async register (data, profileData, authMethod) {
-    const rolesNeedEmail = [`customer`, `stuff`, `manager`]
     const role = data.role
-    if (!authMethod) throw `請選擇驗證方式`
-    if (_.includes(rolesNeedEmail, role)) {
-      if (!profileData.email) throw `${rolesNeedEmail} 需輸入 email`
-    }
 
+    if (!authMethod) throw `請選擇驗證方式`
     const user = await ck.userDat.create(data)
 
     profileData.user_username = user.username
-    const profile = await ck.profileDat.create(profileData)
+    const profile = await ck.profileDat.createProfile(role, profileData)
 
     if (authMethod === `email`) {
       ck.mail.sendRegisterMail()
