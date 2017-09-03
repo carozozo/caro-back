@@ -136,8 +136,10 @@ class CaroBack {
     try {
       const filename = path.basename(p).replace(path.extname(p), ``)
       const modelName = _.replaceAll(filename, `.`, `_`)
-      if (this[modelName]) return this.err(`model ${modelName} 已被佔用`)
-      if (!skip) this[filename] = require(p)
+      if (!skip) {
+        if (this[modelName]) return this.err(`model ${modelName} 已被佔用`)
+        this[filename] = require(p)
+      }
       else require(p)
     } catch (e) {
       if (++this.require.count > 100) return this.err(`載入 ${p} 失敗`, e)
