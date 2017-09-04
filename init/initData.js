@@ -44,7 +44,7 @@ ck.boot.on(`runStacks`, async () => {
 
   // 建立假資料
   ck.info(`${dbMSg} 開始建立假資料`)
-  ck.requireDir(`${__dirname}/initData`, {skip: true})
+  ck.requireDir(`${__dirname}/_initData`, {skip: true})
   await ck.mainDb.stacker.runStacks()
   ck.info(`${dbMSg} 假資料建立完畢`)
 
