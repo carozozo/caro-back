@@ -1,3 +1,4 @@
+// 建立 user 和 profile 資料
 ck.runAsync(async () => {
   const userFake = ck.userFake
   const _userArr = []
