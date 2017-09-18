@@ -12,6 +12,12 @@ class Config {
     ]
   }
 
+  get cron () {
+    return {
+      timezone: `Asia/Taipei`
+    }
+  }
+
   getMongoDb (key) {
     const host = `localhost`
     const env = process.env.TEST_MODE ? `test` : process.env.NODE_ENV

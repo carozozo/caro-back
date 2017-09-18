@@ -8,3 +8,5 @@ require(`${__dirname}/setBefRouter`)
 require(`${__dirname}/setRouter`)
 require(`${__dirname}/setAftRouter`)
 require(`${__dirname}/initData`)
+// 其他設定
+require(`${__dirname}/setCron`)
