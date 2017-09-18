@@ -18,8 +18,9 @@ ck.boot.on(`runStacks`, async () => {
   ck.requireDir(`${__dirname}/task`, {skip: true})
   cron.befTask((description, expression) => {
     log(`執行`, expression, description)
-  }).aftTask((description, expression) => {
+  }).aftTask((result, description, expression) => {
     log(`完畢`, expression, description)
+    ck.info(`result=`, result)
   }).onTasking((description, expression) => {
     log(`跳過`, expression, description)
   }).run((description, expression) => {
