@@ -31,6 +31,7 @@ class Stacker {
   on (fnName, fn) {
     const hook = this._getHook(fnName)
     hook.on.push(fn)
+    return this
   }
 
   regStack (fn) {
