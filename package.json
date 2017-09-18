@@ -14,7 +14,7 @@
     "start:beta": "NODE_ENV=beta pm2 startOrRestart ecosystem.config.js;npm run log:beta",
     "start:alpha": "NODE_ENV=alpha pm2 startOrRestart ecosystem.config.js;npm run log:alpha",
     "start:prod": "NODE_ENV=prod pm2 startOrRestart ecosystem.config.js;npm run log:prod",
-    "migrate": "VERSION=$VERSION NODE_PATH=./ NODE_ENV=dev node migration/index",
+    "migrate": "VERSION=$VERSION NODE_PATH=./ NODE_ENV=dev node migration/app",
     "log": "pm2 logs caro-back-dev",
     "log:beta": "pm2 logs caro-back-beta",
     "log:alpha": "pm2 logs caro-back-alpha",

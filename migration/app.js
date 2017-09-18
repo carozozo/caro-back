@@ -1,12 +1,11 @@
 const CaroBack = require(`ck`)
+global._ = require(`caro`)
 global.ck = new CaroBack()
 
 require(`init/setVariable`)
 require(`init/setConfig`)
 require(`init/setModel`)
 require(`boot/connectDb`)
-
-ck.boot.runStacks()
 
 ck.boot.on(`runStacks`, async () => {
   const version = process.env.VERSION || ck.APP_VERSION
@@ -22,4 +21,4 @@ ck.boot.on(`runStacks`, async () => {
     ck.err(`執行 migration v${version} 發生錯誤:`, e)
     process.exit(1)
   }
-})
+}).runStacks()
