@@ -6,6 +6,7 @@ const ignoreArr = [
   `.eslintignore`,
   `*.log`,
   `[\\/\\\\]\\./`,
+  `cron`,
   `docs`,
   `logs`,
   `migration`,
