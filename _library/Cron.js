@@ -7,6 +7,13 @@ class Cron {
     this._timeZone = opt.timeZone
     this._befTaskRunHooks = [] // 每個 task 執行前的 hook
     this._aftTaskRunHooks = [] // 每個 task 執行後的 hook
+    this._onTaskingHooks = [] // 每個 task 執行時, 上個執行還未結束的 hook
+  }
+
+  async _runHooks (hooks, argsForCb) {
+    for (const cb of hooks) {
+      await cb.apply(null, argsForCb)
+    }
   }
 
   regJob (description, ...args) {
@@ -31,15 +38,23 @@ class Cron {
 
       // 重新包裝要執行的 fn
       const fn = args[1]
+      let isRunning = false
       args[1] = async () => {
-        for (const cb of this._befTaskRunHooks) {
-          await cb.apply(null, argsForCb)
+        if (isRunning) { // 上個 task 還在執行中
+          return await this._runHooks(this._onTaskingHooks, argsForCb)
         }
-        await fn.apply(null, argsForCb)
-        for (const cb of this._aftTaskRunHooks) {
-          await cb.apply(null, argsForCb)
+
+        isRunning = true
+        try {
+          await this._runHooks(this._befTaskRunHooks, argsForCb)
+          await fn()
+          await this._runHooks(this._aftTaskRunHooks, argsForCb)
+        } catch (e) {
+          ck.err(e)
         }
+        isRunning = false
       }
+
       this._taskMap[description] = this._cron.schedule.apply(this._cron, args)
       cb && cb.apply(null, argsForCb)
     }
@@ -51,7 +66,12 @@ class Cron {
   }
 
   aftTask (cb) {
-    this._befTaskRunHooks.push(cb)
+    this._aftTaskRunHooks.push(cb)
+    return this
+  }
+
+  onTasking (cb) {
+    this._onTaskingHooks.push(cb)
     return this
   }
 }

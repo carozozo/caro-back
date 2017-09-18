@@ -5,11 +5,13 @@ ck.boot.on(`runStacks`, async () => {
     ck.info(`-${name}- Cron Job [${expression}] ${description}`)
   }
 
-  ck.requireDir(`${__dirname}/_cron`, {skip: true})
+  ck.requireDir(`${__dirname}/_setCron`, {skip: true})
   cron.befTask((description, expression) => {
     log(`執行`, expression, description)
   }).aftTask((description, expression) => {
     log(`完畢`, expression, description)
+  }).onTasking((description, expression) => {
+    log(`跳過`, expression, description)
   }).run((description, expression) => {
     log(`載入`, expression, description)
   })
