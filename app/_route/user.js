@@ -17,9 +17,9 @@ router.post(`/login`, ck.genRouteFn(async (req, res) => {
   const result = await ck.userSer.login(username, pwd)
   res.suc(result)
 }))
-router.post(`/logout`, ck.genRouteFn(async (req, res) => {
+router.post(`/logout`, ck.auth.authRole(), ck.genRouteFn(async (req, res) => {
   const username = req.reqUser.username
-  const result = await new ck.userSer(req.reqUser).logout(username)
+  const result = await ck.userSer.logout(username)
   res.suc(result)
 }))
 router.get(`/getById`, ck.auth.authRole(`stuff`, `manager`, `admin`), ck.genRouteFn(async (req, res) => {
