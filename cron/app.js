@@ -20,7 +20,7 @@ ck.boot.on(`runStacks`, async () => {
     log(`執行`, expression, description)
   }).aftTask((result, description, expression) => {
     log(`完畢`, expression, description)
-    ck.info(`result=`, result)
+    ck.log(`[${expression}] ${description} result=`, result)
   }).onTasking((description, expression) => {
     log(`跳過`, expression, description)
   }).run((description, expression) => {
