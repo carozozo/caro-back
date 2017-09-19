@@ -130,6 +130,40 @@ describe(groupPath, () => {
       use: ck.COMMON_USE
     }, sucArr, errArr)
   })
+  it(`logout`, async () => {
+    const name = `logoutUser`
+    const path = `${groupPath}/logout`
+    const sucArr = []
+    const errArr = []
+
+    await (async () => {
+      const body = {}
+      const result = await ck.poster.post(path, body, `customer`)
+      assert.apiSuc(result)
+      sucArr.push(result)
+    })()
+    // 沒有訪問權限
+    await (async () => {
+      const body = {}
+      const result = await ck.poster.post(path, body)
+      assert.apiWar(result)
+      errArr.push(result)
+    })()
+
+    ck.outputResultDoc({
+      version,
+      api: {
+        title: `用戶登出`,
+        method: `post`,
+        path
+      },
+      name,
+      group,
+      param: [
+      ],
+      use: ck.COMMON_USE
+    }, sucArr, errArr)
+  })
   it(`getById`, async () => {
     const name = `getUserById`
     const user = await ck.userDat.findOne()
@@ -213,6 +247,7 @@ describe(groupPath, () => {
       use: ck.COMMON_USE
     }, sucArr, errArr)
   })
+  // TODO 因為 logout 已登出, 所以這邊會報錯
   it(`updateById`, async () => {
     const name = `updateById`
     const path = `${groupPath}/${name}`

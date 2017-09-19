@@ -40,6 +40,6 @@ router.post(`/updateById`, ck.auth.authRole(), ck.genRouteFn(async (req, res) =>
   if (req.reqUser.ifCustomer() && !req.reqUser.ifSameId(id)) {
     throw `一般用戶只能更新自己的資料`
   }
-  const result = await  ck.userSer.updateById(id, data)
+  const result = await ck.userSer.updateById(id, data)
   res.suc(result)
 }))
