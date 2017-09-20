@@ -129,6 +129,17 @@ class CaroBack {
     console.trace.apply(null, args)
   }
 
+  // 建立客製化 log
+  // e.g. ck.createLog(`demo`) => 可以用 ck.log.demo('這個資訊會寫入 {日期}-demo.log')
+  createLog (logName) {
+    ck.log[logName] = (...args) => {
+      this._initLog(logName, args)
+      this._writeLog(logName, args)
+      args.unshift(`\x1b[33m%s\x1b[0m`)
+      console.log.apply(null, args)
+    }
+  }
+
   require (p, opt = {}) {
     const path = require(`path`)
     const skip = opt.skip // require 之後不要放入 ck
