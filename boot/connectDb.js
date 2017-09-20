@@ -1,5 +1,5 @@
 ck.boot.regStack(async () => {
-  const redisConfig = ck.config.sessionDb
+  const redisConfig = ck.config.cacheDb
   const host = redisConfig.host
   const port = redisConfig.port
   const database = redisConfig.database

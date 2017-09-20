@@ -41,7 +41,7 @@ class Config {
     }
   }
 
-  get sessionDb () {
+  get cacheDb () {
     return {
       host: `127.0.0.1`,
       port: 6379,
