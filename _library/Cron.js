@@ -47,9 +47,12 @@ class Cron {
         isRunning = true
         try {
           await this._runHooks(this._befTaskRunHooks, argsForCb)
+
           const result = await fn()
-          argsForCb.unshift(result)
-          await this._runHooks(this._aftTaskRunHooks, argsForCb)
+
+          let argsForResultCb = _.clone(argsForCb)
+          argsForResultCb.unshift(result)
+          await this._runHooks(this._aftTaskRunHooks, argsForResultCb)
         } catch (e) {
           ck.err(e)
         }
