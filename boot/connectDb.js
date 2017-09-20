@@ -1,5 +1,5 @@
 ck.boot.regStack(async () => {
-  const redisConfig = ck.config.getRedis(`session`)
+  const redisConfig = ck.config.sessionDb
   const host = redisConfig.host
   const port = redisConfig.port
   const database = redisConfig.database
@@ -10,7 +10,7 @@ ck.boot.regStack(async () => {
 })
 
 ck.boot.regStack(async () => {
-  const dbConfig = ck.config.getMongoDb(`analysis`)
+  const dbConfig = ck.config.analysisDb
   const host = dbConfig.host
   const port = dbConfig.port
   const database = dbConfig.database
@@ -21,7 +21,7 @@ ck.boot.regStack(async () => {
 })
 
 ck.boot.regStack(async () => {
-  const dbConfig = ck.config.getMysql()
+  const dbConfig = ck.config.mainDb
   const host = dbConfig.host
   const port = dbConfig.port
   const database = dbConfig.database
