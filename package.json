@@ -28,9 +28,9 @@
     "migration:alpha": "VERSION=$VERSION NODE_PATH=./ NODE_ENV=alpha node migration/app",
     "migration:prod": "VERSION=$VERSION NODE_PATH=./ NODE_ENV=prod node migration/app",
     "sample": "TARGET=$TARGET node ./sample.js",
-    "sample:delete": "TARGET=$TARGET IS_DELETE=true node ./sample.js",
+    "sample.delete": "TARGET=$TARGET IS_DELETE=true node ./sample.js",
     "test": "TEST_MODE=true NODE_PATH=./ NODE_ENV=dev mocha --timeout 5000 test/app.js",
-    "test:doc": "DOC=true npm run test; apidoc -i docs -o public/apidoc/v$npm_package_version/"
+    "test.doc": "DOC=true npm run test; apidoc -i docs -o public/apidoc/v$npm_package_version/"
   },
   "dependencies": {
     "bcrypt": "^1.0.3",
