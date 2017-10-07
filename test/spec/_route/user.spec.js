@@ -48,7 +48,7 @@ describe(groupPath, () => {
     })()
     // 基本資料沒有 email
     await (async () => {
-      const data = ck.userFake.genCreate({username: usernameForSuc})
+      const data = ck.userFake.genCreate({username: `noEmailUser`})
       const profileData = ck.profileFake.genCreate({name: data.username, email: undefined})
       const body = {data, profileData, authMethod}
       const result = await ck.poster.post(path, body)
@@ -138,7 +138,8 @@ describe(groupPath, () => {
 
     await (async () => {
       const body = {}
-      const result = await ck.poster.post(path, body, `customer`)
+      // 取得最後一個 customer 測試帳號用來登出
+      const result = await ck.poster.post(path, body, `customer`, {roleIndex: ck.tester.roleAmount - 1})
       assert.apiSuc(result)
       sucArr.push(result)
     })()
@@ -159,8 +160,7 @@ describe(groupPath, () => {
       },
       name,
       group,
-      param: [
-      ],
+      param: [],
       use: ck.COMMON_USE
     }, sucArr, errArr)
   })
@@ -224,7 +224,7 @@ describe(groupPath, () => {
         }
       }
     })()
-    // customer 無法權限
+    // customer 權限不足
     await (async () => {
       const result = await ck.poster.get(queryPath, `customer`)
       assert.apiWar(result)
@@ -247,7 +247,6 @@ describe(groupPath, () => {
       use: ck.COMMON_USE
     }, sucArr, errArr)
   })
-  // TODO 因為 logout 已登出, 所以這邊會報錯
   it(`updateById`, async () => {
     const name = `updateById`
     const path = `${groupPath}/${name}`
