@@ -1,4 +1,4 @@
-class UserSer {
+class UserCtr {
   async register (data, profileData, authMethod) {
     const role = data.role
 
@@ -69,4 +69,4 @@ class UserSer {
   }
 }
 
-module.exports = new UserSer()
+module.exports = new UserCtr()

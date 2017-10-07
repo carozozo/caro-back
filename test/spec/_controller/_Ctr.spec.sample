@@ -1,4 +1,4 @@
-describe(`sampleSer`, () => {
+describe(`sampleCtr`, () => {
   describe(``, () => {
     it(``, async () => {
     })

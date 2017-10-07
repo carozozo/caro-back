@@ -7,30 +7,30 @@ router.post(`/register`, ck.genRouteFn(async (req, res) => {
   const data = args.data
   const profileData = args.profileData
   const authMethod = args.authMethod
-  const result = await ck.userSer.register(data, profileData, authMethod)
+  const result = await ck.userCtr.register(data, profileData, authMethod)
   res.suc(result)
 }))
 router.post(`/login`, ck.genRouteFn(async (req, res) => {
   const args = ck.req.validateRequired(req, [`username`, `pwd`])
   const username = args.username
   const pwd = args.pwd
-  const result = await ck.userSer.login(username, pwd)
+  const result = await ck.userCtr.login(username, pwd)
   res.suc(result)
 }))
 router.post(`/logout`, ck.auth.authRole(), ck.genRouteFn(async (req, res) => {
   const username = req.reqUser.username
-  const result = await ck.userSer.logout(username)
+  const result = await ck.userCtr.logout(username)
   res.suc(result)
 }))
 router.get(`/getById`, ck.auth.authRole(`stuff`, `manager`, `admin`), ck.genRouteFn(async (req, res) => {
   const args = ck.req.validateRequired(req, [`id`])
   const id = args.id
-  const result = await ck.userSer.getById(id)
+  const result = await ck.userCtr.getById(id)
   res.suc(result)
 }))
 router.get(`/getList`, ck.auth.authRole(`stuff`, `manager`, `admin`), ck.genRouteFn(async (req, res) => {
   const args = ck.req.validateRequired(req)
-  const result = await ck.userSer.getList(args)
+  const result = await ck.userCtr.getList(args)
   res.suc(result)
 }))
 router.post(`/updateById`, ck.auth.authRole(), ck.genRouteFn(async (req, res) => {
@@ -40,6 +40,6 @@ router.post(`/updateById`, ck.auth.authRole(), ck.genRouteFn(async (req, res) =>
   if (req.reqUser.ifCustomer() && !req.reqUser.ifSameId(id)) {
     throw `一般用戶只能更新自己的資料`
   }
-  const result = await ck.userSer.updateById(id, data)
+  const result = await ck.userCtr.updateById(id, data)
   res.suc(result)
 }))

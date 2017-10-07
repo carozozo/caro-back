@@ -1,0 +1,4 @@
+class SampleCtr {
+}
+
+module.exports = new SampleCtr()
