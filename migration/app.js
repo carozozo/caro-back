@@ -8,17 +8,17 @@ require(`init/setModel`)
 require(`boot/connectDb`)
 
 ck.boot.on(`runStacks`, async () => {
-  const version = process.env.VERSION || ck.APP_VERSION
+  const target = process.env.TARGET || ck.APP_VERSION
   try {
     ck.info(`==========================================`)
-    ck.info(`準備 migrate v${version}`)
-    ck.requireDir(`${__dirname}/${version}`)
+    ck.info(`準備載入 migration ${target}`)
+    ck.requireDir(`${__dirname}/${target}`)
     await ck.migration.runStacks()
-    ck.info(`migrate v${version} 執行完畢`)
+    ck.info(`migrate 完畢`)
     ck.info(`==========================================`)
-    process.exit(0)
+    process.exit()
   } catch (e) {
-    ck.err(`migrate v${version} 發生錯誤:`, e)
+    ck.err(`migrate 發生錯誤:`, e)
     process.exit(1)
   }
 }).runStacks()
