@@ -52,7 +52,7 @@ ck.boot.on(`runStacks`, async () => {
   ck.info(`${dbMSg} 假資料建立完畢`)
 
   // 建立測試帳號
-  ck.info(`開始建立測試 User`)
+  ck.info(`開始建立測試 User, 每個 role ${ck.tester.roleAmount} 組`)
   await ck.tester.setTesters()
   ck.info(`測試 User 建立完畢`)
 })

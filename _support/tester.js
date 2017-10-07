@@ -1,10 +1,10 @@
 /* 提供測試用 User Id 和 Token Id */
 class TesterData {
   constructor () {
-    // 每個 role 都會有 10 組 userIds 和 tokenIds
+    // 每個 role 都會有 ${this._roleAmount} 組 userIds 和 tokenIds
+    const roleAmount = this.roleAmount
     const tokenIdPrefix = `596b7a06f6f4e33afe5dd`
     const userRoles = ck.config.userRoles
-    const roleAmount = 10
     let userIndex = 10001
     for (let i in userRoles) {
       const role = userRoles[i]
@@ -18,9 +18,16 @@ class TesterData {
     }
   }
 
+  // 取得每個 role 的測試帳號數量
+  get roleAmount () {
+    return 20
+  }
+
   getMapByRole (role, i = 0) {
-    if (!this[`_${role}Arr`]) throw Error(`指定的 role ${role} 不存在`)
-    return this[`_${role}Arr`][i]
+    const map = this[`_${role}Arr`]
+    if (!map) throw Error(`指定的 role ${role} 不存在`)
+    if (!map[i]) throw Error(`指定的 role ${role} index ${i} 不存在`)
+    return map[i]
   }
 }
 
@@ -35,9 +42,9 @@ class Tester extends TesterData {
   async setTesters () {
     const userDataArr = []
     const profileDataArr = []
-    // 每個 role 建立 5 個已登入的 users
+    // 每個 role 建立 ${this.roleAmount} 個已登入的 users
     for (const role of ck.config.userRoles) {
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < this.roleAmount; i++) {
         const username = this._genTesterUsername(role, i)
         const roleMap = this.getMapByRole(role, i)
         const userId = roleMap.userId
