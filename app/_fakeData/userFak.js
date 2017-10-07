@@ -1,4 +1,4 @@
-class UserFake {
+class UserFak {
   genCreate (data = {}) {
     const role = data.role || `customer`
     let count = this[`_${role}Count`] || 0
@@ -19,4 +19,4 @@ class UserFake {
   }
 }
 
-module.exports = new UserFake()
+module.exports = new UserFak()

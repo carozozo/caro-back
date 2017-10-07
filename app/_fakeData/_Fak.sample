@@ -1,6 +1,6 @@
-class SampleFake {
+class SampleFak {
   constructor () {
-    ck.sampleFakeData.regStack(async () => {
+    ck.sampleFakData.regStack(async () => {
     })
   }
 
@@ -16,4 +16,4 @@ class SampleFake {
   }
 }
 
-module.exports =  new SampleFake()
+module.exports =  new SampleFak()

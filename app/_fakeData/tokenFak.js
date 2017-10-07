@@ -1,4 +1,4 @@
-class TokenFake {
+class TokenFak {
   genCreate (data = {}) {
     const _data = _.assign({
       username: undefined,
@@ -12,4 +12,4 @@ class TokenFake {
   }
 }
 
-module.exports = new TokenFake()
+module.exports = new TokenFak()

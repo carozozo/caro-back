@@ -12,8 +12,8 @@ describe(groupPath, () => {
     const usernameForSuc = `sucUser`
     await (async () => {
       const authMethod = `email`
-      const data = ck.userFake.genCreate({username: usernameForSuc})
-      const profileData = ck.profileFake.genCreate({name: data.username})
+      const data = ck.userFak.genCreate({username: usernameForSuc})
+      const profileData = ck.profileFak.genCreate({name: data.username})
       const body = {data, profileData, authMethod}
       const result = await ck.poster.post(path, body)
       assert.apiSuc(result)
@@ -21,8 +21,8 @@ describe(groupPath, () => {
     })()
     // 重複註冊
     await (async () => {
-      const data = ck.userFake.genCreate({username: usernameForSuc})
-      const profileData = ck.profileFake.genCreate({name: data.username})
+      const data = ck.userFak.genCreate({username: usernameForSuc})
+      const profileData = ck.profileFak.genCreate({name: data.username})
       const body = {data, profileData, authMethod}
       const result = await ck.poster.post(path, body)
       assert.apiWar(result)
@@ -30,8 +30,8 @@ describe(groupPath, () => {
     })()
     // 沒有輸入帳號
     await (async () => {
-      const data = ck.userFake.genCreate({username: undefined})
-      const profileData = ck.profileFake.genCreate({name: data.username})
+      const data = ck.userFak.genCreate({username: undefined})
+      const profileData = ck.profileFak.genCreate({name: data.username})
       const body = {data, profileData, authMethod}
       const result = await ck.poster.post(path, body)
       assert.apiWar(result)
@@ -39,8 +39,8 @@ describe(groupPath, () => {
     })()
     // 沒有輸入密碼
     await (async () => {
-      const data = ck.userFake.genCreate({pwd: undefined})
-      const profileData = ck.profileFake.genCreate({name: data.username})
+      const data = ck.userFak.genCreate({pwd: undefined})
+      const profileData = ck.profileFak.genCreate({name: data.username})
       const body = {data, profileData, authMethod}
       const result = await ck.poster.post(path, body)
       assert.apiWar(result)
@@ -48,8 +48,8 @@ describe(groupPath, () => {
     })()
     // 基本資料沒有 email
     await (async () => {
-      const data = ck.userFake.genCreate({username: `noEmailUser`})
-      const profileData = ck.profileFake.genCreate({name: data.username, email: undefined})
+      const data = ck.userFak.genCreate({username: `noEmailUser`})
+      const profileData = ck.profileFak.genCreate({name: data.username, email: undefined})
       const body = {data, profileData, authMethod}
       const result = await ck.poster.post(path, body)
       assert.apiWar(result)

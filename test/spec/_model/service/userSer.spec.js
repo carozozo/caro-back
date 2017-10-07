@@ -1,8 +1,8 @@
 describe(`userSer`, () => {
   describe(`register`, () => {
     it(`with authMethod = email`, async () => {
-      const data = ck.userFake.genCreate()
-      const profileData = ck.profileFake.genCreate({name: data.username})
+      const data = ck.userFak.genCreate()
+      const profileData = ck.profileFak.genCreate({name: data.username})
       const authMethod = `email`
       const {user, profile} = await ck.userSer.register(data, profileData, authMethod)
       assert.equal(user.name, data.name)
@@ -11,8 +11,8 @@ describe(`userSer`, () => {
       assert.equal(profile.name, data.username)
     })
     it(`with authMethod = sms`, async () => {
-      const data = ck.userFake.genCreate()
-      const profileData = ck.profileFake.genCreate({name: data.username})
+      const data = ck.userFak.genCreate()
+      const profileData = ck.profileFak.genCreate({name: data.username})
       const authMethod = `sms`
       const {user, profile} = await ck.userSer.register(data, profileData, authMethod)
       assert.equal(user.name, data.name)
@@ -21,8 +21,8 @@ describe(`userSer`, () => {
       assert.equal(profile.name, data.username)
     })
     it(`error by same username`, async () => {
-      const data = ck.userFake.genCreate({username: `sameUser`})
-      const profileData = ck.profileFake.genCreate()
+      const data = ck.userFak.genCreate({username: `sameUser`})
+      const profileData = ck.profileFak.genCreate()
       const authMethod = `sms`
       await ck.userSer.register(data, profileData, authMethod)
       await assert.shouldGotErr(async () => {
@@ -30,8 +30,8 @@ describe(`userSer`, () => {
       })
     })
     it(`error by without authMethod`, async () => {
-      const data = ck.userFake.genCreate()
-      const profileData = ck.profileFake.genCreate()
+      const data = ck.userFak.genCreate()
+      const profileData = ck.profileFak.genCreate()
       await assert.shouldGotErr(async () => {
         await ck.userSer.register(data, profileData)
       })

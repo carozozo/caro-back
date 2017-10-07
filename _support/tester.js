@@ -49,9 +49,9 @@ class Tester extends TesterData {
         const roleMap = this.getMapByRole(role, i)
         const userId = roleMap.userId
         const tokenId = roleMap.tokenId
-        const userData = ck.userFake.genCreate({id: userId, username, pwd: username, role})
-        const profileData = ck.profileFake.genCreate({name: username, user_username: username})
-        const tokenData = ck.tokenFake.genCreate({id: tokenId, username})
+        const userData = ck.userFak.genCreate({id: userId, username, pwd: username, role})
+        const profileData = ck.profileFak.genCreate({name: username, user_username: username})
+        const tokenData = ck.tokenFak.genCreate({id: tokenId, username})
         userDataArr.push(userData)
         profileDataArr.push(profileData)
         await ck.tokenDat.create(tokenData)

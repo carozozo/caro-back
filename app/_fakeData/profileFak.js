@@ -1,4 +1,4 @@
-class ProfileFake {
+class ProfileFak {
   genCreate (data = {}) {
     let count = this._count || 0
     const _data = _.assign({
@@ -16,4 +16,4 @@ class ProfileFake {
   }
 }
 
-module.exports = new ProfileFake()
+module.exports = new ProfileFak()
