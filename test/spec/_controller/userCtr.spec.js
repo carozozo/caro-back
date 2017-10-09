@@ -109,8 +109,8 @@ describe(`userCtr`, () => {
 
   describe(`updateById`, () => {
     it(async () => {
-      const reqUser = await ck.tester.getReqUser()
-      const id = reqUser.$data.id
+      const $customer = await ck.tester.getTester()
+      const id = $customer.id
       const pwd = `1234`
       const data = {pwd}
       await ck.userCtr.updateById(id, data)
