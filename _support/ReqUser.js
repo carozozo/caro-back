@@ -1,4 +1,4 @@
-/* 發出 request 的 user */
+/* 發出 request 的 user class */
 class ReqUser {
   constructor (user) {
     if (!user) throw Error(`ReqUser 缺少必要參數 user`)

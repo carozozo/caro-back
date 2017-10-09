@@ -1,4 +1,4 @@
-/* 提供測試用 User Id 和 Token Id */
+/* 提供測試用 user id 和 token id */
 class TesterData {
   constructor () {
     // 每個 role 都會有 ${this._roleAmount} 組 userIds 和 tokenIds
@@ -31,7 +31,7 @@ class TesterData {
   }
 }
 
-/* 提供測試用戶 functions */
+/* 提供測試用戶函式 */
 class Tester extends TesterData {
   _genTesterUsername (role, i = 0) {
     // e.g. adminTest, adminTest2 ...
