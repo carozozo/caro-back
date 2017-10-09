@@ -1,1 +1,1 @@
-ck.requireDir(`${ck.TEST_PATH}/_support`)
+ck.autoRequire(`${ck.TEST_PATH}/_support`)

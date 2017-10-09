@@ -12,7 +12,7 @@ ck.boot.on(`runStacks`, async () => {
   try {
     ck.info(`==========================================`)
     ck.info(`準備載入 migration ${target}`)
-    ck.requireDir(`${__dirname}/${target}`)
+    ck.autoRequire(`${__dirname}/${target}`)
     await ck.migration.runStacks()
     ck.info(`migrate 完畢`)
     ck.info(`==========================================`)

@@ -18,7 +18,7 @@ ck.boot.on(`runStacks`, async () => {
     return ck.log.cron(`-${name}- Cron Job [${expression}] ${description}`)
   }
 
-  ck.requireDir(`${__dirname}/task`, {skip: true})
+  ck.autoRequire(`${__dirname}/task`, {skip: true})
   cron.befTask((description, expression) => {
     log(`執行`, expression, description)
   }).aftTask((result, description, expression) => {
