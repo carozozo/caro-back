@@ -1,4 +1,4 @@
-/* 提供 Cron Job 功能 */
+/* 提供 node-cron 客製化操作服務 */
 class Cron {
   constructor (opt = {}) {
     this._cron = require(`node-cron`)

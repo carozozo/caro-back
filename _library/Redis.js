@@ -1,4 +1,4 @@
-/* 提供 Redis 客製化操作服務 */
+/* 提供 redis 客製化操作服務 */
 class Redis {
   constructor () {
     this._redis = require(`redis`)

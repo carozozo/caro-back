@@ -1,3 +1,4 @@
+/* 提供 express 客製化操作服務 */
 class Api {
   constructor () {
     const express = require(`express`)

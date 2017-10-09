@@ -1,4 +1,4 @@
-/* 提供註冊 functions 和執行 */
+/* 提供註冊 functions 和 await 執行 */
 class Stacker {
   constructor () {
     this._hookMap = {}

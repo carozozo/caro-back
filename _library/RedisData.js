@@ -1,4 +1,4 @@
-/* Redis 資料操作 promise 版 */
+/* redis 資料操作 promise 版 */
 class RedisModel {
   constructor (client) {
     if (!client) throw Error(`缺少參數 client`)
@@ -100,7 +100,7 @@ class RedisModel {
   }
 }
 
-/* 客製化 Redis 資料操作 */
+/* 客製化 redis 有類似 SQL 的資料操作方式 */
 class RedisData extends RedisModel {
   constructor (client, category) {
     super(client)
@@ -208,12 +208,6 @@ class RedisData extends RedisModel {
     return key
   }
 
-  async create (data) {
-    const key = this._genKeyByData(data)
-    await this.hmset(key, data)
-    return data
-  }
-
   // 找出每一筆資料並直行 callback
   async _findEach (where, cb) {
     const ids = await this._getIdsByWhere(where)
@@ -229,6 +223,12 @@ class RedisData extends RedisModel {
         await this._removeIdFromAllIndex(id)
       }
     }
+  }
+
+  async create (data) {
+    const key = this._genKeyByData(data)
+    await this.hmset(key, data)
+    return data
   }
 
   async find (where) {
