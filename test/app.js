@@ -23,4 +23,5 @@ const specPath = `test/spec`
 ck.requireDir(`${specPath}/_library`, {skip: true})
 ck.requireDir(`${specPath}/_data`, {skip: true})
 ck.requireDir(`${specPath}/_controller`, {skip: true})
+ck.requireDir(`${specPath}/_service`, {skip: true})
 ck.requireDir(`${specPath}/_route`, {skip: true})

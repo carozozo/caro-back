@@ -1,5 +1,5 @@
-describe(`sampleDat`, () => {
-  describe(`create`, () => {
+describe.skip(`sampleDat`, () => {
+  describe(``, () => {
     it.skip(``, async () => {
     })
   })

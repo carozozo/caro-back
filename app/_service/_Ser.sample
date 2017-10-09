@@ -1,0 +1,4 @@
+class SampleSer {
+}
+
+module.exports = new SampleSer()

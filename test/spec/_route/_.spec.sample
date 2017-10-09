@@ -1,8 +1,8 @@
 const version = ck.ck.APP_VERSION
 const group = `sample`
 const groupPath = ck.api.getGroupPath(group)
-describe(groupPath, () => {
-  it.skip(``, async () => {
+describe.skip(groupPath, () => {
+  it(``, async () => {
     ck.apiDoc.outputApi({
       version,
       api: {

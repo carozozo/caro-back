@@ -1,4 +1,4 @@
-describe.skip(`sampleCtr`, () => {
+describe.skip(`userSer`, () => {
   describe(``, () => {
     it(``, async () => {
     })
