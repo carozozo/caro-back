@@ -33,7 +33,12 @@
 │
 ├── public                                # 提供 client 下載的項目, 目前提供 api-document 網頁
 │
-├── test                                  # `npm run test` 執行測試; `npm run test.doc` 執行測試和產生 api-document
+├── test                                  # Unit-Test 項目
+│   ├── _library                          # test 通用函式庫
+│   ├── _support                          # test 專用函式庫
+│   ├── init                              # test 啟動時要載入的初始化項目
+│   ├── spec                              # 各類要測試的項目實做
+│   └── app.js                            # `npm run test` 執行測試執行檔; `npm run test.doc` 執行測試和產生 api-document
 │
 ├── .eslintignore                         # es-lint 排除設定檔
 │
@@ -41,7 +46,7 @@
 │
 ├── .gitignore                            # git 排除設定檔
 │
-├── app.js                                # `npm run app` 啟動專案
+├── app.js                                # `npm run app` 啟動專案執行檔
 │
 ├── ck.js                                 # Caro Back 基本函式
 │
@@ -55,19 +60,33 @@
 │
 ├── README.md                             # (這個檔案)
 │
-├── sample.js                             # `npm run sample` 產生的基礎開發檔案
+├── sample.js                             # `npm run sample` 產生基礎開發檔案的執行檔; `npm run sample.delete` 移除開發檔案
 │
 └──
 ```
 
+## Server 啟動基本流程
+- app.js 啟動
+- init 執行基本設置/載入module/router設定... 等初始化項目
+- boot 執行 DB 連線/啟動 API server... 等啟動項目
+
+## 包含 app.js 的 Server 主要分類
+- root
+- cron Cron-Job 排程項目
+- migration 一次性執行項目
+- test Unit-Test
+
 ## Npm Script 說明 (npm run xxx)
-1. `app` `app:環境` 啟動 App-Server
-2. `cron` `app:環境` 啟動 Cron-Job
-3. `lint` 執行 es-lint 檢查 code 品質
-4. `log` `log:環境` 觀看 pm2 log
-5. `migration` `migration:環境` 一次性執行項目; 可用環境參數 `TARGET=xxx` 指定要執行的目錄或檔案;
+- `app` `app:環境` 啟動 App-Server
+- `cron` `app:環境` 啟動 Cron-Job
+- `lint` 執行 es-lint 檢查 code 品質
+- `log` `log:環境` 觀看 pm2 log
+- `migration` `migration:環境` 一次性執行項目; 可用環境參數 `TARGET=xxx` 指定要執行的目錄或檔案;
 不指定 TARGET 時會依 package version 載入對應的資料夾
-6. `TARGET=xxx sample` 用模版(.sample)建立一般例行性開發檔案(.js)
-6. `TARGET=xxx sample.delete` 移除一般例行性開發檔案
-7. `test` 執行 Unit-Test
-8. `test.doc` 執行 Unit-Test 並且建立 API DOC 文件
+- `TARGET=xxx FOLDER=xxx sample` 用模版(.sample)建立基礎開發檔案(.js); 可不指定 FOLDER
+- `TARGET=xxx FOLDER=xxx sample.delete` 移除基礎開發檔案; 可不指定 FOLDER
+- `test` 執行 Unit-Test
+- `test.doc` 執行 Unit-Test 並且建立 API DOC 文件
+
+## 一些五四三
+- 用 _ 開頭的資料夾, 代表是由 ck.autoRequire 自動載入的檔案
