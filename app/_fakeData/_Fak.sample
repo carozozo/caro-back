@@ -1,9 +1,4 @@
 class SampleFak {
-  constructor () {
-    ck.sampleFakData.regStack(async () => {
-    })
-  }
-
   genCreate (data = {}) {
     const _data = _.assign({
     }, data)
