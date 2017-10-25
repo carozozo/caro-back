@@ -4,7 +4,7 @@ global.ck = new CaroBack({isWriteLog: true})
 
 require(`init/setVariable`)
 require(`init/setConfig`)
-require(`init/setModel`)
+require(`init/setModule`)
 require(`boot/connectDb`)
 
 ck.boot.on(`runStacks`, async () => {
