@@ -1,6 +1,6 @@
 class UserDat extends ck.SequelizeData {
   constructor () {
-    const model = ck.userSch.model
+    const model = ck.userMod.model
 
     super(model)
 

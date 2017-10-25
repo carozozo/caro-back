@@ -9,11 +9,6 @@ class UserSch {
         type: Sequelize.ENUM.apply(null, ck.config.userRoles), defaultValue: `customer`
       }
     }
-    this.model = db.createModel(`User`, this.fields)
-    this.model.hasMany(ck.profileDat.model, {
-      sourceKey: `username`,
-      foreignKey: {name: `user_username`, allowNull: false}
-    })
   }
 }
 

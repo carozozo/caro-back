@@ -1,4 +1,3 @@
-// request 紀錄
 class RequestSch {
   constructor () {
     this.fields = {
@@ -29,8 +28,6 @@ class RequestSch {
       },
       responseMsg: {type: String} // 回傳的訊息, responseStatus = suc 時不寫入
     }
-    this.schema = ck.mongoSchema.createSchema(this.fields)
-    this.model = ck.analysisDb.createModel(`Request`, this.schema)
   }
 }
 

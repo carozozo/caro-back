@@ -10,8 +10,9 @@
 │   ├── _controller                       # 提供 route 對應的功能實作
 │   ├── _data                             # 資料函式庫, 實做功能所需的資料邏輯處理, 繼承自 ck.SequelizeData/ck.MongoData...等
 │   ├── _fakeData                         # 產生假資料的函式庫, 用在開發時建立初始化的資料, 提供開發測試
+│   ├── _model                            # DB model 建立
 │   ├── _route                            # 定義 API 路徑, 只負責接收 request 和 response
-│   ├── _schema                           # 資料庫欄位定義, 以及 db model 建立
+│   ├── _schema                           # 資料庫欄位定義
 │   └── _service                          # 由 controller 抽出來的單元/共用函式, 分擔其工作量以及可以實做更精確的單元測試
 │
 ├── boot                                  # 啟動各項服務, 例如 DB 連線, 啟動 API Server

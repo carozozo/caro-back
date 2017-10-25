@@ -1,9 +1,9 @@
 class SampleSch {
-  const db = ck.mainDb
   constructor () {
+    const db = ck.mainDb
+    const Sequelize = db.Sequelize
     this.fields = {
     }
-    this.model = db.createModel(`Sample`, this.fields)
   }
 }
 module.exports = new SampleSch()

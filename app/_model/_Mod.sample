@@ -1,0 +1,7 @@
+class SampleMod {
+  constructor () {
+    const db = ck.mainDb
+    this.model = db.createModel(`Sample`, ck.sampleSch.fields)
+  }
+}
+module.exports = new SampleMod()

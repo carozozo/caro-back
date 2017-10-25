@@ -7,7 +7,6 @@ class ProfileSch {
       email: {type: Sequelize.STRING(25)}, // 電子郵件
       phone: {type: Sequelize.STRING(15)} // 手機號碼
     }
-    this.model = db.createModel(`Profile`, this.fields)
   }
 }
 
