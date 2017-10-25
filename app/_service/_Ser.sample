@@ -1,4 +1,4 @@
-class SampleSer {
+class $Sample$Ser {
 }
 
-module.exports = new SampleSer()
+module.exports = new $Sample$Ser()

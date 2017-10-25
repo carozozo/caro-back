@@ -1,4 +1,4 @@
-class SampleSch {
+class $Sample$Sch {
   constructor () {
     const db = ck.mainDb
     const Sequelize = db.Sequelize
@@ -6,4 +6,4 @@ class SampleSch {
     }
   }
 }
-module.exports = new SampleSch()
+module.exports = new $Sample$Sch()

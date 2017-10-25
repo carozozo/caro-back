@@ -1,4 +1,4 @@
-class SampleFak {
+class $Sample$Fak {
   genCreate (data = {}) {
     const _data = _.assign({
     }, data)
@@ -7,8 +7,8 @@ class SampleFak {
 
   async fake (data) {
     const _data = this.genCreate(data)
-    return ck.sampleDat.create(_data)
+    return ck.$sample$Dat.create(_data)
   }
 }
 
-module.exports =  new SampleFak()
+module.exports =  new $Sample$Fak()

@@ -1,7 +1,7 @@
-class SampleMod {
+class $Sample$Mod {
   constructor () {
     const db = ck.mainDb
-    this.model = db.createModel(`Sample`, ck.sampleSch.fields)
+    this.model = db.createModel(`$Sample$`, ck.$sample$Sch.fields)
   }
 }
-module.exports = new SampleMod()
+module.exports = new $Sample$Mod()

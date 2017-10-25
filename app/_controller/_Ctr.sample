@@ -1,4 +1,4 @@
-class SampleCtr {
+class $Sample$Ctr {
 }
 
-module.exports = new SampleCtr()
+module.exports = new $Sample$Ctr()
