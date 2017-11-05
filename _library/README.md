@@ -1,0 +1,58 @@
+# LIBRARY
+
+## 目的
+node.js 透過 npm 就提供了各式各樣方便開發的模組及函式庫   
+但因為其泛用/原生性的關係, 有時在專案開發上就不是非常的便利   
+   
+例如 mongoose 雖然提供了強大的 mongoDB 操作   
+但是在 pre and post hook 的執行上卻不是完美支援   
+而且 mongoose 的 schema 雖然可以定義 validator 對資料做基本的檢查   
+但是卻只在 create 的時候才有效, update 則否   
+   
+所以 library 這個資料夾   
+主要就是用來強化 or 簡化開發專案時所需的模組及函式庫   
+用以減少開發時可能發生的錯誤, 甚至是增加開發效率   
+   
+## 特別介紹 MongoData/RedisData/SequelizeData
+### 整合了一些基本的 DB 的 CRUD 操作   
+   
+把 mongoose/redis/sequelize 不同的呼叫方式統合成共同的使用方法   
+例如 原生的 sequelize model 的 .find 用法是   
+model.find({where:{id: 1}, 參數1: xxx})   
+   
+而繼承 SequelizeData 的 model 的 .find 用法是   
+model.find({id: 1}, {參數1: xxx})   
+   
+這樣子的用法則和 mongoose 相似   
+而 RedisData 則提供了原生的 redis 沒有的 CRUD   
+   
+目前共通的 method 有   
+- create/createMany
+- find/findOne/findById
+- update/updateOne/updateById
+- remove/removeOne/removeById
+- count
+   
+### 提供相同的 hook functions
+   
+例如   
+model.pre('create', (data)=> { // model.create/createMany 時觸發   
+  // 在資料寫入前驗證/轉換 data   
+})   
+   
+model.post('find', (result)=> { // model.find/findOne/findById 時觸發   
+  // 把讀取出來的 result 做轉換   
+})   
+   
+### 支援原生 model 的操作
+   
+因捨棄了 mongoose/sequelize 的 method / static function   
+取出來的會是 plain-object 資料   
+但如果在開發時有特別的需求, 還是可以透過 .model 的管道執行原生的函式   
+   
+例如 ck.userDat 繼承 ck.SequelizeData   
+ck.userDat.find({id: 1}) => 會觸發 hook   
+同等於   
+ck.userDat.$find({id: 1}) => 不會觸發 hook   
+同等於   
+ck.userDat.model.findAll({where: {id: 1}}) => 原生的 sequalize 操作   
