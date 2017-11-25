@@ -1,6 +1,6 @@
 class RequestDat extends ck.MongoData {
   constructor () {
-    const model = ck.requestSch.model
+    const model = ck.requestMod.model
 
     super(model)
   }
