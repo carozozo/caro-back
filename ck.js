@@ -42,9 +42,10 @@ class CaroBack {
   }
 
   _toString (data) {
-    if (_.isString(data)) return data
+    if (_.isString(data) || _.isFunction(data)) return data
     if (_.isError(data)) return `${data.message}\n${data.stack}`
-    return JSON.stringify(data, null, 2)
+    if (_.isObject(data)) return JSON.stringify(data, null, 2)
+    return data
   }
 
   _initLog (logName, args) {
@@ -118,6 +119,7 @@ class CaroBack {
     this._initLog(name, args)
     this._writeLog(name, args)
     args.unshift(`\x1b[32m%s\x1b[0m`)
+    
     console.log.apply(null, args)
   }
 
