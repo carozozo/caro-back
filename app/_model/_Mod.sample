@@ -1,7 +1,16 @@
 class $Sample$Mod {
   constructor () {
-    const db = ck.mainDb
-    this.model = db.createModel(`$Sample$`, ck.$sample$Sch.fields)
+    this.schema = ck.mongoSchema.createSchema(ck.$sample$Sch.fields)
+    this.model = ck.analysisDb.createModel(`$Sample$`, this.schema)
+  }
+}
+
+module.exports = new CountLoggedUserMod()
+
+
+class $Sample$Mod {
+  constructor () {
+    this.model = ck.mainDb.createModel(`$Sample$`, ck.$sample$Sch.fields)
   }
 }
 module.exports = new $Sample$Mod()
