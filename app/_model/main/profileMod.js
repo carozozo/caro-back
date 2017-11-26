@@ -1,7 +1,6 @@
 class ProfileMod {
   constructor () {
-    const db = ck.mainDb
-    this.model = db.createModel(`Profile`, ck.profileSch.fields)
+    this.model = ck.mainDb.createModel(`Profile`, ck.profileSch.fields)
   }
 }
 
