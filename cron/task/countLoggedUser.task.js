@@ -4,5 +4,5 @@ ck.cron.regJob(`每分鐘寫入登入人數`, `*/1 * * * *`, async () => {
     setTimeout(() => r(), 61000)
   })
   const count = await ck.tokenMod.count()
-  return await ck.countLoggedUserDat.create({count})
+  return await ck.countLoggedUserMod.create({count})
 })

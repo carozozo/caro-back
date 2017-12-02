@@ -1,7 +1,9 @@
 // 紀錄登入人數
-class CountLoggedUserMod {
+class CountLoggedUserMod extends ck.MongoModel {
   constructor () {
-    this.model = ck.analysisDb.createModel(`CountLoggedUser`, ck.countLoggedUserSch.schema)
+    const model = ck.analysisDb.createModel(`CountLoggedUser`, ck.countLoggedUserSch.schema)
+
+    super(model)
   }
 }
 
