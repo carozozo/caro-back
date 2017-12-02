@@ -54,7 +54,7 @@ class Tester extends TesterData {
         const tokenData = ck.tokenFak.genCreate({id: tokenId, username})
         userDataArr.push(userData)
         profileDataArr.push(profileData)
-        await ck.tokenDat.create(tokenData)
+        await ck.tokenMod.create(tokenData)
       }
     }
     await ck.userMod.createMany(userDataArr)

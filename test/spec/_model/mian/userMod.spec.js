@@ -48,7 +48,7 @@ describe(`userMod`, () => {
       const username = fake.username
       await ck.tokenFak.fake({username})
       await ck.userMod.removeById(userId)
-      const tokenCount = await ck.tokenDat.count({username})
+      const tokenCount = await ck.tokenMod.count({username})
       assert.equal(tokenCount, 0)
     })
   })

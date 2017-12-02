@@ -24,11 +24,11 @@ class UserCtr {
     if (!user) throw `帳號不存在`
     if (!await ck.userMod.ifSamePwd(user, pwd)) throw `密碼錯誤`
 
-    let token = await ck.tokenDat.findOne({username})
+    let token = await ck.tokenMod.findOne({username})
     if (token) {
-      token = await ck.tokenDat.extendExpiredTime({username})
+      token = await ck.tokenMod.extendExpiredTime({username})
     } else {
-      token = await ck.tokenDat.create({username})
+      token = await ck.tokenMod.create({username})
     }
     delete user.pwd
     return {user, token}
@@ -59,7 +59,7 @@ class UserCtr {
   }
 
   async logout (username) {
-    return ck.tokenDat.remove({username})
+    return ck.tokenMod.remove({username})
   }
 
   async updateById (id, data) {

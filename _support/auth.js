@@ -24,7 +24,7 @@ class Auth {
     const tokenId = arr[1]
     if (tokenKey !== ck.auth.tokenKey) return next(`訪問憑證無效(key)`)
 
-    const token = await ck.tokenDat.findOne({id: tokenId})
+    const token = await ck.tokenMod.findOne({id: tokenId})
     if (!token) return next(`訪問憑證不存在`)
 
     // 設置 reqUser object

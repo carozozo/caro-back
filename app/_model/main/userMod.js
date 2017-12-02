@@ -36,7 +36,7 @@ class UserMod extends ck.SequelizeModel {
   async _preRemove (where) {
     const users = await this.find(where)
     for (const user of users) {
-      await ck.tokenDat.remove({username: user.username})
+      await ck.tokenMod.remove({username: user.username})
     }
   }
 

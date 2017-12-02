@@ -49,7 +49,7 @@ describe(`userCtr`, () => {
       await ck.userCtr.login(`admin`, `admin`)
       const user = await ck.userMod.findByUsername(`admin`)
       const username = user.username
-      const tokenLength = await ck.tokenDat.count({username})
+      const tokenLength = await ck.tokenMod.count({username})
       assert.equal(tokenLength, 1)
     })
     it(`error by user not exists`, async () => {
@@ -69,7 +69,7 @@ describe(`userCtr`, () => {
       const username = `admin`
       await ck.userCtr.login(username, username)
       await ck.userCtr.logout(username)
-      const token = await ck.tokenDat.findOne({username})
+      const token = await ck.tokenMod.findOne({username})
       assert.isNull(token)
     })
   })

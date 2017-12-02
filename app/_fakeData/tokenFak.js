@@ -8,7 +8,7 @@ class TokenFak {
 
   async fake (data) {
     const _data = this.genCreate(data)
-    return ck.tokenDat.create(_data)
+    return ck.tokenMod.create(_data)
   }
 }
 
