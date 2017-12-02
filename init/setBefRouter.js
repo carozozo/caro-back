@@ -12,24 +12,33 @@ const toString = (data) => {
   return data
 }
 const writeRequestLog = async (req, opt) => {
-  const requestTime = opt.requestTime
-  const responseStatus = opt.responseStatus
-  const responseMsg = opt.responseMsg
-  const username = _.get(req, `reqUser.$data.username`, `none`)
+  const requestTime = req.requestTime
+  const username = _.get(req, `reqUser.$data.username`)
+  const userRole = _.get(req, `reqUser.$data.role`)
   const ip = req.headers[`x-forwarded-for`] ||
     req.connection.remoteAddress ||
     req.socket.remoteAddress ||
     req.connection.socket.remoteAddress
-  ck.requestMod.create({
+
+  const responseTime = opt.responseTime
+  const responseStatus = opt.responseStatus
+  const responseMsg = opt.responseMsg
+
+  const processMilliseconds = new Date(responseTime) - new Date(requestTime)
+
+  await ck.requestMod.create({
     username,
+    userRole,
     ip,
     baseUrl: req.baseUrl || req.path,
     path: req.path,
     method: req.method,
-    userAgent: req.useragent,
     requestTime,
+    responseTime,
+    processMilliseconds,
     responseStatus,
-    responseMsg
+    responseMsg,
+    userAgent: req.useragent,
   })
 }
 
@@ -48,15 +57,19 @@ ck.api.use(bodyParser.urlencoded({extended: false}))
   .use(async (req, res, next) => {
     const method = req.method
     const path = req.originalUrl
-    const now = new Date()
+
+    // 設置開始 request 時間
+    req.requestTime = new Date()
 
     res.suc = (ret) => {
       ck.log(`[${method}] ${path} response=`, transToInfo(ret))
       const msg = toString(ret)
+
       writeRequestLog(req, {
-        requestTime: now,
+        responseTime: new Date(),
         responseStatus: `suc`
       })
+
       res.json({
         suc: msg
       })
@@ -64,11 +77,13 @@ ck.api.use(bodyParser.urlencoded({extended: false}))
     res.err = (ret) => {
       ck.err(`[${method}] ${path} response error=`, transToInfo(ret))
       const msg = toString(ret)
+
       writeRequestLog(req, {
-        requestTime: now,
+        responseTime: new Date(),
         responseStatus: `err`,
         responseMsg: msg
       })
+
       res.json({
         err: msg
       })
@@ -76,11 +91,13 @@ ck.api.use(bodyParser.urlencoded({extended: false}))
     res.war = (ret) => {
       ck.err(`[${method}] ${path} response warning=`, transToInfo(ret))
       const msg = toString(ret)
+
       writeRequestLog(req, {
-        requestTime: now,
+        responseTime: new Date(),
         responseStatus: `war`,
         responseMsg: msg
       })
+
       res.json({
         war: msg
       })
