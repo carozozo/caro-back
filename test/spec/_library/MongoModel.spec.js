@@ -1,4 +1,4 @@
-describe(`MongoData`, () => {
+describe(`MongoModel`, () => {
   const fields = {
     name: {type: String},
   }
@@ -12,7 +12,7 @@ describe(`MongoData`, () => {
 
   before(async () => {
     model = ck.analysisDb.createModel(`Test`, schema)
-    testDat = new ck.MongoData(model)
+    testDat = new ck.MongoModel(model)
   })
 
   beforeEach(async () => {

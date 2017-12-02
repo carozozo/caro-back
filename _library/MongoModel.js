@@ -1,5 +1,5 @@
 /* 客製化 Mongo 資料操作 */
-class MongoData {
+class MongoModel {
   constructor (model) {
     this.model = model
     this._hookMap = {}
@@ -219,4 +219,4 @@ class MongoData {
   }
 }
 
-module.exports = MongoData
+module.exports = MongoModel

@@ -1,4 +1,4 @@
-class CountLoggedUserDat extends ck.MongoData {
+class CountLoggedUserDat extends ck.MongoModel {
   constructor () {
     const model = ck.countLoggedUserMod.model
     super(model)

@@ -1,4 +1,4 @@
-class $Sample$Dat extends ck.MongoData {
+class $Sample$Dat extends ck.MongoModel {
   constructor (model) {
     super(model)
   }

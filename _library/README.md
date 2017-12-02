@@ -21,7 +21,7 @@ mongoose 提供了 model.save 和原生 mongoDB 的 create/update 去儲存資�
 主要就是用來強化 or 簡化開發專案時所需的模組及函式庫   
 用以減少開發時可能發生的錯誤, 甚至是增加開發效率
 
-## 特別介紹 MongoData/RedisData/SequelizeModel
+## 特別介紹 MongoModel/RedisData/SequelizeModel
 ### 整合了一些基本的 DB 的 CRUD 操作   
 
 把 mongoose/redis/sequelize 不同的呼叫方式統合成共同的使用方法   

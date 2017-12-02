@@ -1,4 +1,4 @@
-class RequestDat extends ck.MongoData {
+class RequestDat extends ck.MongoModel {
   constructor () {
     const model = ck.requestMod.model
 

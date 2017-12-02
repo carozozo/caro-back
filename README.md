@@ -8,7 +8,7 @@
 │
 ├── app                                   # 專案開發內容
 │   ├── _controller                       # 提供 route 對應的功能實作
-│   ├── _data                             # 資料函式庫, 實做功能所需的資料邏輯處理, 繼承自 ck.SequelizeModel/ck.MongoData...等
+│   ├── _data                             # 資料函式庫, 實做功能所需的資料邏輯處理, 繼承自 ck.SequelizeModel/ck.MongoModel...等
 │   ├── _fakeData                         # 產生假資料的函式庫, 用在開發時建立初始化的資料, 提供開發測試
 │   ├── _model                            # DB model 建立
 │   ├── _route                            # 定義 API 路徑, 只負責接收 request 和 response
