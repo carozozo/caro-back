@@ -1,4 +1,4 @@
-describe.skip(`sampleDat`, () => {
+describe.skip(`sampleMod`, () => {
   describe(``, () => {
     it.skip(``, async () => {
     })

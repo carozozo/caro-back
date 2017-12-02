@@ -17,11 +17,11 @@ router.get(`${ck.API_DOC_ROUTE_PATH}/*`, ck.genRouteFn(async (req, res) => {
   const username = au[0]
   const pwd = au[1]
   if (username !== `admin`) return returnDeined()
-  const user = await ck.userDat.findByUsername(username)
+  const user = await ck.userMod.findByUsername(username)
   if (!(user && _.eq(`Basic`, basic))) return returnDeined()
 
   try {
-    await ck.userDat.ifSamePwd(user, pwd)
+    await ck.userMod.ifSamePwd(user, pwd)
   } catch (e) {
     return returnDeined()
   }

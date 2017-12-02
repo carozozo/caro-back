@@ -47,7 +47,7 @@ describe(`userCtr`, () => {
     it(`multi login will not create multi token`, async () => {
       await ck.userCtr.login(`admin`, `admin`)
       await ck.userCtr.login(`admin`, `admin`)
-      const user = await ck.userDat.findByUsername(`admin`)
+      const user = await ck.userMod.findByUsername(`admin`)
       const username = user.username
       const tokenLength = await ck.tokenDat.count({username})
       assert.equal(tokenLength, 1)
@@ -76,7 +76,7 @@ describe(`userCtr`, () => {
 
   describe(`getById`, () => {
     it(async () => {
-      const one = await ck.userDat.findOne()
+      const one = await ck.userMod.findOne()
       const id = one.id
       const user = await ck.userCtr.getById(id)
       assert.equal(user.id, id)
@@ -114,9 +114,9 @@ describe(`userCtr`, () => {
       const pwd = `1234`
       const data = {pwd}
       await ck.userCtr.updateById(id, data)
-      const user = await ck.userDat.findById(id)
+      const user = await ck.userMod.findById(id)
       assert.equal(user.id, id)
-      assert.isTrue(await ck.userDat.ifSamePwd(user, pwd))
+      assert.isTrue(await ck.userMod.ifSamePwd(user, pwd))
     })
   })
 })

@@ -15,7 +15,7 @@ class UserFak {
 
   async fake (data) {
     const _data = this.genCreate(data)
-    return ck.userDat.create(_data)
+    return ck.userMod.create(_data)
   }
 }
 

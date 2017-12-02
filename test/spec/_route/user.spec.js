@@ -166,7 +166,7 @@ describe(groupPath, () => {
   })
   it(`getById`, async () => {
     const name = `getUserById`
-    const user = await ck.userDat.findOne()
+    const user = await ck.userMod.findOne()
     const path = `${groupPath}/getById`
     const query = {id: user.id}
     const queryPath = _.serializeUrl(path, query)

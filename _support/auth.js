@@ -29,7 +29,7 @@ class Auth {
 
     // 設置 reqUser object
     const username = token.username
-    const user = await ck.userDat.findOne({username})
+    const user = await ck.userMod.findOne({username})
     req.reqUser = new ck.ReqUser(user)
     next()
   }

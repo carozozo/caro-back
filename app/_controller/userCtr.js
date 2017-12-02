@@ -3,7 +3,7 @@ class UserCtr {
     const role = data.role
 
     if (!authMethod) throw `請選擇驗證方式`
-    const user = await ck.userDat.create(data)
+    const user = await ck.userMod.create(data)
 
     profileData.user_username = user.username
     const profile = await ck.profileDat.createProfile(role, profileData)
@@ -20,9 +20,9 @@ class UserCtr {
   async login (username, pwd) {
     if (!username) throw `請輸入帳號`
     if (!pwd) throw `請輸入密碼`
-    const user = await ck.userDat.findByUsername(username)
+    const user = await ck.userMod.findByUsername(username)
     if (!user) throw `帳號不存在`
-    if (!await ck.userDat.ifSamePwd(user, pwd)) throw `密碼錯誤`
+    if (!await ck.userMod.ifSamePwd(user, pwd)) throw `密碼錯誤`
 
     let token = await ck.tokenDat.findOne({username})
     if (token) {
@@ -35,7 +35,7 @@ class UserCtr {
   }
 
   async getById (id) {
-    const user = await ck.userDat.findById(id)
+    const user = await ck.userMod.findById(id)
     user && delete user.pwd
     return user
   }
@@ -51,7 +51,7 @@ class UserCtr {
       limit
     }
     if (username) where.username = {$like: `%${username}%`}
-    const list = await ck.userDat.find(where, opt)
+    const list = await ck.userMod.find(where, opt)
     return _.map(list, (u) => {
       delete u.pwd
       return u
@@ -63,7 +63,7 @@ class UserCtr {
   }
 
   async updateById (id, data) {
-    const user = await ck.userDat.updateById(id, data, {new: true})
+    const user = await ck.userMod.updateById(id, data, {new: true})
     user && delete user.pwd
     return user
   }

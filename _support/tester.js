@@ -57,14 +57,14 @@ class Tester extends TesterData {
         await ck.tokenDat.create(tokenData)
       }
     }
-    await ck.userDat.createMany(userDataArr)
+    await ck.userMod.createMany(userDataArr)
     await ck.profileDat.createMany(profileDataArr)
   }
 
   // 取得測試用戶
   async getTester (role = `customer`, i) {
     const username = this._genTesterUsername(role, i)
-    return ck.userDat.findByUsername(username)
+    return ck.userMod.findByUsername(username)
   }
 
   // 取得用 ReqUser 包裝後的測試用戶

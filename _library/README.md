@@ -100,11 +100,11 @@ model.post('count', (result, where, opt = {})=> {
 取出來的會是 plain-object 資料   
 但如果在開發時有特別的需求, 還是可以透過 .model 的管道執行原生的函式   
    
-例如 ck.userDat 繼承 ck.SequelizeModel
+例如 ck.userMod 繼承 ck.SequelizeModel
 ```
-ck.userDat.find({id: 1}) // 會觸發 hook   
+ck.userMod.find({id: 1}) // 會觸發 hook   
 // 同等於   
-ck.userDat.$find({id: 1}) // 不會觸發 hook   
+ck.userMod.$find({id: 1}) // 不會觸發 hook   
 // 同等於   
-ck.userDat.model.findAll({where: {id: 1}}) // 原生的 sequalize 操作
+ck.userMod.model.findAll({where: {id: 1}}) // 原生的 sequalize 操作
 ```
