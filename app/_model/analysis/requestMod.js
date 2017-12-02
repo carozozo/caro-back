@@ -1,7 +1,9 @@
 // request 紀錄
-class RequestMod {
+class RequestMod extends ck.MongoModel {
   constructor () {
-    this.model = ck.analysisDb.createModel(`Request`, ck.requestSch.schema)
+    const model = ck.analysisDb.createModel(`Request`, ck.requestSch.schema)
+    
+    super(model)
   }
 }
 

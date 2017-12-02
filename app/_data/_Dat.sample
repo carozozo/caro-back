@@ -1,7 +1,0 @@
-class $Sample$Dat extends ck.MongoModel {
-  constructor (model) {
-    super(model)
-  }
-}
-
-module.exports = new $Sample$Dat(ck.$sample$Sch.model)

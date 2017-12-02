@@ -20,7 +20,7 @@ const writeRequestLog = async (req, opt) => {
     req.connection.remoteAddress ||
     req.socket.remoteAddress ||
     req.connection.socket.remoteAddress
-  ck.requestDat.create({
+  ck.requestMod.create({
     username,
     ip,
     baseUrl: req.baseUrl || req.path,
