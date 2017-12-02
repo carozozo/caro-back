@@ -1,5 +1,5 @@
 /* 客製化 Sequelize 資料操作 */
-class SequelizeData {
+class SequelizeModel {
   constructor (model) {
     this.model = model
     this._hookMap = {}
@@ -245,4 +245,4 @@ class SequelizeData {
   }
 }
 
-module.exports = SequelizeData
+module.exports = SequelizeModel

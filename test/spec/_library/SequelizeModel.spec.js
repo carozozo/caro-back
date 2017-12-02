@@ -1,4 +1,4 @@
-describe(`SequelizeData`, () => {
+describe(`SequelizeModel`, () => {
   const db = ck.mainDb
   const Sequelize = db.Sequelize
   const fields = {
@@ -13,7 +13,7 @@ describe(`SequelizeData`, () => {
 
   before(async () => {
     model = db.createModel(`Test`, fields)
-    testDat = new ck.SequelizeData(model)
+    testDat = new ck.SequelizeModel(model)
     await model.sync()
   })
 

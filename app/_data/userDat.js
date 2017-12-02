@@ -1,4 +1,4 @@
-class UserDat extends ck.SequelizeData {
+class UserDat extends ck.SequelizeModel {
   constructor () {
     const model = ck.userMod.model
 

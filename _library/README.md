@@ -21,14 +21,14 @@ mongoose 提供了 model.save 和原生 mongoDB 的 create/update 去儲存資�
 主要就是用來強化 or 簡化開發專案時所需的模組及函式庫   
 用以減少開發時可能發生的錯誤, 甚至是增加開發效率
 
-## 特別介紹 MongoData/RedisData/SequelizeData
+## 特別介紹 MongoData/RedisData/SequelizeModel
 ### 整合了一些基本的 DB 的 CRUD 操作   
 
 把 mongoose/redis/sequelize 不同的呼叫方式統合成共同的使用方法   
 例如 原生的 sequelize model 的 .find 用法是   
 model.find({where:{id: 1}, 參數1: xxx})
 
-而繼承 SequelizeData 的 model 的 .find 用法是   
+而繼承 SequelizeModel 的 model 的 .find 用法是   
 model.find({id: 1}, {參數1: xxx})
 
 這樣子的用法則和 mongoose 相似   
@@ -100,7 +100,7 @@ model.post('count', (result, where, opt = {})=> {
 取出來的會是 plain-object 資料   
 但如果在開發時有特別的需求, 還是可以透過 .model 的管道執行原生的函式   
    
-例如 ck.userDat 繼承 ck.SequelizeData
+例如 ck.userDat 繼承 ck.SequelizeModel
 ```
 ck.userDat.find({id: 1}) // 會觸發 hook   
 // 同等於   

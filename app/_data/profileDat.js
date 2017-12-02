@@ -1,4 +1,4 @@
-class ProfileDat extends ck.SequelizeData {
+class ProfileDat extends ck.SequelizeModel {
   constructor () {
     const model = ck.profileMod.model
     super(model)
