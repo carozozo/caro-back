@@ -21,7 +21,6 @@ after(function () {
 
 const specPath = `test/spec`
 ck.autoRequire(`${specPath}/_library`, {skip: true})
-ck.autoRequire(`${specPath}/_data`, {skip: true})
 ck.autoRequire(`${specPath}/_controller`, {skip: true})
 ck.autoRequire(`${specPath}/_service`, {skip: true})
 ck.autoRequire(`${specPath}/_route`, {skip: true})
