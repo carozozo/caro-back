@@ -1,5 +1,5 @@
 /* redis 資料操作 promise 版 */
-class RedisModel {
+class RedisPromise {
   constructor (client) {
     if (!client) throw Error(`缺少參數 client`)
     this.client = client // redis client
@@ -101,7 +101,7 @@ class RedisModel {
 }
 
 /* 客製化 redis 有類似 SQL 的資料操作方式 */
-class RedisData extends RedisModel {
+class RedisModel extends RedisPromise {
   constructor (client, category) {
     super(client)
     this._category = category // 分類名稱
@@ -328,4 +328,4 @@ class RedisData extends RedisModel {
   }
 }
 
-module.exports = RedisData
+module.exports = RedisModel

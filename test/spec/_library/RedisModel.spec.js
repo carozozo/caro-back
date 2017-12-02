@@ -1,4 +1,4 @@
-describe(`RedisData`, () => {
+describe(`RedisModel`, () => {
   let testDat
   const createRow = async () => {
     this.count = this.count || 0
@@ -8,7 +8,7 @@ describe(`RedisData`, () => {
 
   before(async () => {
     const keys = [`name`]
-    testDat = new ck.RedisData(ck.cacheDb.client, `Test`, keys)
+    testDat = new ck.RedisModel(ck.cacheDb.client, `Test`, keys)
     for (let i = 0; i < 5; i++) {
       await createRow(i)
     }

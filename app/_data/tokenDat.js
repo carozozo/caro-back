@@ -1,4 +1,4 @@
-class TokenDat extends ck.RedisData {
+class TokenDat extends ck.RedisModel {
   constructor () {
     super(ck.cacheDb.client, `Token`)
   }
