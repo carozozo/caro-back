@@ -1,11 +1,8 @@
-class $Sample$Mod {
+class $Sample$Mod extends ck.RedisModel {
   constructor () {
-    this.model = ck.mainDb.createModel(`$Sample$`, ck.$sample$Sch.fields)
+    super(ck.cacheDb.client, `$Sample$`)
   }
 }
-
-module.exports = new $Sample$Mod()
-
 
 class $Sample$Mod {
   constructor () {
@@ -14,12 +11,9 @@ class $Sample$Mod {
   }
 }
 
-module.exports = new CountLoggedUserMod()
-
-
-class $Sample$Mod extends ck.RedisModel {
+class $Sample$Mod {
   constructor () {
-    super(ck.cacheDb.client, `$Sample$`)
+    this.model = ck.mainDb.createModel(`$Sample$`, ck.$sample$Sch.fields)
   }
 }
 
