@@ -29,15 +29,15 @@ class Config {
     }
   }
 
-  get analysisDb () {
+  get logDb () {
     const env = process.env.TEST_MODE ? `test` : process.env.NODE_ENV
     const mainName = `caro-back`
-    const analysisDbName = `${mainName}-analysis-${env}`
+    const logDbName = `${mainName}-log-${env}`
     const host = `localhost`
     return {
       host,
       port: 27017,
-      database: analysisDbName,
+      database: logDbName,
     }
   }
 

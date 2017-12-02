@@ -15,7 +15,7 @@ before(function (done) {
 
 after(function () {
   ck.cacheDb.disconnect()
-  ck.analysisDb.disconnect()
+  ck.logDb.disconnect()
   ck.mainDb.disconnect()
 })
 

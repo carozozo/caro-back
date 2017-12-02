@@ -10,13 +10,13 @@ ck.boot.regStack(async () => {
 })
 
 ck.boot.regStack(async () => {
-  const dbConfig = ck.config.analysisDb
+  const dbConfig = ck.config.logDb
   const host = dbConfig.host
   const port = dbConfig.port
   const database = dbConfig.database
   const dbMsg = `Mongo 資料庫 ${host}:${port} ${database}`
   ck.info(`準備連接 ${dbMsg}`)
-  await ck.analysisDb.connectDb(host, port, database)
+  await ck.logDb.connectDb(host, port, database)
   ck.info(`已連接 ${dbMsg}`)
 })
 

@@ -8,20 +8,20 @@ ck.boot.on(`runStacks`, async () => {
 })
 
 ck.boot.on(`runStacks`, async () => {
-  const dbMSg = `Mongo 資料庫 ${ck.analysisDb.database}`
+  const dbMSg = `Mongo 資料庫 ${ck.logDb.database}`
   // 清除資料
   if (!ck.CAN_DROP_DB) return
   const excludes = [ // 不想被清空的 collection
     `request`,
     `countLoggedUser`,
   ]
-  ck.analysisDb.on(`dropCollectionsEach`, (name, i) => {
+  ck.logDb.on(`dropCollectionsEach`, (name, i) => {
     ck.info(`${dbMSg} 清除第 ${i + 1} 組 collection ${name} 完成`)
   }).on(`dropCollectionsEachExclude`, (name, i) => {
     ck.info(`${dbMSg} 排除第 ${i + 1} 組 collection ${name}`)
   })
   ck.info(`準備清除 ${dbMSg} 資料`)
-  const names = await ck.analysisDb.dropCollections({excludes}) || []
+  const names = await ck.logDb.dropCollections({excludes}) || []
   ck.info(`${dbMSg} 清除 ${names.length - excludes.length} 組資料完成`)
 })
 

@@ -11,7 +11,7 @@ describe(`MongoModel`, () => {
   }
 
   before(async () => {
-    model = ck.analysisDb.createModel(`Test`, schema)
+    model = ck.logDb.createModel(`Test`, schema)
     testMod = new ck.MongoModel(model)
   })
 

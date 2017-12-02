@@ -1,16 +1,26 @@
 class $Sample$Mod {
   constructor () {
+    this.model = ck.mainDb.createModel(`$Sample$`, ck.$sample$Sch.fields)
+  }
+}
+
+module.exports = new $Sample$Mod()
+
+
+class $Sample$Mod {
+  constructor () {
     this.schema = ck.mongoSchema.createSchema(ck.$sample$Sch.fields)
-    this.model = ck.analysisDb.createModel(`$Sample$`, this.schema)
+    this.model = ck.logDb.createModel(`$Sample$`, this.schema)
   }
 }
 
 module.exports = new CountLoggedUserMod()
 
 
-class $Sample$Mod {
+class $Sample$Mod extends ck.RedisModel {
   constructor () {
-    this.model = ck.mainDb.createModel(`$Sample$`, ck.$sample$Sch.fields)
+    super(ck.cacheDb.client, `$Sample$`)
   }
 }
+
 module.exports = new $Sample$Mod()
