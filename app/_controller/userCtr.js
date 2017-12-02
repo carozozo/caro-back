@@ -6,7 +6,7 @@ class UserCtr {
     const user = await ck.userMod.create(data)
 
     profileData.user_username = user.username
-    const profile = await ck.profileDat.createProfile(role, profileData)
+    const profile = await ck.profileMod.createProfile(role, profileData)
 
     if (authMethod === `email`) {
       ck.mail.sendRegisterMail()

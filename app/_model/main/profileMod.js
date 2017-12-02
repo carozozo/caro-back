@@ -1,6 +1,20 @@
-class ProfileMod {
+class ProfileMod extends ck.SequelizeModel {
   constructor () {
-    this.model = ck.mainDb.createModel(`Profile`, ck.profileSch.fields)
+    const model = ck.mainDb.createModel(`Profile`, ck.profileSch.fields)
+
+    super(model)
+  }
+
+  get rolesNeedEmail () {
+    return [`customer`, `stuff`, `manager`]
+  }
+
+  async createProfile (role, data) {
+    const rolesNeedEmail = this.rolesNeedEmail
+    if (_.includes(rolesNeedEmail, role)) {
+      if (!data.email) throw `${rolesNeedEmail} 需輸入 email`
+    }
+    return this.create(data)
   }
 }
 

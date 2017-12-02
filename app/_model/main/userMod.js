@@ -1,7 +1,7 @@
 class UserMod extends ck.SequelizeModel {
   constructor () {
     const model = ck.mainDb.createModel(`User`, ck.userSch.fields)
-    model.hasMany(ck.profileDat.model, {
+    model.hasMany(ck.profileMod.model, {
       sourceKey: `username`,
       foreignKey: {name: `user_username`, allowNull: false}
     })

@@ -58,7 +58,7 @@ class Tester extends TesterData {
       }
     }
     await ck.userMod.createMany(userDataArr)
-    await ck.profileDat.createMany(profileDataArr)
+    await ck.profileMod.createMany(profileDataArr)
   }
 
   // 取得測試用戶

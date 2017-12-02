@@ -30,5 +30,5 @@ ck.runAsync(async () => {
   setProfile(_user)
 
   await ck.userMod.createMany(_userArr)
-  await ck.profileDat.createMany(_profileArr)
+  await ck.profileMod.createMany(_profileArr)
 })

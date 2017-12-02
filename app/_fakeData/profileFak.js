@@ -12,7 +12,7 @@ class ProfileFak {
 
   async fake (data) {
     const _data = this.genCreate(data)
-    return ck.profileDat.create(_data)
+    return ck.profileMod.create(_data)
   }
 }
 
