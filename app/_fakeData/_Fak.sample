@@ -7,7 +7,7 @@ class $Sample$Fak {
 
   async fake (data) {
     const _data = this.genCreate(data)
-    return ck.$sample$Dat.create(_data)
+    return ck.$sample$Mod.create(_data)
   }
 }
 

@@ -22,8 +22,8 @@ if (!targetName) {
 const getFilePathFromSample = (samplePath) => {
   const dirPath = path.dirname(samplePath)
   const fileName = path.basename(samplePath)
-    .replace(`__`, _.upperFirst(targetName)) // e.g. __Dat.sample => UserDat.sample
-    .replace(`_`, targetName) // e.g. _dat.sample => userDat.sample
+    .replace(`__`, _.upperFirst(targetName)) // e.g. __Ctr.sample => UserCtr.sample
+    .replace(`_`, targetName) // e.g. _Ctr.sample => userCtr.sample
     .replace(`.sample`, `.js`)
   const folderPath = path.join(dirPath, folder)
   if (!fs.existsSync(folderPath)) fs.mkdirSync(folderPath)
