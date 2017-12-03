@@ -14,6 +14,7 @@ const ignoreArr = [
   `public`,
   `test`,
 ]
+const nodePath = `./`
 
 module.exports = {
   apps: [{
@@ -22,7 +23,15 @@ module.exports = {
     watch: true,
     ignore_watch: ignoreArr,
     env: {
-      NODE_PATH: `./`
+      NODE_PATH: nodePath
+    }
+  }, {
+    name: `caro-back-cron-${process.env.NODE_ENV || `dev`}`,
+    script: `./cron/app.js`,
+    watch: true,
+    ignore_watch: ignoreArr,
+    env: {
+      NODE_PATH: nodePath
     }
   }]
 }
