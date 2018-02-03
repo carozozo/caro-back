@@ -8,7 +8,7 @@
     "url": "https://github.com/carozozo/caro-back"
   },
   "engines": {
-    "node": ">=8.4.0 <=8.9.1"
+    "node": ">=8.9.0 <=8.9.4"
   },
   "license": "MIT",
   "config": {},
