@@ -1,7 +1,7 @@
 ck.config = (() => {
   /* 設定檔 */
-  const configDir = `../config`
+  const configDir = `./_setConfig`
   const env = process.env.NODE_ENV
-  const Config = require(`${configDir}/${_.upperFirst(env)}Config`)
+  const Config = require(`${configDir}/${env === `dev` ? `` : _.upperFirst(env)}Config`)
   return new Config()
 })()

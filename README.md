@@ -17,8 +17,6 @@
 │
 ├── boot                                  # 啟動各項服務, 例如 DB 連線, 啟動 API Server
 │
-├── config                                # 專案設定檔
-│
 ├── cron                                  # `npm run cron` 啟動 Cron-Job 項目
 │
 ├── docs                                  # `npm run test.doc` 之後產生的 js 檔 for apidoc 載入

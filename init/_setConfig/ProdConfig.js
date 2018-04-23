@@ -1,4 +1,4 @@
-const Config = require(`./Config`)
+const Config = require(`./init/config`)
 
 class ProdConfig extends Config {
 }

@@ -37,3 +37,4 @@ jspm_packages
 docs
 public
 .idea
+/.env
