@@ -8,7 +8,7 @@
     "url": "https://github.com/carozozo/caro-back"
   },
   "engines": {
-    "node": ">=8.9.0 <=8.9.4"
+    "node": ">=8.9.0 <=8.11.1"
   },
   "license": "MIT",
   "config": {},
@@ -44,25 +44,25 @@
     "body-parser": "^1.18.2",
     "caro": "^1.0.1",
     "dotenv": "^5.0.1",
-    "express": "^4.16.2",
+    "express": "^4.16.3",
     "express-useragent": "^1.0.12",
     "lodash": "^4.17.5",
-    "moment": "^2.21.0",
-    "mongoose": "^4.13.11",
-    "mysql2": "^1.5.2",
+    "moment": "^2.22.1",
+    "mongoose": "^4.13.12",
+    "mysql2": "^1.5.3",
     "node-cron": "^1.2.1",
     "passport": "^0.3.2",
     "redis": "^2.8.0",
-    "request": "^2.83.0",
+    "request": "^2.85.0",
     "request-promise": "^4.2.2",
-    "sequelize": "^4.35.2",
+    "sequelize": "^4.37.6",
     "uniqid": "^4.1.1"
   },
   "devDependencies": {
     "apidoc": "^0.17.5",
     "babel-eslint": "^7.2.3",
     "chai": "^4.1.2",
-    "eslint": "^4.18.2",
+    "eslint": "^4.19.1",
     "pre-commit": "^1.2.2"
   },
   "apidoc": {
