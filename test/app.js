@@ -17,6 +17,7 @@ after(function () {
   ck.cacheDb.disconnect()
   ck.logDb.disconnect()
   ck.mainDb.disconnect()
+  process.exit()
 })
 
 const specPath = `test/spec`
