@@ -164,6 +164,44 @@ describe(groupPath, () => {
       use: ck.COMMON_USE
     }, sucArr, errArr)
   })
+  it(`updateById`, async () => {
+    const name = `updateById`
+    const path = `${groupPath}/${name}`
+    const data = {}
+    const sucArr = []
+    const errArr = []
+
+    await (async () => {
+      const customer = await ck.tester.getTester()
+      const body = {id: customer.id, data}
+      const result = await ck.poster.post(path, body, `customer`)
+      assert.apiSuc(result)
+      sucArr.push(result)
+    })()
+    // customer 無法更新別人的資料
+    await (async () => {
+      const stuff = await ck.tester.getTester(`stuff`)
+      const body = {id: stuff.id, data}
+      const result = await ck.poster.post(path, body, `customer`)
+      assert.apiWar(result)
+      errArr.push(result)
+    })()
+
+    ck.outputResultDoc({
+      version,
+      api: {
+        title: `用 id 更新用戶資料`,
+        method: `post`,
+        path
+      },
+      name,
+      group,
+      param: [
+        {type: `id`, field: `id`, desc: `用戶 id`}
+      ],
+      use: ck.COMMON_USE
+    }, sucArr, errArr)
+  })
   it(`getById`, async () => {
     const name = `getUserById`
     const user = await ck.userMod.findOne()
@@ -239,44 +277,6 @@ describe(groupPath, () => {
         path
       },
       roles: [`stuff`, `manager`, `admin`],
-      name,
-      group,
-      param: [
-        {type: `id`, field: `id`, desc: `用戶 id`}
-      ],
-      use: ck.COMMON_USE
-    }, sucArr, errArr)
-  })
-  it(`updateById`, async () => {
-    const name = `updateById`
-    const path = `${groupPath}/${name}`
-    const data = {}
-    const sucArr = []
-    const errArr = []
-
-    await (async () => {
-      const customer = await ck.tester.getTester()
-      const body = {id: customer.id, data}
-      const result = await ck.poster.post(path, body, `customer`)
-      assert.apiSuc(result)
-      sucArr.push(result)
-    })()
-    // customer 無法更新別人的資料
-    await (async () => {
-      const stuff = await ck.tester.getTester(`stuff`)
-      const body = {id: stuff.id, data}
-      const result = await ck.poster.post(path, body, `customer`)
-      assert.apiWar(result)
-      errArr.push(result)
-    })()
-
-    ck.outputResultDoc({
-      version,
-      api: {
-        title: `用 id 更新用戶資料`,
-        method: `post`,
-        path
-      },
       name,
       group,
       param: [

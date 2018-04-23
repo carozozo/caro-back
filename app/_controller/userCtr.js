@@ -34,6 +34,19 @@ class UserCtr {
     return {user, token}
   }
 
+  async logout (reqUser) {
+    return ck.tokenMod.remove({username: reqUser.username})
+  }
+
+  async updateById (reqUser, id, data) {
+    if (reqUser.ifCustomer() && !reqUser.ifSameId(id)) {
+      throw `一般用戶只能更新自己的資料`
+    }
+    const user = await ck.userMod.updateById(id, data, {new: true})
+    user && delete user.pwd
+    return user
+  }
+
   async getById (id) {
     const user = await ck.userMod.findById(id)
     user && delete user.pwd
@@ -56,16 +69,6 @@ class UserCtr {
       delete u.pwd
       return u
     })
-  }
-
-  async logout (username) {
-    return ck.tokenMod.remove({username})
-  }
-
-  async updateById (id, data) {
-    const user = await ck.userMod.updateById(id, data, {new: true})
-    user && delete user.pwd
-    return user
   }
 }
 

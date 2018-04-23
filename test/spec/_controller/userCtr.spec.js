@@ -66,11 +66,39 @@ describe(`userCtr`, () => {
 
   describe(`logout`, () => {
     it(async () => {
-      const username = `admin`
+      const user = await ck.userMod.findByUsername(`admin`)
+      const reqCustomer = new ck.ReqUser(user)
+      const username = reqCustomer.username
       await ck.userCtr.login(username, username)
-      await ck.userCtr.logout(username)
+
+      await ck.userCtr.logout(reqCustomer)
       const token = await ck.tokenMod.findOne({username})
       assert.isNull(token)
+    })
+  })
+
+  describe(`updateById`, () => {
+    it(async () => {
+      const $customer = await ck.tester.getTester()
+      const id = $customer.id
+      const pwd = `1234`
+      const data = {pwd}
+      const reqUser = new ck.ReqUser($customer)
+      await ck.userCtr.updateById(reqUser, id, data)
+      const user = await ck.userMod.findById(id)
+      assert.equal(user.id, id)
+      assert.isTrue(await ck.userMod.ifSamePwd(user, pwd))
+    })
+    it(`should got error when customer want edit data of other one`, async () => {
+      const reqCustomer = await ck.tester.getReqUser()
+      const reqCustomer2 = await ck.tester.getReqUser(`customer`, 2)
+      const id = reqCustomer2.id
+      const pwd = `1234`
+      const data = {pwd}
+      const reqUser = new ck.ReqUser(reqCustomer)
+      assert.shouldGotErr(async () => {
+        await ck.userCtr.updateById(reqUser, id, data)
+      })
     })
   })
 
@@ -104,19 +132,6 @@ describe(`userCtr`, () => {
       const secondItem = userList[1]
       const userListBySkip = await ck.userCtr.getList({offset: 1})
       assert.equal(userListBySkip[0].username, secondItem.username)
-    })
-  })
-
-  describe(`updateById`, () => {
-    it(async () => {
-      const $customer = await ck.tester.getTester()
-      const id = $customer.id
-      const pwd = `1234`
-      const data = {pwd}
-      await ck.userCtr.updateById(id, data)
-      const user = await ck.userMod.findById(id)
-      assert.equal(user.id, id)
-      assert.isTrue(await ck.userMod.ifSamePwd(user, pwd))
     })
   })
 })
