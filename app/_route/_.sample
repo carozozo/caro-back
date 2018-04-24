@@ -2,10 +2,18 @@ const group = `$sample$`
 const groupPath = ck.api.getGroupPath(group)
 const router = ck.api.createRouter(groupPath)
 
-router.get(`/sample`, ck.auth.authRole(), ck.genRouteFn(async (req, res) => {
+router.post(`/postSample`, ck.auth.authRole(), ck.genRouteFn(async (req, res) => {
   const args = ck.req.validateRequired(req, [`arg1`])
   const arg1 = args.arg1
 
-  const result = await new ck.$sample$Ctr.sample(req.reqUser, arg1)
+  const result = await new ck.$sample$Ctr.postSample(req.reqUser, arg1)
+  res.suc(result)
+}))
+
+router.get(`/getSample`, ck.auth.authRole(), ck.genRouteFn(async (req, res) => {
+  const args = ck.req.validateRequired(req, [`arg1`])
+  const arg1 = args.arg1
+
+  const result = await new ck.$sample$Ctr.getSample(req.reqUser, arg1)
   res.suc(result)
 }))

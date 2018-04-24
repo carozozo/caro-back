@@ -1,5 +1,8 @@
 class $Sample$Ctr {
-  async sample (reqUser, arg1) {
+  async postSample (reqUser, arg1) {
+  }
+
+  async getSample (reqUser, arg1) {
   }
 }
 

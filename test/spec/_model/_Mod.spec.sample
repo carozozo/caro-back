@@ -1,6 +1,8 @@
-describe.skip(`sampleMod`, () => {
+describe.skip(`$sample$Mod`, () => {
   describe(``, () => {
-    it.skip(``, async () => {
+    it(async () => {
+    })
+    it(`other case`, async () => {
     })
   })
 })

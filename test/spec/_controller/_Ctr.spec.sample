@@ -1,6 +1,15 @@
-describe.skip(`sampleCtr`, () => {
-  describe(``, () => {
-    it(``, async () => {
+describe.skip(`$sample$Ctr`, () => {
+  describe(`postSample`, () => {
+    it(async () => {
+    })
+    it(`other case`, async () => {
+    })
+  })
+
+  describe(`getSample`, () => {
+    it(async () => {
+    })
+    it(`other case`, async () => {
     })
   })
 })

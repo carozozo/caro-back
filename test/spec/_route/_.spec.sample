@@ -1,8 +1,27 @@
-const version = ck.ck.APP_VERSION
-const group = `sample`
+const version = ck.APP_VERSION
+const group = `$sample$`
 const groupPath = ck.api.getGroupPath(group)
+
 describe.skip(groupPath, () => {
-  it(``, async () => {
+  it(`postSample`, async () => {
+    const name = `postSample`
+    const path = `${groupPath}/${name}`
+    const sucArr = []
+    const errArr = []
+
+    await (async () => {
+      const body = {}
+      const result = await ck.poster.post(path, body, `customer`)
+      assert.apiSuc(result)
+      sucArr.push(result)
+    })()
+    await (async () => {
+      const body = {}
+      const result = await ck.poster.post(path, body, `customer`)
+      assert.apiWar(result)
+      errArr.push(result)
+    })()
+
     ck.apiDoc.outputApi({
       version,
       api: {
@@ -16,12 +35,42 @@ describe.skip(groupPath, () => {
         {type: `string`, field: `sample`, desc: ``},
       ],
       use: ck.COMMON_USE,
-      success: [
-        {name: `result`, data: result},
+    }, sucArr, errArr)
+  })
+  it(`getSample`, async () => {
+    const name = `getSample`
+    const path = `${groupPath}/${name}`
+    const sucArr = []
+    const errArr = []
+
+    await (async () => {
+      const query = {}
+      const queryPath = _.serializeUrl(path, query)
+      const result = await ck.poster.get(queryPath, `customer`)
+      assert.apiSuc(result)
+      sucArr.push(result)
+    })()
+    await (async () => {
+      const query = {}
+      const queryPath = _.serializeUrl(path, query)
+      const result = await ck.poster.get(queryPath, `customer`)
+      assert.apiWar(result)
+      errArr.push(result)
+    })()
+
+    ck.apiDoc.outputApi({
+      version,
+      api: {
+        title: ``,
+        method: `get`,
+        path,
+      },
+      name,
+      group,
+      param: [
+        {type: `string`, field: `sample`, desc: ``},
       ],
-      error: [
-        {name: `error`, data: errResult},
-      ],
-    })
+      use: ck.COMMON_USE,
+    }, sucArr, errArr)
   })
 })
