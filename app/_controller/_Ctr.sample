@@ -1,4 +1,6 @@
 class $Sample$Ctr {
+  async sample (reqUser, arg1) {
+  }
 }
 
 module.exports = $Sample$Ctr

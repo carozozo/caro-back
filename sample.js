@@ -1,20 +1,39 @@
 /*
- 執行 `TARGET=xxx FOLDER=xxx npm run sample` `TARGET=xxx FOLDER=xxx npm run sample.delete`
- 從 app 資料夾中找出 .sample 檔案, 並複製成 .js 檔案; 或是移除指定的相關 .js 檔案
- e.g.1 `TARGET=demo FOLDER=folder npm run sample`
- e.g.2 `TARGET=demo FOLDER=folder npm run sample.delete`
+ `TARGET=xxx FOLDER=xxx npm run sample`
+ 找出所有 .sample 檔案, 並複製成 .js 檔案
+
+ `TARGET=xxx FOLDER=xxx npm run sample:model`
+ 找出 model 相關的 .sample 檔案, 並複製成 .js 檔案
+
+ `TARGET=xxx FOLDER=xxx npm run sample:route`
+ 找出 route 相關的 .sample 檔案, 並複製成 .js 檔案
+
+ `TARGET=xxx FOLDER=xxx npm run sample.delete`
+ 找出所有 .sample 對應的檔案, 並移除對應的 .js 檔案
+
+ `TARGET=xxx FOLDER=xxx npm run sample.delete:model`
+ 找出 model 相關的 .sample 檔案, 並移除對應的 .js 檔案
+
+ `TARGET=xxx FOLDER=xxx npm run sample.delete:route`
+ 找出 route 相關的 .sample 檔案, 並移除對應的 .js 檔案
 */
 const _ = require(`caro`)
 const fs = require(`fs`)
 const path = require(`path`)
 const targetName = process.env.TARGET
 const folder = process.env.FOLDER
+const sampleType = process.env.SAMPLE_TYPE
 const isDelete = process.env.IS_DELETE
 
 if (!targetName) {
   console.error(`
-  請輸入 'TARGET={{想建立的檔名}} npm run sample' 建立目標相關檔案
-  或 'TARGET={{想移除的檔名}} npm run sample.delete' 移除目標相關檔案
+    請輸入
+    'TARGET=xxx FOLDER=xxx npm run sample'              建立相關檔案
+    'TARGET=xxx FOLDER=xxx npm run sample:model'        建立 model 相關檔案
+    'TARGET=xxx FOLDER=xxx npm run sample:route'        建立 route 相關檔案
+    'TARGET=xxx FOLDER=xxx npm run sample.delete'       移除相關檔案
+    'TARGET=xxx FOLDER=xxx npm run sample.delete:model' 移除 model 相關檔案
+    'TARGET=xxx FOLDER=xxx npm run sample.delete:route' 移除 route 相關檔案
   `)
   process.exit()
 }
@@ -62,5 +81,25 @@ const getSampleFile = (fileOrDir) => {
   }
 }
 
-getSampleFile(`app`)
-getSampleFile(`test/spec`)
+if (!sampleType) {
+  getSampleFile(`app`)
+  getSampleFile(`test/spec`)
+  return
+}
+
+if (sampleType === `route`) {
+  getSampleFile(`app/_route`)
+  getSampleFile(`app/_controller`)
+  getSampleFile(`app/_service`)
+  getSampleFile(`test/spec/_route`)
+  getSampleFile(`test/spec/_controller`)
+  getSampleFile(`test/spec/_service`)
+  return
+}
+
+if (sampleType === `model`) {
+  getSampleFile(`app/_schema`)
+  getSampleFile(`app/_model`)
+  getSampleFile(`test/spec/_model`)
+  return
+}
