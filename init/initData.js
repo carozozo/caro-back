@@ -11,10 +11,8 @@ ck.boot.on(`runStacks`, async () => {
   const dbMSg = `Mongo 資料庫 ${ck.logDb.database}`
   // 清除資料
   if (!ck.CAN_DROP_DB) return
-  const excludes = [ // 不想被清空的 collection
-    `request`,
-    `countLoggedUser`,
-  ]
+  const dbConfig = ck.config.logDb
+  const excludes = dbConfig.excludes
   ck.logDb.on(`dropCollectionsEach`, (name, i) => {
     ck.info(`${dbMSg} 清除第 ${i + 1} 組 collection ${name} 完成`)
   }).on(`dropCollectionsEachExclude`, (name, i) => {
@@ -32,8 +30,8 @@ ck.boot.on(`runStacks`, async () => {
   }
   // 清除資料
   if (!ck.CAN_DROP_DB) return
-  const excludes = [ // 不想被清空的 table
-  ]
+  const dbConfig = ck.config.mainDb
+  const excludes = dbConfig.excludes
   ck.info(`準備清除 ${dbMSg} 資料`)
   ck.mainDb.on(`dropTablesEach`, (name, i) => {
     ck.info(`${dbMSg} 清除第 ${i + 1} 組 table ${name} 完成`)

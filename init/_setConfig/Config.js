@@ -29,14 +29,19 @@ class Config {
       database: `${process.env.MAIN_DB_DATABASE}${process.env.TEST_MODE ? `-test` : ``}`,
       username: process.env.MAIN_DB_USERNAME,
       pwd: process.env.MAIN_DB_PWD,
+      excludes: [ // 不想被清空的 table
+      ],
     }
   }
 
   get logDb () {
     return {
-      host:process.env.LOG_DB_HOST,
+      host: process.env.LOG_DB_HOST,
       port: process.env.LOG_DB_PORT,
       database: `${process.env.LOG_DB_DATABASE}${process.env.TEST_MODE ? `-test` : ``}`,
+      excludes: [ // 不想被清空的 collection
+        `Request`,
+      ],
     }
   }
 
