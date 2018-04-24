@@ -1,4 +1,4 @@
-const Config = require(`./init/config`)
+const Config = require(`./config`)
 
 class BetaConfig extends Config {
 }
