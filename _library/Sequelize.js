@@ -15,6 +15,10 @@ class Sequelize {
     return this._connection
   }
 
+  get QueryInterface () {
+    return this.connection.queryInterface
+  }
+
   _getHook (fnName) {
     const hookMap = this._hookMap
     const hook = hookMap[fnName] = hookMap[fnName] || {}
@@ -148,7 +152,8 @@ class Sequelize {
   createModel (modelName, schema, opt = {}) {
     ck.debug(`createModel`, modelName)
     opt = _.assign({
-      paranoid: true // 預設假刪除
+      paranoid: true, // 預設假刪除
+      freezeTableName: true, // table 名稱和 modelName 一樣
     }, opt)
     const model = this.connection.define(modelName, schema, opt)
     this._modelMap[modelName] = model
