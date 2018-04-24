@@ -25,7 +25,7 @@ class RequestSch {
         required: true
       },
       requestTime: {type: Date, required: true}, // request 的時間
-      responseTime: {type: Date, required: true}, // request 的時間
+      responseTime: {type: Date, required: true}, // response 的時間
       processMilliseconds: {type: Number, required: true}, // 處理 request 的毫秒數
       responseStatus: { // response 狀態
         type: String,
