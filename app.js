@@ -1,11 +1,10 @@
 const cupLength = require(`os`).cpus().length
 const cluster = require(`cluster`)
-const useCluster = true
 const CaroBack = require(`ck`)
 global._ = require(`caro`)
 global.ck = new CaroBack({isWriteLog: true})
 
-if (useCluster && cluster.isMaster && !process.env.TEST_MODE) {
+if (cluster.isMaster && process.env.CLUSTER === `true`) {
   ck.info(`master #${process.pid} is running`)
   for (let i = 0; i < Math.max(cupLength, 1); ++i) {
     ck.info(`Start fork worker [${i}]`)
