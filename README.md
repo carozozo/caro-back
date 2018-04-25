@@ -8,12 +8,12 @@
 │
 ├── app                                   # 專案開發內容
 │   ├── _controller                       # 提供 route 對應的功能實作
-│   ├── _data                             # 資料函式庫, 實做每個獨立 DB-Table 所需的邏輯處理, 繼承自 ck.SequelizeModel/ck.MongoModel...等
+│   ├── _data                             # 資料函式庫, 實作每個獨立 DB-Table 所需的邏輯處理, 繼承自 ck.SequelizeModel/ck.MongoModel...等
 │   ├── _fakeData                         # 產生假資料的函式庫, 用在開發時建立初始化的資料, 提供開發測試
 │   ├── _model                            # DB model 建立
 │   ├── _route                            # 定義 API 路徑, 只負責接收 request 和 response
 │   ├── _schema                           # DB 欄位定義
-│   └── _service                          # 由 controller 抽出來的單元/共用函式, 分擔其工作量以及可以實做更精確的單元測試
+│   └── _service                          # 由 controller 抽出來的單元/共用函式, 分擔其工作量以及可以實作更精確的單元測試
 │
 ├── boot                                  # 啟動各項服務, 例如 DB 連線, 啟動 API Server
 │
@@ -35,7 +35,7 @@
 │   ├── _library                          # test 通用函式庫
 │   ├── _support                          # test 專用函式庫
 │   ├── init                              # test 啟動時要載入的初始化項目
-│   ├── spec                              # 各類要測試的項目實做
+│   ├── spec                              # 各類要測試的項目實作
 │   └── app.js                            # `npm run test` 執行測試執行檔; `npm run test.doc` 執行測試和產生 api-document
 │
 ├── .eslintignore                         # es-lint 排除設定檔
@@ -88,3 +88,5 @@
 
 ## 一些五四三
 - 用 _ 開頭的資料夾, 代表是由 ck.autoRequire 自動載入的檔案
+- 執行 `TARGET=xxx FOLDER=xxx sample` 產生出來的範例就是基本的 code style
+- route 的 response 做了最大的簡化, 只有 suc/war/err 三種狀態
