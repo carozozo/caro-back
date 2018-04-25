@@ -25,7 +25,9 @@ class RequestSch {
         required: true
       },
       requestTime: {type: Date, required: true}, // request 的時間
+      requestArgs: {type: ck.mongoSchema.Mixed}, // request 傳送的參數
       responseTime: {type: Date, required: true}, // response 的時間
+      responseData: {type: ck.mongoSchema.Mixed}, // response 的資料
       processMilliseconds: {type: Number, required: true}, // 處理 request 的毫秒數
       responseStatus: { // response 狀態
         type: String,
@@ -36,7 +38,6 @@ class RequestSch {
         ],
         required: true
       },
-      responseMsg: {type: String}, // 回傳的訊息, responseStatus = suc 時不寫入
       userAgent: {type: Object, required: true}, // request 代理資訊
     }
     this.schema = ck.mongoSchema.createSchema(this.fields)

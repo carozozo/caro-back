@@ -1,16 +1,26 @@
 const bodyParser = require(`body-parser`)
 const userAgent = require(`express-useragent`)
-const transToInfo = (result) => {
-  if (_.isArray(result) && result.length) {
-    result = [result[0], `...`]
+
+// 簡化 response 資料 for log
+const contractResponse = (response) => {
+  const maxLength = 10
+  if (!_.isArray(response) || response.length <= maxLength) return response
+
+  const responseDataLength = response.length
+  const ret = []
+
+  for (let i = 0; i < maxLength; i++) {
+    ret.push(response[i])
   }
-  return result
+  ret.push(`... and ${responseDataLength - maxLength} more`)
+  return ret
 }
-const toString = (data) => {
-  if (_.isError(data)) return data.toString()
+const convertData = (data) => {
+  if (_.isError(data)) return data.message + data.stack
   return data
 }
-const writeRequestLog = async (req, opt) => {
+const writeRequestLog = async (req, param) => {
+  const args = req.args
   const requestTime = req.requestTime
   const username = _.get(req, `reqUser.$data.username`)
   const userRole = _.get(req, `reqUser.$data.role`)
@@ -19,9 +29,9 @@ const writeRequestLog = async (req, opt) => {
     req.socket.remoteAddress ||
     req.connection.socket.remoteAddress
 
-  const responseTime = opt.responseTime
-  const responseStatus = opt.responseStatus
-  const responseMsg = opt.responseMsg
+  const responseTime = param.responseTime
+  const responseStatus = param.responseStatus
+  const responseData = param.responseData
 
   const processMilliseconds = new Date(responseTime) - new Date(requestTime)
 
@@ -33,10 +43,11 @@ const writeRequestLog = async (req, opt) => {
     path: req.path,
     method: req.method,
     requestTime,
+    requestArgs: args,
     responseTime,
+    responseData,
     processMilliseconds,
     responseStatus,
-    responseMsg,
     userAgent: req.useragent,
   })
 }
@@ -54,52 +65,36 @@ ck.api.use(bodyParser.urlencoded({extended: false}))
     next()
   })
   .use(async (req, res, next) => {
-    const method = req.method
-    const path = req.originalUrl
+    const doResponse = (status, ret) => {
+      const method = req.method
+      const path = req.originalUrl
+      const msg = contractResponse(ret)
+
+      ck.logger.log(`[${method}] ${path} response ${status}=`, msg)
+      ret = convertData(ret)
+
+      writeRequestLog(req, {
+        responseTime: new Date(),
+        responseStatus: status,
+        responseData: msg
+      })
+
+      res.json({
+        [status]: ret
+      })
+    }
 
     // 設置開始 request 時間
     req.requestTime = new Date()
 
     res.suc = (ret) => {
-      ck.logger.log(`[${method}] ${path} response=`, transToInfo(ret))
-      const msg = toString(ret)
-
-      writeRequestLog(req, {
-        responseTime: new Date(),
-        responseStatus: `suc`
-      })
-
-      res.json({
-        suc: msg
-      })
+      doResponse(`suc`, ret)
     }
     res.err = (ret) => {
-      ck.logger.err(`[${method}] ${path} response error=`, transToInfo(ret))
-      const msg = toString(ret)
-
-      writeRequestLog(req, {
-        responseTime: new Date(),
-        responseStatus: `err`,
-        responseMsg: msg
-      })
-
-      res.json({
-        err: msg
-      })
+      doResponse(`err`, ret)
     }
     res.war = (ret) => {
-      ck.logger.err(`[${method}] ${path} response warning=`, transToInfo(ret))
-      const msg = toString(ret)
-
-      writeRequestLog(req, {
-        responseTime: new Date(),
-        responseStatus: `war`,
-        responseMsg: msg
-      })
-
-      res.json({
-        war: msg
-      })
+      doResponse(`war`, ret)
     }
     next()
   })
