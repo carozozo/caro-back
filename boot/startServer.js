@@ -1,6 +1,5 @@
 ck.boot.regStack(async () => {
   const start = async (port) => {
-    ck.debug(`port`, port)
     try {
       ck.logger.log(`準備啟動伺服器, port:`, port)
       await ck.api.listen(port)

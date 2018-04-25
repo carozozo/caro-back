@@ -2,7 +2,7 @@ const cupLength = require(`os`).cpus().length
 const cluster = require(`cluster`)
 const CaroBack = require(`ck`)
 global._ = require(`caro`)
-global.ck = new CaroBack({isWriteLog: true})
+global.ck = new CaroBack()
 
 if (cluster.isMaster && process.env.CLUSTER === `true`) {
   ck.logger.log(`master #${process.pid} is running`)

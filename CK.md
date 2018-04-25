@@ -11,26 +11,6 @@ opt.logDir {String} .log 所在資料夾路徑, 預設 ./logs
 
 ## 函式基本介紹
 
-### console.log 強化版 - 會寫入當下時間及檔案位置
-```
-ck.ifWriteLog(Boolean) - 需置是否要寫入 log
-```
-```
-ck.debug(...) - 不顯示在 console, 只寫入 debug.log
-```
-```
-ck.info(...) - 只顯示在 console, 不寫入 log
-```
-```
-ck.err(...) - console.error 加強版, 顯示在 console 和寫入 error.log
-```
-```
-ck.log(...) - console.log 加強版, 顯示在 console 和寫入 log.log
-```
-```
-ck.trace(...) - console.trace 加強版, 顯示在 console 和寫入 trace.log
-```
-
 ### lazy-require 自動化載入
 ```
 ck.require(path, opt) - 類似 node require, 載入後會自動掛載到 ck 底下;

@@ -1,6 +1,6 @@
 const CaroBack = require(`ck`)
 global._ = require(`caro`)
-global.ck = new CaroBack({isWriteLog: true})
+global.ck = new CaroBack()
 
 require(`init`)
 require(`boot`)
