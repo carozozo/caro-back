@@ -2,8 +2,7 @@ const bodyParser = require(`body-parser`)
 const userAgent = require(`express-useragent`)
 const transToInfo = (result) => {
   if (_.isArray(result) && result.length) {
-    const ret = result.slice(0, 1)
-    return _.replaceLast(JSON.stringify(ret, null, 2), `]`, `  ...\n]`)
+    result = [result[0], `...`]
   }
   return result
 }
