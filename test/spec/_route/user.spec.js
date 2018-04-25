@@ -56,7 +56,7 @@ describe(groupPath, () => {
       errArr.push(result)
     })()
 
-    ck.outputResultDoc({
+    ck.apiDoc.outputResultDoc({
       version,
       api: {
         title: `註冊用戶`,
@@ -113,7 +113,7 @@ describe(groupPath, () => {
       errArr.push(result)
     })()
 
-    ck.outputResultDoc({
+    ck.apiDoc.outputResultDoc({
       version,
       api: {
         title: `用戶登入`,
@@ -151,7 +151,7 @@ describe(groupPath, () => {
       errArr.push(result)
     })()
 
-    ck.outputResultDoc({
+    ck.apiDoc.outputResultDoc({
       version,
       api: {
         title: `用戶登出`,
@@ -187,7 +187,7 @@ describe(groupPath, () => {
       errArr.push(result)
     })()
 
-    ck.outputResultDoc({
+    ck.apiDoc.outputResultDoc({
       version,
       api: {
         title: `用 id 更新用戶資料`,
@@ -228,7 +228,7 @@ describe(groupPath, () => {
       errArr.push(result)
     })()
 
-    ck.outputResultDoc({
+    ck.apiDoc.outputResultDoc({
       version,
       api: {
         title: `用 id 取得用戶資料`,
@@ -269,7 +269,7 @@ describe(groupPath, () => {
       errArr.push(result)
     })()
 
-    ck.outputResultDoc({
+    ck.apiDoc.outputResultDoc({
       version,
       api: {
         title: `取得用戶列表`,
