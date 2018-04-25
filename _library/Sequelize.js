@@ -101,7 +101,6 @@ class Sequelize {
   }
 
   disconnect () {
-    ck.debug(`disconnect`)
     this._connection.close()
   }
 
@@ -114,7 +113,6 @@ class Sequelize {
       const excludes = opt.excludes || []
       for (const modelName in map) {
         if (!modelMap.hasOwnProperty(modelName)) continue
-        ck.debug(`dropTables`, modelName)
         const model = map[modelName]
         try {
           if (!_.includes(excludes, modelName)) {
@@ -127,7 +125,6 @@ class Sequelize {
           index++
         } catch (e) {
           if (++failedCount > 100) {
-            ck.err(`清除 table ${modelName} 失敗`)
             throw e
           }
           // 如果是因為 foreign 存在而無法刪除, 先記錄在 foreignFailedMap 之後再執行刪除
@@ -150,7 +147,6 @@ class Sequelize {
   }
 
   createModel (modelName, schema, opt = {}) {
-    ck.debug(`createModel`, modelName)
     opt = _.assign({
       paranoid: true, // 預設假刪除
       freezeTableName: true, // table 名稱和 modelName 一樣

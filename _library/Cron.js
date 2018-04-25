@@ -54,7 +54,8 @@ class Cron {
           argsForResultCb.unshift(result)
           await this._runHooks(this._aftTaskRunHooks, argsForResultCb)
         } catch (e) {
-          ck.err(e)
+          console.error(e)
+          isRunning = false
         }
         isRunning = false
       }

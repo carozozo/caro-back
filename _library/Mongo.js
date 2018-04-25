@@ -68,7 +68,6 @@ class Mongo {
   }
 
   disconnect () {
-    ck.debug(`disconnect`)
     this._connection.close()
   }
 
@@ -87,7 +86,6 @@ class Mongo {
         const p = new Promise((resolve) => {
           const i = Number(index)
           const modelName = modelNames[i]
-          ck.debug(`dropCollections`, modelName)
           if (!_.includes(excludes, modelName)) {
             models[modelName].remove({}, () => {
               this._triggerByOn(`dropCollectionsEach`, [modelName, i])
@@ -108,7 +106,6 @@ class Mongo {
   }
 
   createModel (modelName, schema) {
-    ck.debug(`createModel`, modelName)
     return this.connection.model(modelName, schema, modelName)
   }
 }

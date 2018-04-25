@@ -16,11 +16,7 @@ class Stacker {
     const hook = this._getHook(fnName)
     const fns = hook[triggerMethod]
     for (const fn of fns) {
-      try {
-        await fn.apply(this, args)
-      } catch (e) {
-        ck.err(e)
-      }
+      await fn.apply(this, args)
     }
   }
 
@@ -41,11 +37,7 @@ class Stacker {
   async runStacks () {
     const _fns = this._fns
     for (const fn of _fns) {
-      try {
-        await fn()
-      } catch (e) {
-        ck.err(e)
-      }
+      await fn()
     }
     this._triggerByOn(`runStacks`)
   }
