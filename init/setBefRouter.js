@@ -51,7 +51,7 @@ ck.api.use(bodyParser.urlencoded({extended: false}))
     if (reqPath.startsWith(ck.API_DOC_ROUTE_PATH)) return next()
     // 取得所有 req 變數
     req.args = _.assign(req.params, req.body, req.query)
-    ck.log(`[${req.method}] ${reqPath} request=`, req.args)
+    ck.logger.log(`[${req.method}] ${reqPath} request=`, req.args)
     next()
   })
   .use(async (req, res, next) => {
@@ -62,7 +62,7 @@ ck.api.use(bodyParser.urlencoded({extended: false}))
     req.requestTime = new Date()
 
     res.suc = (ret) => {
-      ck.log(`[${method}] ${path} response=`, transToInfo(ret))
+      ck.logger.log(`[${method}] ${path} response=`, transToInfo(ret))
       const msg = toString(ret)
 
       writeRequestLog(req, {

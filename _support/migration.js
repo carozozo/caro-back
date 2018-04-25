@@ -12,7 +12,7 @@ class Migration extends ck.Stacker {
       const description = obj.description
       const fn = obj.fn
       try {
-        ck.log(`\n[${Number(key) + 1}] - ${description}\nresult=`, await fn())
+        ck.logger.log(`\n[${Number(key) + 1}] - ${description}\nresult=`, await fn())
       } catch (e) {
         ck.err(e)
       }

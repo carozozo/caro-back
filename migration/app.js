@@ -10,12 +10,12 @@ require(`boot/connectDb`)
 ck.boot.on(`runStacks`, async () => {
   const target = process.env.TARGET || ck.APP_VERSION
   try {
-    ck.info(`==========================================`)
-    ck.info(`準備載入 migration ${target}`)
+    ck.logger.log(`==========================================`)
+    ck.logger.log(`準備載入 migration ${target}`)
     ck.autoRequire(`${__dirname}/${target}`)
     await ck.migration.runStacks()
-    ck.info(`migrate 完畢`)
-    ck.info(`==========================================`)
+    ck.logger.log(`migrate 完畢`)
+    ck.logger.log(`==========================================`)
     process.exit()
   } catch (e) {
     ck.err(`migrate 發生錯誤:`, e)
