@@ -41,6 +41,7 @@ class Config {
       database: `${process.env.LOG_DB_DATABASE}${process.env.TEST_MODE ? `-test` : ``}`,
       excludes: [ // 不想被清空的 collection
         `Request`,
+        `Logger`,
       ],
     }
   }
