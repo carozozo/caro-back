@@ -14,7 +14,7 @@ class Migration extends ck.Stacker {
       try {
         ck.logger.log(`\n[${Number(key) + 1}] - ${description}\nresult=`, await fn())
       } catch (e) {
-        ck.err(e)
+        ck.logger.err(e)
       }
     }
     this._triggerByOn(`runStacks`)

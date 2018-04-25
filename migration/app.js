@@ -18,7 +18,7 @@ ck.boot.on(`runStacks`, async () => {
     ck.logger.log(`==========================================`)
     process.exit()
   } catch (e) {
-    ck.err(`migrate 發生錯誤:`, e)
+    ck.logger.err(`migrate 發生錯誤:`, e)
     process.exit(1)
   }
 }).runStacks()

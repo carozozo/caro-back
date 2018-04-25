@@ -18,7 +18,7 @@ assert.shouldGotErr = async (fn) => {
     err = e
   }
   if (!err) throw Error(`should got error but not`)
-  ck.err(`got error:`, (err.toString && err.toString()) || err)
+  ck.logger.err(`got error:`, (err.toString && err.toString()) || err)
 }
 
 assert.apiSuc = (response) => {

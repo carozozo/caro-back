@@ -75,7 +75,7 @@ ck.api.use(bodyParser.urlencoded({extended: false}))
       })
     }
     res.err = (ret) => {
-      ck.err(`[${method}] ${path} response error=`, transToInfo(ret))
+      ck.logger.err(`[${method}] ${path} response error=`, transToInfo(ret))
       const msg = toString(ret)
 
       writeRequestLog(req, {
@@ -89,7 +89,7 @@ ck.api.use(bodyParser.urlencoded({extended: false}))
       })
     }
     res.war = (ret) => {
-      ck.err(`[${method}] ${path} response warning=`, transToInfo(ret))
+      ck.logger.err(`[${method}] ${path} response warning=`, transToInfo(ret))
       const msg = toString(ret)
 
       writeRequestLog(req, {
