@@ -3,10 +3,7 @@
 ## 使用方式
 ```
 const CaroBack = require(`ck`)
-global.ck = new CaroBack(opt)
-
-opt.isWriteLog {Boolean} 是否要寫入 .log 檔案
-opt.logDir {String} .log 所在資料夾路徑, 預設 ./logs
+global.ck = new CaroBack()
 ```
 
 ## 函式基本介紹
