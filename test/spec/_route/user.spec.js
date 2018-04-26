@@ -76,7 +76,6 @@ describe(groupPath, () => {
         {type: `string`, field: `profileData.email`, desc: `email`},
         {type: `string`, field: `profileData.phone`, desc: `電話`}
       ],
-      use: ck.COMMON_USE
     }, sucArr, errArr)
   })
   it(`login`, async () => {
@@ -127,7 +126,7 @@ describe(groupPath, () => {
         {type: `string`, field: `data.username`, desc: `帳號`},
         {type: `string`, field: `data.pwd`, desc: `密碼`}
       ],
-      use: ck.COMMON_USE
+      use: ck.apiDoc.commonUse
     }, sucArr, errArr)
   })
   it(`logout`, async () => {
@@ -161,7 +160,7 @@ describe(groupPath, () => {
       name,
       group,
       param: [],
-      use: ck.COMMON_USE
+      use: ck.apiDoc.commonUse
     }, sucArr, errArr)
   })
   it(`updateById`, async () => {
@@ -199,7 +198,7 @@ describe(groupPath, () => {
       param: [
         {type: `id`, field: `id`, desc: `用戶 id`}
       ],
-      use: ck.COMMON_USE
+      use: ck.apiDoc.commonUse
     }, sucArr, errArr)
   })
   it(`getById`, async () => {
@@ -241,10 +240,10 @@ describe(groupPath, () => {
       param: [
         {type: `id`, field: `id`, desc: `用戶 id`}
       ],
-      use: ck.COMMON_USE
+      use: ck.apiDoc.commonUse
     }, sucArr, errArr)
   })
-  it.only(`getList`, async () => {
+  it(`getList`, async () => {
     const name = `getList`
     const path = `${groupPath}/${name}`
     const query = {offset: 0, limit: 2}
@@ -282,7 +281,7 @@ describe(groupPath, () => {
       param: [
         {type: `id`, field: `id`, desc: `用戶 id`}
       ],
-      use: ck.COMMON_USE
+      use: ck.apiDoc.commonUse
     }, sucArr, errArr)
   })
 })

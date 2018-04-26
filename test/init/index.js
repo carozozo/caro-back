@@ -1,4 +1,3 @@
-require(`./setVariable`)
 // 客製化 test functions
 require(`./customMocha`)
 require(`./customAssert`)

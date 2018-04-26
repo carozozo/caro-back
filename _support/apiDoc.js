@@ -1,5 +1,9 @@
 /* 提供執行 api document 建置 */
 class ApiDoc extends ck.ApiDoc {
+  get commonUse () {
+    return [`authHeader`]
+  }
+
   outputApi (opt = {}) {
     // 額外支援參數 roles => @apiDescription 會顯示限制的 user 權限
     const roles = opt.roles

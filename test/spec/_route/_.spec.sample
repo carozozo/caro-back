@@ -34,7 +34,7 @@ describe.skip(groupPath, () => {
       param: [
         {type: `string`, field: `sample`, desc: ``},
       ],
-      use: ck.COMMON_USE,
+      use: ck.apiDoc.commonUse,
     }, sucArr, errArr)
   })
   it(`getSample`, async () => {
@@ -70,7 +70,7 @@ describe.skip(groupPath, () => {
       param: [
         {type: `string`, field: `sample`, desc: ``},
       ],
-      use: ck.COMMON_USE,
+      use: ck.apiDoc.commonUse,
     }, sucArr, errArr)
   })
 })

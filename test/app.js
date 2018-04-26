@@ -1,4 +1,6 @@
 const CaroBack = require(`ck`)
+
+global.assert = require(`chai`).assert
 global._ = require(`caro`)
 global.ck = new CaroBack()
 
