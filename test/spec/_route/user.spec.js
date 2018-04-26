@@ -15,45 +15,45 @@ describe(groupPath, () => {
       const data = ck.userFak.genCreate({username: usernameForSuc})
       const profileData = ck.profileFak.genCreate({name: data.username})
       const body = {data, profileData, authMethod}
-      const result = await ck.poster.post(path, body)
-      assert.apiSuc(result)
-      sucArr.push(result)
+      const response = await ck.poster.post(path, body)
+      assert.apiSuc(response)
+      sucArr.push(response)
     })()
     // 重複註冊
     await (async () => {
       const data = ck.userFak.genCreate({username: usernameForSuc})
       const profileData = ck.profileFak.genCreate({name: data.username})
       const body = {data, profileData, authMethod}
-      const result = await ck.poster.post(path, body)
-      assert.apiWar(result)
-      errArr.push(result)
+      const response = await ck.poster.post(path, body)
+      assert.apiWar(response)
+      errArr.push(response)
     })()
     // 沒有輸入帳號
     await (async () => {
       const data = ck.userFak.genCreate({username: undefined})
       const profileData = ck.profileFak.genCreate({name: data.username})
       const body = {data, profileData, authMethod}
-      const result = await ck.poster.post(path, body)
-      assert.apiWar(result)
-      errArr.push(result)
+      const response = await ck.poster.post(path, body)
+      assert.apiWar(response)
+      errArr.push(response)
     })()
     // 沒有輸入密碼
     await (async () => {
       const data = ck.userFak.genCreate({pwd: undefined})
       const profileData = ck.profileFak.genCreate({name: data.username})
       const body = {data, profileData, authMethod}
-      const result = await ck.poster.post(path, body)
-      assert.apiWar(result)
-      errArr.push(result)
+      const response = await ck.poster.post(path, body)
+      assert.apiWar(response)
+      errArr.push(response)
     })()
     // 基本資料沒有 email
     await (async () => {
       const data = ck.userFak.genCreate({username: `noEmailUser`})
       const profileData = ck.profileFak.genCreate({name: data.username, email: undefined})
       const body = {data, profileData, authMethod}
-      const result = await ck.poster.post(path, body)
-      assert.apiWar(result)
-      errArr.push(result)
+      const response = await ck.poster.post(path, body)
+      assert.apiWar(response)
+      errArr.push(response)
     })()
 
     ck.apiDoc.outputResultDoc({
@@ -87,30 +87,30 @@ describe(groupPath, () => {
 
     await (async () => {
       const body = {username: `adminTest`, pwd: `adminTest`}
-      const result = await ck.poster.post(path, body)
-      assert.apiSuc(result)
-      sucArr.push(result)
+      const response = await ck.poster.post(path, body)
+      assert.apiSuc(response)
+      sucArr.push(response)
     })()
     // 帳號不存在
     await (async () => {
       const body = {username: `notExists`, pwd: `notExists`}
-      const result = await ck.poster.post(path, body)
-      assert.apiWar(result)
-      errArr.push(result)
+      const response = await ck.poster.post(path, body)
+      assert.apiWar(response)
+      errArr.push(response)
     })()
     // 沒輸入密碼
     await (async () => {
       const body = {username: `adminTest`, pwd: ``}
-      const result = await ck.poster.post(path, body)
-      assert.apiWar(result)
-      errArr.push(result)
+      const response = await ck.poster.post(path, body)
+      assert.apiWar(response)
+      errArr.push(response)
     })()
     // 密碼錯誤
     await (async () => {
       const body = {username: `adminTest`, pwd: `wrongPwd`}
-      const result = await ck.poster.post(path, body)
-      assert.apiWar(result)
-      errArr.push(result)
+      const response = await ck.poster.post(path, body)
+      assert.apiWar(response)
+      errArr.push(response)
     })()
 
     ck.apiDoc.outputResultDoc({
@@ -139,16 +139,16 @@ describe(groupPath, () => {
     await (async () => {
       const body = {}
       // 取得最後一個 customer 測試帳號用來登出
-      const result = await ck.poster.post(path, body, `customer`, {roleIndex: ck.tester.roleAmount - 1})
-      assert.apiSuc(result)
-      sucArr.push(result)
+      const response = await ck.poster.post(path, body, `customer`, {roleIndex: ck.tester.roleAmount - 1})
+      assert.apiSuc(response)
+      sucArr.push(response)
     })()
     // 沒有訪問權限
     await (async () => {
       const body = {}
-      const result = await ck.poster.post(path, body)
-      assert.apiWar(result)
-      errArr.push(result)
+      const response = await ck.poster.post(path, body)
+      assert.apiWar(response)
+      errArr.push(response)
     })()
 
     ck.apiDoc.outputResultDoc({
@@ -174,17 +174,17 @@ describe(groupPath, () => {
     await (async () => {
       const customer = await ck.tester.getTester()
       const body = {id: customer.id, data}
-      const result = await ck.poster.post(path, body, `customer`)
-      assert.apiSuc(result)
-      sucArr.push(result)
+      const response = await ck.poster.post(path, body, `customer`)
+      assert.apiSuc(response)
+      sucArr.push(response)
     })()
     // customer 無法更新別人的資料
     await (async () => {
       const stuff = await ck.tester.getTester(`stuff`)
       const body = {id: stuff.id, data}
-      const result = await ck.poster.post(path, body, `customer`)
-      assert.apiWar(result)
-      errArr.push(result)
+      const response = await ck.poster.post(path, body, `customer`)
+      assert.apiWar(response)
+      errArr.push(response)
     })()
 
     ck.apiDoc.outputResultDoc({
@@ -213,19 +213,19 @@ describe(groupPath, () => {
 
     await (async () => {
       for (const role of [`stuff`, `manager`, `admin`]) {
-        const result = await ck.poster.get(queryPath, role)
-        assert.apiSuc(result)
+        const response = await ck.poster.get(queryPath, role)
+        assert.apiSuc(response)
         if (!sucArr.gotResult) {
           sucArr.gotResult = true
-          sucArr.push(result)
+          sucArr.push(response)
         }
       }
     })()
     // customer 無法權限
     await (async () => {
-      const result = await ck.poster.get(queryPath, `customer`)
-      assert.apiWar(result)
-      errArr.push(result)
+      const response = await ck.poster.get(queryPath, `customer`)
+      assert.apiWar(response)
+      errArr.push(response)
     })()
 
     ck.apiDoc.outputResultDoc({
@@ -244,29 +244,29 @@ describe(groupPath, () => {
       use: ck.COMMON_USE
     }, sucArr, errArr)
   })
-  it(`getList`, async () => {
+  it.only(`getList`, async () => {
     const name = `getList`
     const path = `${groupPath}/${name}`
-    const query = {}
+    const query = {offset: 0, limit: 2}
     const queryPath = _.serializeUrl(path, query)
     const sucArr = []
     const errArr = []
 
     await (async () => {
       for (const role of [`stuff`, `manager`, `admin`]) {
-        const result = await ck.poster.get(queryPath, role)
-        assert.apiSuc(result)
+        const response = await ck.poster.get(queryPath, role)
+        assert.apiSuc(response)
         if (!sucArr.gotResult) {
           sucArr.gotResult = true
-          sucArr.push(result)
+          sucArr.push(response)
         }
       }
     })()
     // customer 權限不足
     await (async () => {
-      const result = await ck.poster.get(queryPath, `customer`)
-      assert.apiWar(result)
-      errArr.push(result)
+      const response = await ck.poster.get(queryPath, `customer`)
+      assert.apiWar(response)
+      errArr.push(response)
     })()
 
     ck.apiDoc.outputResultDoc({
