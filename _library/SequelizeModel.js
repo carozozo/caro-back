@@ -7,6 +7,8 @@ class SequelizeModel {
 
   _genWhereForOpt (where = {}, opt = {}) {
     opt.where = where
+    if (opt.offset) opt.offset = parseInt(opt.offset, 10)
+    if (opt.limit) opt.limit = parseInt(opt.limit, 10)
     return opt
   }
 
