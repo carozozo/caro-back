@@ -87,6 +87,6 @@
 - `test.doc` 執行 Unit-Test 並且建立 API DOC 文件
 
 ## 一些五四三
-- 用 _ 開頭的資料夾, 代表是由 ck.autoRequire 自動載入的檔案
+- 用 _ 開頭的資料夾, 代表是由 ck.requireDir 自動載入的檔案
 - 執行 `TARGET=xxx FOLDER=xxx sample` 產生出來的範例就是基本的 code style
 - route 的 response 做了最大的簡化, 只有 suc/war/err 三種狀態

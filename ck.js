@@ -58,7 +58,7 @@ class CaroBack {
     }
   }
 
-  autoRequire (fileOrDirPath, opt) {
+  requireDir (fileOrDirPath, opt) {
     const fs = require(`fs`)
     const path = require(`path`)
     let fileCount = 0

@@ -1,1 +1,1 @@
-ck.autoRequire(`${ck.APP_PATH}/_route`)
+ck.requireDir(`${ck.APP_PATH}/_route`)

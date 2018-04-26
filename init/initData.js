@@ -46,7 +46,7 @@ ck.boot.on(`runStacks`, async () => {
 
   // 建立假資料
   ck.logger.log(`${dbMSg} 開始建立假資料`)
-  ck.autoRequire(`${__dirname}/_initData`, {skip: true})
+  ck.requireDir(`${__dirname}/_initData`, {skip: true})
   ck.logger.log(`${dbMSg} 假資料建立完畢`)
 
   // 建立測試帳號

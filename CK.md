@@ -27,7 +27,7 @@ ck.demo.fn1()
 ck.demo.fn2()
 ```
 ```
-ck.autoRequire(path, opt) - ck.require 強化版, 當 path 是資料夾時, 會自動掛載底下所有的 js 檔案
+ck.requireDir(path, opt) - ck.require 強化版, 當 path 是資料夾時, 會自動掛載底下所有的 js 檔案
 opt.skip {Boolean} 載入時是否掛載到 ck 底下, 預設 true
 
 e.g.
@@ -46,7 +46,7 @@ module.exports = {
 }
 
 app.js -
-ck.autoRequire(`sampleDir`)
+ck.requireDir(`sampleDir`)
 ck.a.fn1()
 ck.a.fn1()
 ck.b.fn3()
