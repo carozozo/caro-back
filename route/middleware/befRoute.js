@@ -70,7 +70,9 @@ ck.api.befRoute(bodyParser.urlencoded({extended: false}))
       const path = req.originalUrl
       const msg = contractResponse(ret)
 
-      ck.logger.log(`[${method}] ${path} response ${status}=`, msg)
+      const loggerMethod = status === `suc` ? `log` : `err`
+      ck.logger[loggerMethod](`[${method}] ${path} response ${status}=`, msg)
+
       ret = convertData(ret)
 
       writeRequestLog(req, {
