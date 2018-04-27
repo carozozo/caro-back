@@ -20,6 +20,7 @@ if (cluster.isMaster && process.env.CLUSTER === `true`) {
   })
 } else {
   ck.requireDir(`module`)
+  ck.requireDir(`route`)
   require(`init`)
   require(`boot`)
 }

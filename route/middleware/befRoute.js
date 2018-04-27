@@ -52,11 +52,11 @@ const writeRequestLog = async (req, param) => {
   })
 }
 
-ck.api.use(bodyParser.urlencoded({extended: false}))
-  .use(bodyParser.json())
-  .use(userAgent.express())
-  .use(ck.auth.init())
-  .use((req, res, next) => {
+ck.api.befRoute(bodyParser.urlencoded({extended: false}))
+  .befRoute(bodyParser.json())
+  .befRoute(userAgent.express())
+  .befRoute(ck.auth.init())
+  .befRoute((req, res, next) => {
     const reqPath = req.originalUrl
     if (reqPath.startsWith(`/apidoc`)) return next()
     // 取得所有 req 變數
@@ -64,7 +64,7 @@ ck.api.use(bodyParser.urlencoded({extended: false}))
     ck.logger.log(`[${req.method}] ${reqPath} request=`, req.args)
     next()
   })
-  .use(async (req, res, next) => {
+  .befRoute(async (req, res, next) => {
     const doResponse = (status, ret) => {
       const method = req.method
       const path = req.originalUrl

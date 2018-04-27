@@ -6,6 +6,9 @@ class Api {
     this.express = express
     this.app = express()
     this._hookMap = {}
+    this._befRoutes = []
+    this._onRoutes = []
+    this._aftRoutes = []
   }
 
   _getHook (fnName) {
@@ -38,18 +41,33 @@ class Api {
     return this
   }
 
-  use (...args) {
-    this.app.use.apply(this.app, args)
+  befRoute (...args) {
+    this._befRoutes.push(() => {
+      this.app.use.apply(this.app, args)
+    })
+    return this
+  }
+
+  aftRoute (...args) {
+    this._aftRoutes.push(() => {
+      this.app.use.apply(this.app, args)
+    })
     return this
   }
 
   createRouter (path = ``) {
     const router = this.express.Router()
-    this.app.use(path, router)
+    this._onRoutes.push(() => {
+      this.app.use(path, router)
+    })
     return router
   }
 
   listen (port = 80) {
+    _.forEach(this._befRoutes, (fn) => fn())
+    _.forEach(this._onRoutes, (fn) => fn())
+    _.forEach(this._aftRoutes, (fn) => fn())
+
     return new Promise((resolve, reject) => {
       let server = this.app.listen(port, () => {
         this.port = port

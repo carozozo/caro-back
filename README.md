@@ -62,8 +62,10 @@
 
 ## Server 啟動基本流程
 - app.js 啟動
-- init 執行基本設置/載入module/router設定... 等初始化項目
-- boot 執行 DB 連線/啟動 API server... 等啟動項目
+- 載入 module - 各種函式庫 and 功能實作
+- 載入 init 初始化項目
+- 載入 route - API 對外窗口
+- 載入 boot 執行 DB 連線/啟動 API server... 等啟動項目
 
 ## 包含 app.js 的 Server 主要分類
 - root
