@@ -50,4 +50,4 @@ class ApiDoc extends ck.ApiDoc {
   }
 }
 
-module.exports = new ApiDoc(`${ck.PROJECT_PATH}/docs`, `defineDoc.js`, !process.env.DOC)
+module.exports = new ApiDoc(`${process.env.PWD}/docs`, `defineDoc.js`, !process.env.DOC)

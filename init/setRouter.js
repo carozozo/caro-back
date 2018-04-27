@@ -1,1 +1,1 @@
-ck.requireDir(`${ck.APP_PATH}/_route`)
+ck.requireDir(`app/_route`)

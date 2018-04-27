@@ -27,7 +27,7 @@ docRouter.get(`${ck.API_DOC_ROUTE_PATH}/*`, ck.api.genRouteFn(async (req, res) =
   }
 
   const reqPath = req.path
-  res.sendFile(`${ck.VIEW_PATH}${reqPath}`)
+  res.sendFile(`${process.env.PWD}/public${reqPath}`)
 }))
 
 const group = ``
