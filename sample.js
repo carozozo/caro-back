@@ -82,15 +82,16 @@ const getSampleFile = (fileOrDir) => {
 }
 
 if (!sampleType) {
-  getSampleFile(`app`)
+  getSampleFile(`_route`)
+  getSampleFile(`module`)
   getSampleFile(`test/spec`)
   return
 }
 
 if (sampleType === `route`) {
-  getSampleFile(`app/_route`)
-  getSampleFile(`app/_controller`)
-  getSampleFile(`app/_service`)
+  getSampleFile(`_route`)
+  getSampleFile(`module/_controller`)
+  getSampleFile(`module/_service`)
   getSampleFile(`test/spec/_route`)
   getSampleFile(`test/spec/_controller`)
   getSampleFile(`test/spec/_service`)
@@ -98,8 +99,8 @@ if (sampleType === `route`) {
 }
 
 if (sampleType === `model`) {
-  getSampleFile(`app/_schema`)
-  getSampleFile(`app/_model`)
+  getSampleFile(`module/_schema`)
+  getSampleFile(`module/_model`)
   getSampleFile(`test/spec/_model`)
   return
 }
