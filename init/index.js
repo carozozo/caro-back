@@ -1,5 +1,4 @@
 // 基本設置
-require(`${__dirname}/setVariable`)
 require(`${__dirname}/setConfig`)
 // 載入 app module
 require(`${__dirname}/setModule`)
