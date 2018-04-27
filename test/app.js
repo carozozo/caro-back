@@ -7,15 +7,13 @@ global.ck = new CaroBack()
 ck.requireDir(`module`)
 ck.requireDir(`route`)
 ck.requireDir(`boot`)
-require(`./init`)
-
-ck.boot.runStacks()
+ck.requireDir(`./init`, {skip: true})
 
 before(function (done) {
   ck.boot.on(`runStacks`, () => {
     ck.poster.setApiUrl(`http://localhost:${ck.api.port}`)
     done()
-  })
+  }).runStacks()
 })
 
 after(function () {
