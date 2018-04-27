@@ -7,8 +7,10 @@ global.ck = new CaroBack()
 ck.requireDir(`module`)
 ck.requireDir(`route`)
 require(`init`)
-require(`boot`)
+ck.requireDir(`boot`)
 require(`./init`)
+
+ck.boot.runStacks()
 
 before(function (done) {
   ck.boot.on(`runStacks`, () => {
