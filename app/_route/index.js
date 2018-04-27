@@ -1,6 +1,6 @@
 const docRouter = ck.api.createRouter(`/`)
 
-docRouter.get(`${ck.API_DOC_ROUTE_PATH}/*`, ck.genRouteFn(async (req, res) => {
+docRouter.get(`${ck.API_DOC_ROUTE_PATH}/*`, ck.api.genRouteFn(async (req, res) => {
   const authorization = req.headers.authorization
   const returnDeined = () => {
     res.statusCode = 401
@@ -34,7 +34,7 @@ const group = ``
 const groupPath = ck.api.getGroupPath(group)
 const router = ck.api.createRouter(groupPath)
 
-router.post(`/batchRequest`, ck.genRouteFn(async (req, res) => {
+router.post(`/batchRequest`, ck.api.genRouteFn(async (req, res) => {
   const protocol = req.protocol
   const host = req.headers.host
   const request = new ck.RequestPromise(`${protocol}://${host}`)

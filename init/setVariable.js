@@ -16,12 +16,3 @@ ck.runAsync = async (fn) => {
     ck.logger.err(e)
   }
 }
-ck.genRouteFn = (genFn) => {
-  return async (req, res, next) => {
-    try {
-      await genFn(req, res, next)
-    } catch (e) {
-      next(e)
-    }
-  }
-}

@@ -3,6 +3,16 @@ class Api extends ck.Api {
   getGroupPath (group, version = ck.APP_VERSION) {
     return `/api/v${version}/${group}`
   }
+
+  genRouteFn (genFn) {
+    return async (req, res, next) => {
+      try {
+        await genFn(req, res, next)
+      } catch (e) {
+        next(e)
+      }
+    }
+  }
 }
 
 module.exports = new Api()
