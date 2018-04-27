@@ -53,7 +53,7 @@ class CaroBack {
       }
       else require(p)
     } catch (e) {
-      if (++this.require.count > 100) throw Error(`載入 ${p} 失敗`, e)
+      if (++this.require.count > 100) throw Error(`載入 ${p} 失敗 - ${e}`)
       setTimeout(() => this.require(p), 1)
     }
   }
