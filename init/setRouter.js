@@ -1,1 +1,1 @@
-ck.requireDir(`_route`)
+ck.requireDir(`route`)

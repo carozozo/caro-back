@@ -22,7 +22,8 @@ after(function () {
 })
 
 const specPath = `test/spec`
-ck.requireDir(`${specPath}/_library`, {skip: true})
-ck.requireDir(`${specPath}/_controller`, {skip: true})
-ck.requireDir(`${specPath}/_service`, {skip: true})
-ck.requireDir(`${specPath}/_route`, {skip: true})
+ck.requireDir(`${specPath}/library`, {skip: true})
+ck.requireDir(`${specPath}/model`, {skip: true})
+ck.requireDir(`${specPath}/controller`, {skip: true})
+ck.requireDir(`${specPath}/service`, {skip: true})
+ck.requireDir(`${specPath}/route`, {skip: true})
