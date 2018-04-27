@@ -26,11 +26,30 @@ class Logger {
 
   // 取得呼叫的路徑
   _getLogCallerPath () {
-    const stackList = new Error().stack.split(`\n`).splice(5) // 前 5 個是 Logger 自己呼叫
-    // stackList[0] 可能的格式1: `     at {呼叫者路徑}`
-    // stackList[0] 可能的格式2: `     at xxx.js ({呼叫者路徑})`
-    const callerPath = stackList[0].replace(/\s*at.*\(+(.*)\)+/i, `$1`)
-    return callerPath.replace(process.env.PWD, ``)
+    try {
+      const err = new Error()
+      let callerFile
+      let currentFile
+
+      Error.prepareStackTrace = (err, stack) => {return stack}
+
+      currentFile = err.stack.shift().getFileName()
+
+      while (err.stack.length) {
+        callerFile = err.stack.shift()
+        const callerFileName = callerFile.getFileName()
+        const callerFileLine = callerFile.getLineNumber()
+        const callerFileColumn = callerFile.getColumnNumber()
+
+        if (currentFile !== callerFileName) {
+          const filename = callerFileName.replace(process.env.PWD, ``)
+          return `${filename}:${callerFileLine}:${callerFileColumn}`
+        }
+      }
+    } catch (err) {
+      // 跳過
+    }
+    return undefined
   }
 
   _getLogInfo (args) {
