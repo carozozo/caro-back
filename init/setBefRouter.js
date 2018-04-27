@@ -58,7 +58,7 @@ ck.api.use(bodyParser.urlencoded({extended: false}))
   .use(ck.auth.init())
   .use((req, res, next) => {
     const reqPath = req.originalUrl
-    if (reqPath.startsWith(ck.API_DOC_ROUTE_PATH)) return next()
+    if (reqPath.startsWith(`/apidoc`)) return next()
     // 取得所有 req 變數
     req.args = _.assign(req.params, req.body, req.query)
     ck.logger.log(`[${req.method}] ${reqPath} request=`, req.args)

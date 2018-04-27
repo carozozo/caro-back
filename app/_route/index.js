@@ -1,6 +1,6 @@
 const docRouter = ck.api.createRouter(`/`)
 
-docRouter.get(`${ck.API_DOC_ROUTE_PATH}/*`, ck.api.genRouteFn(async (req, res) => {
+docRouter.get(`/apidoc/*`, ck.api.genRouteFn(async (req, res) => {
   const authorization = req.headers.authorization
   const returnDeined = () => {
     res.statusCode = 401
