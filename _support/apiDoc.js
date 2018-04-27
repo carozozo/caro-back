@@ -30,6 +30,7 @@ class ApiDoc extends ck.ApiDoc {
   outputResultDoc (docObj, sucArr, errArr) {
     if (!sucArr) throw Error(`請輸入 sucArr`)
     if (!errArr) throw Error(`請輸入 errArr`)
+    docObj.version = docObj.version || require(`package.json`).version
     docObj.success = (() => {
       const result = []
       _.reduce(sucArr, (result, suc, i) => {

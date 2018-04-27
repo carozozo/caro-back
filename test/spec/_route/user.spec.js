@@ -1,4 +1,3 @@
-const version = ck.APP_VERSION
 const group = `user`
 const groupPath = ck.api.getGroupPath(group)
 
@@ -57,7 +56,6 @@ describe(groupPath, () => {
     })()
 
     ck.apiDoc.outputResultDoc({
-      version,
       api: {
         title: `註冊用戶`,
         method: `post`,
@@ -113,7 +111,6 @@ describe(groupPath, () => {
     })()
 
     ck.apiDoc.outputResultDoc({
-      version,
       api: {
         title: `用戶登入`,
         method: `post`,
@@ -151,7 +148,6 @@ describe(groupPath, () => {
     })()
 
     ck.apiDoc.outputResultDoc({
-      version,
       api: {
         title: `用戶登出`,
         method: `post`,
@@ -187,7 +183,6 @@ describe(groupPath, () => {
     })()
 
     ck.apiDoc.outputResultDoc({
-      version,
       api: {
         title: `用 id 更新用戶資料`,
         method: `post`,
@@ -228,7 +223,6 @@ describe(groupPath, () => {
     })()
 
     ck.apiDoc.outputResultDoc({
-      version,
       api: {
         title: `用 id 取得用戶資料`,
         method: `get`,
@@ -269,7 +263,6 @@ describe(groupPath, () => {
     })()
 
     ck.apiDoc.outputResultDoc({
-      version,
       api: {
         title: `取得用戶列表`,
         method: `get`,

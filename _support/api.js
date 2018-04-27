@@ -1,6 +1,6 @@
 /* 實作 ck.Api 物件 for API Server */
 class Api extends ck.Api {
-  getGroupPath (group, version = ck.APP_VERSION) {
+  getGroupPath (group, version = require(`package.json`).version) {
     return `/api/v${version}/${group}`
   }
 

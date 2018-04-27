@@ -8,7 +8,7 @@ require(`init/setModule`)
 require(`boot/connectDb`)
 
 ck.boot.on(`runStacks`, async () => {
-  const target = process.env.TARGET || ck.APP_VERSION
+  const target = process.env.TARGET || require(`package.json`).version
   try {
     ck.logger.log(`==========================================`)
     ck.logger.log(`準備載入 migration ${target}`)

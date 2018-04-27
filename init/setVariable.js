@@ -1,6 +1,5 @@
 const env = process.env.NODE_ENV
 
-ck.APP_VERSION = require(`package.json`).version
 ck.API_DOC_ROUTE_PATH = `/apidoc`
 ck.WORKER_INDEX = parseInt(process.env.WORKER_INDEX || 0, 10)
 ck.IS_FIRST_PROCESS = ck.WORKER_INDEX === 0
