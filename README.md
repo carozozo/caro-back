@@ -2,6 +2,8 @@
 
 ## 資料夾結構
 ```
+├── _route                                # 定義 API 路徑, 只負責接收 request 和 response
+│
 ├── app                                   # 專案開發內容
 │   ├── _controller                       # 提供 route 對應的功能實作
 │   ├── _fakeData                         # 產生假資料的函式庫, 用在開發時建立初始化的資料, 提供開發測試
