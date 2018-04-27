@@ -1,4 +1,4 @@
-class Config {
+class DevConfig {
   constructor () {
     require(`dotenv`).config()
   }
@@ -55,4 +55,4 @@ class Config {
   }
 }
 
-module.exports = Config
+module.exports = DevConfig

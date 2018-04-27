@@ -3,8 +3,7 @@ global._ = require(`caro`)
 global.ck = new CaroBack()
 
 ck.requireDir(`module`)
-require(`init/setConfig`)
-require(`boot/connectDb`)
+ck.require(`boot/connectDb`, {skip: true})
 
 ck.boot.on(`runStacks`, async () => {
   const cron = ck.cron

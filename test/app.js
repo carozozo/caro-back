@@ -6,7 +6,6 @@ global.ck = new CaroBack()
 
 ck.requireDir(`module`)
 ck.requireDir(`route`)
-require(`init`)
 ck.requireDir(`boot`)
 require(`./init`)
 
