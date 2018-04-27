@@ -1,5 +1,5 @@
-ck.requireDir(`_library`)
-ck.requireDir(`_support`)
+ck.requireDir(`app/_library`)
+ck.requireDir(`app/_support`)
 ck.boot.on(`runStacks`, () => {
   ck.requireDir(`app/_fakeData`)
   ck.requireDir(`app/_schema`)
