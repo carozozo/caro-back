@@ -1,5 +1,5 @@
 // 建立 user 和 profile 資料
-ck.runAsync(async () => {
+(async () => {
   const userFak = ck.userFak
   const _userArr = []
   const _profileArr = []
@@ -31,4 +31,4 @@ ck.runAsync(async () => {
 
   await ck.userMod.createMany(_userArr)
   await ck.profileMod.createMany(_profileArr)
-})
+})()
