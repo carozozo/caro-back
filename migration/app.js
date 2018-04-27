@@ -2,8 +2,8 @@ const CaroBack = require(`ck`)
 global._ = require(`caro`)
 global.ck = new CaroBack()
 
+ck.requireDir(`module`)
 require(`init/setConfig`)
-require(`init/setModule`)
 require(`boot/connectDb`)
 
 ck.boot.on(`runStacks`, async () => {

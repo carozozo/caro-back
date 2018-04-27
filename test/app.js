@@ -4,6 +4,7 @@ global.assert = require(`chai`).assert
 global._ = require(`caro`)
 global.ck = new CaroBack()
 
+ck.requireDir(`module`)
 require(`init`)
 require(`boot`)
 require(`./init`)
