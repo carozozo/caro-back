@@ -7,24 +7,30 @@ class CaroBack {
   }
 
   _getCallerPath () {
+    const prepareStackTrace = Error.prepareStackTrace
     try {
       const err = new Error()
+      Error.prepareStackTrace = prepareStackTrace
       let callerFile
       let currentFile
 
-      Error.prepareStackTrace = (err, stack) => {return stack}
+      Error.prepareStackTrace = (err, stack) => stack
 
       currentFile = err.stack.shift().getFileName()
 
       while (err.stack.length) {
         callerFile = err.stack.shift().getFileName()
 
-        if (currentFile !== callerFile) return callerFile
+        if (currentFile !== callerFile) {
+          Error.prepareStackTrace = prepareStackTrace      
+          return callerFile
+        }
       }
     } catch (err) {
       // 跳過
     }
-    return undefined
+    Error.prepareStackTrace = prepareStackTrace
+    return ``
   }
 
   _parseRequirePath (p) {
@@ -48,11 +54,15 @@ class CaroBack {
       const filename = path.basename(p).replace(path.extname(p), ``)
       const modelName = _.replaceAll(filename, `.`, `_`)
       if (!skip) {
-        if (this[modelName]) console.error(`model ${modelName} 已被佔用`)
+        if (this[modelName]) {
+          console.error(`model ${modelName} 已被佔用`)
+          return
+        }
         this[filename] = require(p)
       }
       else require(p)
     } catch (e) {
+      console.error(e)
       if (++this.require.count > 100) throw Error(`載入 ${p} 失敗 - ${e}`)
       setTimeout(() => this.require(p), 1)
     }
