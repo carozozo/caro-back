@@ -19,8 +19,8 @@ if (cluster.isMaster && process.env.CLUSTER === `true`) {
     console.log(`Worker #${worker.process.pid} exit`)
   })
 } else {
-  ck.requireDir(`module`)
-  ck.requireDir(`route`)
+  ck.requireDir(`module`, {level: 0, load: true})
+  ck.requireDir(`route`, {level: 0})
   ck.requireDir(`boot`)
   ck.boot.runStacks()
 }

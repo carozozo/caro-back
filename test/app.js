@@ -4,10 +4,10 @@ global.assert = require(`chai`).assert
 global._ = require(`caro`)
 global.ck = new CaroBack()
 
-ck.requireDir(`module`)
-ck.requireDir(`route`)
+ck.requireDir(`module`, {level: 0, load: true})
+ck.requireDir(`route`, {level: 0})
 ck.requireDir(`boot`)
-ck.requireDir(`./init`, {skip: true})
+ck.requireDir(`./init`)
 
 before(function (done) {
   ck.boot.on(`runStacks`, () => {
@@ -23,8 +23,8 @@ after(function () {
 })
 
 const specPath = `test/spec`
-ck.requireDir(`${specPath}/library`, {skip: true})
-ck.requireDir(`${specPath}/model`, {skip: true})
-ck.requireDir(`${specPath}/controller`, {skip: true})
-ck.requireDir(`${specPath}/service`, {skip: true})
-ck.requireDir(`${specPath}/route`, {skip: true})
+ck.requireDir(`${specPath}/library`)
+ck.requireDir(`${specPath}/model`)
+ck.requireDir(`${specPath}/controller`)
+ck.requireDir(`${specPath}/service`)
+ck.requireDir(`${specPath}/route`)

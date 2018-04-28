@@ -2,8 +2,8 @@ const CaroBack = require(`ck`)
 global._ = require(`caro`)
 global.ck = new CaroBack()
 
-ck.requireDir(`module`)
-ck.require(`boot/connectDb`, {skip: true})
+ck.requireDir(`module`, {level: 0, load: true})
+ck.require(`boot/connectDb`)
 
 ck.boot.on(`runStacks`, async () => {
   const cron = ck.cron
@@ -14,7 +14,7 @@ ck.boot.on(`runStacks`, async () => {
     return ck.logger.log(`-${name}- Cron Job [${expression}] ${description}`)
   }
 
-  ck.requireDir(`${__dirname}/task`, {skip: true})
+  ck.requireDir(`${__dirname}/task`)
   cron.befTask((description, expression) => {
     log(`執行`, expression, description)
   }).aftTask((result, description, expression) => {
