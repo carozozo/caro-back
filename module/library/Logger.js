@@ -26,12 +26,13 @@ class Logger {
 
   // 取得呼叫的路徑
   _getLogCallerPath () {
+    const prepareStackTrace = Error.prepareStackTrace
     try {
       const err = new Error()
       let callerFile
       let currentFile
 
-      Error.prepareStackTrace = (err, stack) => {return stack}
+      Error.prepareStackTrace = (err, stack) => stack
 
       currentFile = err.stack.shift().getFileName()
 
@@ -42,6 +43,7 @@ class Logger {
         const callerFileColumn = callerFile.getColumnNumber()
 
         if (currentFile !== callerFileName) {
+          Error.prepareStackTrace = prepareStackTrace
           const filename = callerFileName.replace(process.env.PWD, ``)
           return `${filename}:${callerFileLine}:${callerFileColumn}`
         }
@@ -49,7 +51,8 @@ class Logger {
     } catch (err) {
       // 跳過
     }
-    return undefined
+    Error.prepareStackTrace = prepareStackTrace
+    return ``
   }
 
   _getLogInfo (args) {
