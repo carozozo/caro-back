@@ -46,7 +46,7 @@ class CaroBack {
   require (p, opt = {}) {
     const path = require(`path`)
     const skip = opt.skip // require 之後不要放入 ck
-    opt._count = opt._count || 0
+    opt._errCount = opt._errCount || 0 // 計數載入錯誤次數
 
     p = this._parseRequirePath(p)
 
@@ -62,27 +62,30 @@ class CaroBack {
       }
       else return require(p)
     } catch (e) {
-      if (++opt._count > 100) throw Error(`載入 ${p} 失敗 - ${e}`)
+      if (++opt._errCount > 100) throw Error(`載入 ${p} 失敗 - ${e}`)
       setTimeout(() => this.require(p, opt), 1)
     }
   }
 
-  requireDir (fileOrDirPath, opt) {
+  requireDir (fileOrDirPath, opt = {}) {
     const fs = require(`fs`)
     const path = require(`path`)
+    const level = opt.level || opt.level === 0 ? parseInt(opt.level, 10) : 1 // 讀取的資料夾層數
     let fileCount = 0
 
-    const requireFile = (fileOrDir) => {
+    const requireFile = (fileOrDir, currentLevel = 0) => {
       const stat = fs.statSync(fileOrDir)
       if (stat.isFile() && fileOrDir.endsWith(`.js`)) {
         this.require(fileOrDir, opt)
         fileCount++
       }
       if (stat.isDirectory()) {
+        currentLevel++ // 準備讀取下一層資料夾
+        if (level && currentLevel > level) return
         const fileArr = fs.readdirSync(fileOrDir)
         _.forEach(fileArr, (file) => {
           const filePath = path.join(fileOrDir, file)
-          requireFile(filePath)
+          requireFile(filePath, currentLevel)
         })
       }
     }
