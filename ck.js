@@ -22,7 +22,7 @@ class CaroBack {
         callerFile = err.stack.shift().getFileName()
 
         if (currentFile !== callerFile) {
-          Error.prepareStackTrace = prepareStackTrace      
+          Error.prepareStackTrace = prepareStackTrace
           return callerFile
         }
       }
@@ -46,7 +46,7 @@ class CaroBack {
   require (p, opt = {}) {
     const path = require(`path`)
     const skip = opt.skip // require 之後不要放入 ck
-    this.require.count = this.require.count || 0
+    opt._count = opt._count || 0
 
     p = this._parseRequirePath(p)
 
@@ -60,11 +60,10 @@ class CaroBack {
         }
         this[filename] = require(p)
       }
-      else require(p)
+      else return require(p)
     } catch (e) {
-      console.error(e)
-      if (++this.require.count > 100) throw Error(`載入 ${p} 失敗 - ${e}`)
-      setTimeout(() => this.require(p), 1)
+      if (++opt._count > 100) throw Error(`載入 ${p} 失敗 - ${e}`)
+      setTimeout(() => this.require(p, opt), 1)
     }
   }
 
