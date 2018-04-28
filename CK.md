@@ -11,7 +11,7 @@ global.ck = new CaroBack()
 ### lazy-require 自動化載入
 ```
 ck.require(path, opt) - 類似 node require, 載入後會自動掛載到 ck 底下;
-opt.skip {Boolean} 載入時是否掛載到 ck 底下, 預設 true
+opt.load {Boolean} 載入時是否掛載到 ck 底下, 預設 false
 
 e.g.
 demo.js -
@@ -28,7 +28,8 @@ ck.demo.fn2()
 ```
 ```
 ck.requireDir(path, opt) - ck.require 強化版, 當 path 是資料夾時, 會自動掛載底下所有的 js 檔案
-opt.skip {Boolean} 載入時是否掛載到 ck 底下, 預設 true
+opt.load   {Boolean} 載入時是否掛載到 ck 底下, 預設 false
+opt.level  {Integer} 讀取的資料夾層數, 0 = 不設限, 預設 1
 
 e.g.
 sampleDir/a.js -
@@ -45,8 +46,14 @@ module.exports = {
   ...
 }
 
+sampleDir/c/c.js -
+module.exports = {
+  ...
+}
+
 app.js -
-ck.requireDir(`sampleDir`)
+ck.requireDir(`sampleDir`, {load: true})
+// 不會讀取 sampleDir/c/c.js, 因為他在資料夾下第二層
 ck.a.fn1()
 ck.a.fn1()
 ck.b.fn3()

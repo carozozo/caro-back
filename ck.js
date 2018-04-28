@@ -45,7 +45,7 @@ class CaroBack {
 
   require (p, opt = {}) {
     const path = require(`path`)
-    const skip = opt.skip // require 之後不要放入 ck
+    const load = opt.load // require 之後放入 ck
     opt._errCount = opt._errCount || 0 // 計數載入錯誤次數
 
     p = this._parseRequirePath(p)
@@ -53,7 +53,7 @@ class CaroBack {
     try {
       const filename = path.basename(p).replace(path.extname(p), ``)
       const modelName = _.replaceAll(filename, `.`, `_`)
-      if (!skip) {
+      if (load) {
         if (this[modelName]) {
           console.error(`model ${modelName} 已被佔用`)
           return
@@ -70,7 +70,8 @@ class CaroBack {
   requireDir (fileOrDirPath, opt = {}) {
     const fs = require(`fs`)
     const path = require(`path`)
-    const level = opt.level || opt.level === 0 ? parseInt(opt.level, 10) : 1 // 讀取的資料夾層數
+    // 讀取的資料夾層數, 0 = 不設限
+    const level = opt.level || opt.level === 0 ? parseInt(opt.level, 10) : 1 
     let fileCount = 0
 
     const requireFile = (fileOrDir, currentLevel = 0) => {
