@@ -43,6 +43,10 @@ class CaroBack {
     return p
   }
 
+  setDebug (isDebug) {
+    this._isDebug = isDebug
+  }
+
   require (p, opt = {}) {
     const path = require(`path`)
     const load = opt.load // require 之後放入 ck
@@ -53,12 +57,15 @@ class CaroBack {
     try {
       const filename = path.basename(p).replace(path.extname(p), ``)
       const modelName = _.replaceAll(filename, `.`, `_`)
+      if (this._isDebug) console.log(`modelName=`, modelName)
+
       if (load) {
         if (this[modelName]) {
           console.error(`model ${modelName} 已被佔用`)
           return
         }
         this[filename] = require(p)
+        return this[filename]
       }
       else return require(p)
     } catch (e) {
@@ -71,10 +78,12 @@ class CaroBack {
     const fs = require(`fs`)
     const path = require(`path`)
     // 讀取的資料夾層數, 0 = 不設限
-    const level = opt.level || opt.level === 0 ? parseInt(opt.level, 10) : 1 
+    const level = opt.level || opt.level === 0 ? parseInt(opt.level, 10) : 1
     let fileCount = 0
 
     const requireFile = (fileOrDir, currentLevel = 0) => {
+      if (this._isDebug) console.log(`fileOrDir = ${fileOrDir}, currentLevel = ${currentLevel}`)
+
       const stat = fs.statSync(fileOrDir)
       if (stat.isFile() && fileOrDir.endsWith(`.js`)) {
         this.require(fileOrDir, opt)
