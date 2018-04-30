@@ -4,6 +4,10 @@ const isFirstProcess = workerIndex === 0
 const canDropDb = isFirstProcess && (env === `dev` || env === `beta`)
 
 ck.boot.on(`runStacks`, async () => {
+  ck.requireDir(`model`, {level: 0, load: true})
+})
+
+ck.boot.on(`runStacks`, async () => {
   const redisMsg = `Redis 資料庫 ${ck.cacheDb.database}`
   // 清除資料
   if (!canDropDb) return
