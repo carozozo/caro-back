@@ -50,7 +50,6 @@ class CaroBack {
   require (p, opt = {}) {
     const path = require(`path`)
     const load = opt.load // require 之後放入 ck
-    opt._errCount = opt._errCount || 0 // 計數載入錯誤次數
 
     p = this._parseRequirePath(p)
 
@@ -69,8 +68,7 @@ class CaroBack {
       }
       else return require(p)
     } catch (e) {
-      if (++opt._errCount > 100) throw Error(`載入 ${p} 失敗 - ${e}`)
-      setTimeout(() => this.require(p, opt), 1)
+      throw Error(`載入 ${p} 失敗 - ${e.stack}`)
     }
   }
 
@@ -79,15 +77,15 @@ class CaroBack {
     const path = require(`path`)
     // 讀取的資料夾層數, 0 = 不設限
     const level = opt.level || opt.level === 0 ? parseInt(opt.level, 10) : 1
-    let fileCount = 0
+    const ret = []
 
     const requireFile = (fileOrDir, currentLevel = 0) => {
       if (this._isDebug) console.log(`fileOrDir = ${fileOrDir}, currentLevel = ${currentLevel}`)
 
       const stat = fs.statSync(fileOrDir)
       if (stat.isFile() && fileOrDir.endsWith(`.js`)) {
-        this.require(fileOrDir, opt)
-        fileCount++
+        const module = this.require(fileOrDir, opt)
+        ret.push({path: fileOrDir, module})
       }
       if (stat.isDirectory()) {
         currentLevel++ // 準備讀取下一層資料夾
@@ -112,7 +110,7 @@ class CaroBack {
     }
 
     requireFile(fileOrDirPath)
-    return fileCount
+    return ret
   }
 }
 
