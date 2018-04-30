@@ -78,6 +78,7 @@ class Mongo {
       const modelNames = await _.keys(models)
       const collectionLength = modelNames.length
       if (collectionLength === 0) {
+        resolve(modelNames)
         await this._triggerByOn(`dropCollections`, [modelNames])
         return
       }
