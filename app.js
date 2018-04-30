@@ -1,8 +1,7 @@
+require(`ck`)
+
 const cupLength = require(`os`).cpus().length
 const cluster = require(`cluster`)
-const CaroBack = require(`ck`)
-global._ = require(`caro`)
-global.ck = new CaroBack()
 
 if (cluster.isMaster && process.env.CLUSTER === `true`) {
   console.log(`master #${process.pid} is running`)
@@ -19,7 +18,6 @@ if (cluster.isMaster && process.env.CLUSTER === `true`) {
     console.log(`Worker #${worker.process.pid} exit`)
   })
 } else {
-  ck.requireDir(`module`, {level: 0, load: true})
   ck.requireDir(`route`, {level: 0})
   ck.requireDir(`boot`)
   ck.boot.runStacks()

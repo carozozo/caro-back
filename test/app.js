@@ -1,10 +1,7 @@
-const CaroBack = require(`ck`)
+require(`ck`)
 
 global.assert = require(`chai`).assert
-global._ = require(`caro`)
-global.ck = new CaroBack()
 
-ck.requireDir(`module`, {level: 0, load: true})
 ck.requireDir(`route`, {level: 0})
 ck.requireDir(`boot`)
 ck.requireDir(`./init`)

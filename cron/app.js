@@ -1,8 +1,5 @@
-const CaroBack = require(`ck`)
-global._ = require(`caro`)
-global.ck = new CaroBack()
+require(`ck`)
 
-ck.requireDir(`module`, {level: 0, load: true})
 ck.require(`boot/connectDb`)
 
 ck.boot.on(`runStacks`, async () => {
