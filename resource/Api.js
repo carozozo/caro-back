@@ -69,9 +69,9 @@ class Api {
     _.forEach(this._aftRoutes, (fn) => fn())
 
     return new Promise((resolve, reject) => {
-      let server = this.app.listen(port, () => {
+      const server = this.app.listen(port, () => {
         this.port = port
-        resolve()
+        resolve(server)
         this._triggerByOn(`listen`, [port])
       })
       server.on(`error`, (err) => {
