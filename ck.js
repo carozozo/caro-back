@@ -118,8 +118,6 @@ class CaroBack {
 global._ = _
 global.ck = new CaroBack()
 
-// 戴入原生 library
-ck.requireDir(`resource`, {load: true})
 // 戴入客制化 module
 ck.requireDir(`module`, {level: 0, load: true})
 
