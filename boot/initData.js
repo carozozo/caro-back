@@ -4,7 +4,8 @@ const isFirstProcess = workerIndex === 0
 const canDropDb = isFirstProcess && (env === `dev` || env === `beta`)
 
 ck.boot.on(`runStacks`, async () => {
-  ck.requireDir(`model`, {level: 0, load: true})
+  ck.requireDir(`model/schema`, {load: true})
+  ck.requireDir(`model`, {load: true})
 })
 
 ck.boot.on(`runStacks`, async () => {
