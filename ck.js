@@ -119,6 +119,6 @@ global._ = _
 global.ck = new CaroBack()
 
 // 戴入客制化 module
-ck.requireDir(`module`, {level: 0, load: true})
+ck.requireDir(`app/module`, {level: 0, load: true})
 
 module.exports = ck
