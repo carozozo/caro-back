@@ -1,7 +1,7 @@
 require(`ck`)
 
-require(`init/setConfig`)
 require(`boot/connectDb`)
+require(`boot/loadModel`)
 
 ck.boot.on(`runStacks`, async () => {
   const target = process.env.TARGET || require(`package.json`).version

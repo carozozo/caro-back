@@ -3,7 +3,7 @@ require(`ck`)
 global.assert = require(`chai`).assert
 
 ck.requireDir(`route`, {level: 0})
-ck.requireDir(`boot`)
+require(`boot`)
 ck.requireDir(`./init`)
 
 before(function (done) {

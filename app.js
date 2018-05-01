@@ -19,6 +19,6 @@ if (cluster.isMaster && process.env.CLUSTER === `true`) {
   })
 } else {
   ck.requireDir(`route`, {level: 0})
-  ck.requireDir(`boot`)
+  require(`boot`)
   ck.boot.runStacks()
 }
