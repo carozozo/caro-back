@@ -2,6 +2,19 @@
 
 ## 資料夾結構
 ```
+├── app                                   # app root
+│   ├── model                             # 資料函式庫, 實作每個獨立 DB-Table 所需的邏輯處理, 繼承自 ck.SequelizeModel/ck.MongoModel...等
+│   │   └── schema                        # DB 欄位定義
+│   │
+│   ├── module                            # 專案函式庫
+│   │   ├── controller                    # 提供 route 對應的功能實作
+│   │   ├── fakeData                      # 產生假資料的函式庫, 用在開發時建立初始化的資料, 提供開發測試
+│   │   ├── library                       # 通用函式庫, 由 node-module 包裝或是客製成適合快速開發/管控專案
+│   │   ├── service                       # 由 controller 抽出來的單元/共用函式, 分擔其工作量以及可以實作更精確的單元測試
+│   │   └── support                       # 專案專用函式庫, 繼承通用函式庫的內容或是特定邏輯函式 for 專案開發
+│   │
+│   └── route                             # 定義 API 路徑, 負責接收 request 和 response
+│
 ├── boot                                  # 啟動各項服務, 例如 DB 連線, 啟動 API Server
 │
 ├── cron                                  # `npm run cron` 啟動 Cron-Job 項目
@@ -9,27 +22,13 @@
 │
 ├── docs                                  # `npm run test.doc` 之後產生的 js 檔 for apidoc 載入
 │
-├── init                                  # 專案啟動的初始化項目
-│
 ├── migration                             # 一次性執行項目, 主要處理資料庫異動
-│
-├── model                                 # 資料函式庫, 實作每個獨立 DB-Table 所需的邏輯處理, 繼承自 ck.SequelizeModel/ck.MongoModel...等
-│   └── schema                            # DB 欄位定義
-│
-├── module                                # 專案開發內容
-│   ├── controller                        # 提供 route 對應的功能實作
-│   ├── fakeData                          # 產生假資料的函式庫, 用在開發時建立初始化的資料, 提供開發測試
-│   ├── library                           # 通用函式庫, 由 node-module 包裝或是客製成適合快速開發/管控專案
-│   ├── service                           # 由 controller 抽出來的單元/共用函式, 分擔其工作量以及可以實作更精確的單元測試
-│   └── support                           # 專案專用函式庫, 繼承通用函式庫的內容或是特定邏輯函式 for 專案開發
 │
 ├── node_modules                          # node.js 模組
 │
 ├── public                                # 提供 client 下載的項目, 目前提供 api-document 網頁
 │
 ├── resource                              # ck 基本函式庫
-│
-├── route                                 # 定義 API 路徑, 只負責接收 request 和 response
 │
 ├── test                                  # Unit-Test 項目
 │   ├── init                              # test 啟動時要載入的初始化項目
