@@ -2,13 +2,12 @@ require(`ck`)
 
 global.assert = require(`chai`).assert
 
-ck.requireDir(`app/route`, {level: 0})
 ck.require(`boot`)
 ck.requireDir(`./init`)
 
 before(function (done) {
   ck.boot.on(`runStacks`, () => {
-    ck.poster.setApiUrl(`http://localhost:${ck.api.port}`)
+    ck.poster.setApiUrl(`http://localhost:${ck.apiServer.port}`)
     done()
   }).runStacks()
 })
