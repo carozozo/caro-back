@@ -122,6 +122,19 @@ class CaroBack {
     requireFile(fileOrDirPath)
     return ret
   }
+
+  async bootApiServer (apiServer, opt = {}) {
+    const path = require(`path`)
+    const port = opt.port || 3000
+    const routeDir = opt.routeDir || `app/route`
+    const middlewareDir = opt.middlewareDir || path.join(routeDir, `middleware`)
+
+    const requireOpt = {force: true}
+    this.requireDir(routeDir, requireOpt)
+    this.requireDir(middlewareDir, requireOpt)
+
+    await apiServer.listen(port)
+  }
 }
 
 // 宣告 global
