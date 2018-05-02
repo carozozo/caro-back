@@ -50,23 +50,33 @@ class CaroBack {
   require (p, opt = {}) {
     const path = require(`path`)
     const load = opt.load // require 之後放入 ck
+    const force = opt.force // 是否要強制重新 require
 
     p = this._parseRequirePath(p)
 
     try {
       const filename = path.basename(p).replace(path.extname(p), ``)
-      const modelName = _.replaceAll(filename, `.`, `_`)
-      if (this._isDebug) console.log(`modelName=`, modelName)
+      const moduleName = _.replaceAll(filename, `.`, `_`)
+      if (this._isDebug) console.log(`moduleName=`, moduleName)
 
-      if (load) {
-        if (this[modelName]) {
-          console.error(`model ${modelName} 已被佔用`)
-          return
+      if (force) {
+        try {
+          delete require.cache[require.resolve(p)]
+        } catch (e) {
+          // 不需處理
         }
-        this[filename] = require(p)
-        return this[filename]
       }
-      else return require(p)
+
+      if (load && this[moduleName]) {
+        console.error(`module ${moduleName} 已被佔用`)
+        return this[moduleName]
+      }
+
+      const module = require(p)
+      if (load) {
+        this[moduleName] = module
+      }
+      return module
     } catch (e) {
       throw Error(`載入 ${p} 失敗 - ${e.stack}`)
     }
