@@ -1,5 +1,5 @@
 const group = `user`
-const groupPath = ck.api.getGroupPath(group)
+const groupPath = ck.apiServer.getGroupPath(group)
 
 describe(groupPath, () => {
   it(`register`, async () => {

@@ -52,7 +52,7 @@ const writeRequestLog = async (req, param) => {
   })
 }
 
-ck.api.befRoute(bodyParser.urlencoded({extended: false}))
+ck.apiServer.befRoute(bodyParser.urlencoded({extended: false}))
   .befRoute(bodyParser.json())
   .befRoute(userAgent.express())
   .befRoute(ck.auth.init())
