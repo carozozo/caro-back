@@ -123,6 +123,7 @@ class CaroBack {
     return ret
   }
 
+  // 建立 api server 並載入 route
   async bootApiServer (apiServer, opt = {}) {
     const path = require(`path`)
     const port = opt.port || 3000
@@ -134,6 +135,19 @@ class CaroBack {
     this.requireDir(middlewareDir, requireOpt)
 
     await apiServer.listen(port)
+  }
+
+  // 建立 redis 連線並載入 redis-model
+  async bootRedis (redisClient, config, opt = {}) {
+    const host = config.host
+    const port = config.port
+    const database = config.database
+    const modelDir = opt.modelDir || `app/redisModel`
+
+    await redisClient.connectDb(host, port, database)
+
+    const requireOpt = {load: true, force: true}
+    this.requireDir(modelDir, requireOpt)
   }
 }
 
