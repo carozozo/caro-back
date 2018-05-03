@@ -1,6 +1,8 @@
 require(`ck`)
 
-ck.require(`boot/connectDb`)
+ck.require(`boot/startRedis`)
+ck.require(`boot/startMongo`)
+ck.require(`boot/startMaria`)
 
 ck.boot.on(`runStacks`, async () => {
   const cron = ck.cron
