@@ -1,4 +1,4 @@
 require(`./connectDb`)
-require(`./startServer`)
+require(`./startApiServer`)
 require(`./loadModel`)
 require(`./initData`)
