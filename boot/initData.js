@@ -1,20 +1,4 @@
 ck.boot.on(`runStacks`, async () => {
-  const dbMSg = `Mongo 資料庫 ${ck.logDb.database}`
-  // 清除資料
-  if (!ck.unit.canDropDb) return
-  const dbConfig = ck.config.logDb
-  const excludes = dbConfig.excludes
-  ck.logDb.on(`dropCollectionsEach`, (name, i) => {
-    ck.logger.log(`${dbMSg} 清除第 ${i + 1} 組 collection ${name} 完成`)
-  }).on(`dropCollectionsEachExclude`, (name, i) => {
-    ck.logger.log(`${dbMSg} 排除第 ${i + 1} 組 collection ${name}`)
-  })
-  ck.logger.log(`準備清除 ${dbMSg} 資料`)
-  const names = await ck.logDb.dropCollections({excludes}) || []
-  ck.logger.log(`${dbMSg} 清除 ${names.length - excludes.length} 組資料完成`)
-})
-
-ck.boot.on(`runStacks`, async () => {
   const dbMSg = `Maria 資料庫 ${ck.mainDb.database}`
   if (ck.unit.isFirstProcess) {
     await ck.mainDb.sync()

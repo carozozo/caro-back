@@ -1,4 +1,5 @@
 require(`./startRedis`)
+require(`./startMongo`)
 require(`./connectDb`)
 require(`./startApiServer`)
 require(`./loadModel`)

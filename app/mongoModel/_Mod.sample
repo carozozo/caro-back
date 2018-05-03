@@ -1,0 +1,9 @@
+class $Sample$Mod extends ck.MongoModel {
+  constructor () {
+    const model = ck.logDb.createModel(`$Sample$`, ck.$sample$Sch.schema)
+
+    super(model)
+  }
+}
+
+module.exports = new $Sample$Mod()

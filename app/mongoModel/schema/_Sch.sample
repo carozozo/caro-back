@@ -1,0 +1,9 @@
+class $Sample$Sch {
+  constructor () {
+    this.fields = {
+    }
+    this.schema = ck.mongoSchema.createSchema(this.fields)
+  }
+}
+
+module.exports = new $Sample$Sch()
