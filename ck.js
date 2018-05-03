@@ -164,6 +164,26 @@ class CaroBack {
     this.requireDir(schemaDir, requireOpt)
     this.requireDir(modelDir, requireOpt)
   }
+
+  // 建立 maria 連線並載入 maria-model
+  async bootMaria (mariaClient, config, opt = {}) {
+    const host = config.host
+    const port = config.port
+    const database = config.database
+    const username = config.username
+    const pwd = config.pwd
+    const schemaDir = opt.schemaDir || `app/mariaModel/schema`
+    const modelDir = opt.modelDir || `app/mariaModel`
+
+    await mariaClient.connectDb(host, port, database, username, pwd, {
+      dialect: `mysql`,
+      logging: false,
+    })
+
+    const requireOpt = {load: true, force: true}
+    this.requireDir(schemaDir, requireOpt)
+    this.requireDir(modelDir, requireOpt)
+  }
 }
 
 // 宣告 global
