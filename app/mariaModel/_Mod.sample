@@ -1,0 +1,9 @@
+class $Sample$Mod extends ck.SequelizeModel {
+  constructor () {
+    const model = ck.mainDb.createModel(`$Sample$`, ck.$sample$Sch.fields)
+
+    super(model)
+  }
+}
+
+module.exports = new $Sample$Mod()

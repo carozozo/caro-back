@@ -1,6 +1,4 @@
 require(`./startRedis`)
 require(`./startMongo`)
-require(`./connectDb`)
+require(`./startMaria`)
 require(`./startApiServer`)
-require(`./loadModel`)
-require(`./initData`)

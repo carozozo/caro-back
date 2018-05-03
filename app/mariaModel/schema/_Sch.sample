@@ -1,13 +1,5 @@
 class $Sample$Sch {
   constructor () {
-    this.fields = {
-    }
-    this.schema = ck.mongoSchema.createSchema(this.fields)
-  }
-}
-
-class $Sample$Sch {
-  constructor () {
     const db = ck.mainDb
     const Sequelize = db.Sequelize
 
