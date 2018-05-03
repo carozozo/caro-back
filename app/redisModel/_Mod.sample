@@ -1,0 +1,7 @@
+class $Sample$Mod extends ck.RedisModel {
+  constructor () {
+    super(ck.cacheDb.client, `$Sample$`)
+  }
+}
+
+module.exports = new $Sample$Mod()

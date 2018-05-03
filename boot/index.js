@@ -1,3 +1,4 @@
+require(`./startRedis`)
 require(`./connectDb`)
 require(`./startApiServer`)
 require(`./loadModel`)

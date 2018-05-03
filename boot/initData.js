@@ -1,13 +1,4 @@
 ck.boot.on(`runStacks`, async () => {
-  const redisMsg = `Redis 資料庫 ${ck.cacheDb.database}`
-  // 清除資料
-  if (!ck.unit.canDropDb) return
-  ck.logger.log(`準備清除 ${redisMsg} 資料`)
-  await ck.cacheDb.flushdb()
-  ck.logger.log(`${redisMsg} 清除完成`)
-})
-
-ck.boot.on(`runStacks`, async () => {
   const dbMSg = `Mongo 資料庫 ${ck.logDb.database}`
   // 清除資料
   if (!ck.unit.canDropDb) return
