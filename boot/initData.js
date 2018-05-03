@@ -1,12 +1,7 @@
-const env = process.env.NODE_ENV
-const workerIndex = parseInt(process.env.WORKER_INDEX || 0, 10)
-const isFirstProcess = workerIndex === 0
-const canDropDb = isFirstProcess && (env === `dev` || env === `beta`)
-
 ck.boot.on(`runStacks`, async () => {
   const redisMsg = `Redis 資料庫 ${ck.cacheDb.database}`
   // 清除資料
-  if (!canDropDb) return
+  if (!ck.unit.canDropDb) return
   ck.logger.log(`準備清除 ${redisMsg} 資料`)
   await ck.cacheDb.flushdb()
   ck.logger.log(`${redisMsg} 清除完成`)
@@ -15,7 +10,7 @@ ck.boot.on(`runStacks`, async () => {
 ck.boot.on(`runStacks`, async () => {
   const dbMSg = `Mongo 資料庫 ${ck.logDb.database}`
   // 清除資料
-  if (!canDropDb) return
+  if (!ck.unit.canDropDb) return
   const dbConfig = ck.config.logDb
   const excludes = dbConfig.excludes
   ck.logDb.on(`dropCollectionsEach`, (name, i) => {
@@ -30,11 +25,11 @@ ck.boot.on(`runStacks`, async () => {
 
 ck.boot.on(`runStacks`, async () => {
   const dbMSg = `Maria 資料庫 ${ck.mainDb.database}`
-  if (isFirstProcess) {
+  if (ck.unit.isFirstProcess) {
     await ck.mainDb.sync()
   }
   // 清除資料
-  if (!canDropDb) return
+  if (!ck.unit.canDropDb) return
   const dbConfig = ck.config.mainDb
   const excludes = dbConfig.excludes
   ck.logger.log(`準備清除 ${dbMSg} 資料`)
