@@ -149,6 +149,21 @@ class CaroBack {
     const requireOpt = {load: true, force: true}
     this.requireDir(modelDir, requireOpt)
   }
+
+  // 建立 mongoDb 連線並載入 mongo-model
+  async bootMongo (mongoClient, config, opt = {}) {
+    const host = config.host
+    const port = config.port
+    const database = config.database
+    const schemaDir = opt.schemaDir || `app/mongoModel/schema`
+    const modelDir = opt.modelDir || `app/mongoModel`
+
+    await mongoClient.connectDb(host, port, database)
+
+    const requireOpt = {load: true, force: true}
+    this.requireDir(schemaDir, requireOpt)
+    this.requireDir(modelDir, requireOpt)
+  }
 }
 
 // 宣告 global
