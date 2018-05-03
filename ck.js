@@ -142,7 +142,7 @@ class CaroBack {
     const host = config.host
     const port = config.port
     const database = config.database
-    const modelDir = opt.modelDir || `app/redisModel`
+    const modelDir = opt.modelDir || `app/model/redis`
 
     await redisClient.connectDb(host, port, database)
 
@@ -155,8 +155,8 @@ class CaroBack {
     const host = config.host
     const port = config.port
     const database = config.database
-    const schemaDir = opt.schemaDir || `app/mongoModel/schema`
-    const modelDir = opt.modelDir || `app/mongoModel`
+    const schemaDir = opt.schemaDir || `app/model/mongo/schema`
+    const modelDir = opt.modelDir || `app/model/mongo`
 
     await mongoClient.connectDb(host, port, database)
 
@@ -172,8 +172,8 @@ class CaroBack {
     const database = config.database
     const username = config.username
     const pwd = config.pwd
-    const schemaDir = opt.schemaDir || `app/mariaModel/schema`
-    const modelDir = opt.modelDir || `app/mariaModel`
+    const schemaDir = opt.schemaDir || `app/model/maria/schema`
+    const modelDir = opt.modelDir || `app/model/maria`
 
     await mariaClient.connectDb(host, port, database, username, pwd, {
       dialect: `mysql`,
