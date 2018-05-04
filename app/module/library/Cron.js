@@ -21,6 +21,9 @@ class Cron {
     if (this._jobMap[description]) throw Error(`Cron Job [${description}] 已被註冊`)
     const syntax = args[0]
     const fn = args[1]
+    // startJobRightNow = args[2]
+    // theCallbackWhenJobStop = args[3]
+    // timezone = args[4]
     if (!this._cron.validate(syntax)) throw Error(`時間格式不正確`)
     if (!_.isFunction(fn)) throw Error(`請輸入要執行的 function`)
     this._jobMap[description] = args
@@ -30,10 +33,9 @@ class Cron {
     for (const description in this._jobMap) {
       if (!this._jobMap.hasOwnProperty(description)) continue
       const args = this._jobMap[description]
-      // 設置預設時區
-      args[4] = args[4] || this._timeZone
+      args[4] = args[4] || this._timeZone // 設置預設時區
 
-      let argsForCb = _.clone(args)
+      const argsForCb = _.clone(args)
       argsForCb.unshift(description)
 
       // 重新包裝要執行的 fn
