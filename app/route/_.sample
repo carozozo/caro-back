@@ -6,7 +6,7 @@ router.post(`/postSample`, ck.auth.authRole(), ck.apiServer.genRouteFn(async (re
   const args = ck.req.validateRequired(req, [`arg1`])
   const arg1 = args.arg1
 
-  const result = await new ck.$sample$Ctr.postSample(req.reqUser, arg1)
+  const result = await ck.$sample$Ctr.postSample(req.reqUser, arg1)
   res.suc(result)
 }))
 
@@ -14,6 +14,6 @@ router.get(`/getSample`, ck.auth.authRole(), ck.apiServer.genRouteFn(async (req,
   const args = ck.req.validateRequired(req, [`arg1`])
   const arg1 = args.arg1
 
-  const result = await new ck.$sample$Ctr.getSample(req.reqUser, arg1)
+  const result = await ck.$sample$Ctr.getSample(req.reqUser, arg1)
   res.suc(result)
 }))

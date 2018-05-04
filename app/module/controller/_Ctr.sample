@@ -1,9 +1,11 @@
 class $Sample$Ctr {
   async postSample (reqUser, arg1) {
+    return arg1
   }
 
   async getSample (reqUser, arg1) {
+    return arg1
   }
 }
 
-module.exports = $Sample$Ctr
+module.exports = new $Sample$Ctr()
