@@ -21,7 +21,7 @@ describe.skip(groupPath, () => {
       errArr.push(result)
     })()
 
-    ck.apiDoc.outputApi({
+    ck.apiDoc.outputResultDoc({
       api: {
         title: ``,
         method: `post`,
@@ -56,7 +56,7 @@ describe.skip(groupPath, () => {
       errArr.push(result)
     })()
 
-    ck.apiDoc.outputApi({
+    ck.apiDoc.outputResultDoc({
       api: {
         title: ``,
         method: `get`,
