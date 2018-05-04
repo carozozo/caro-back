@@ -1,14 +1,17 @@
 /* 提供建立 apidoc 文件自動化 */
 class ApiDoc {
-  constructor (docDir, defineDoc, skipWriteFile) {
+  constructor (docDir, defineDoc) {
+    const fs = require(`fs`)
+
+    if (!fs.existsSync(docDir)) throw Error(`docDir 資料夾不存在`)
+    const stats = fs.statSync(docDir)
+    if (!stats.isDirectory()) throw Error(`docDir 必須為資料夾`)
+
     this._docDir = docDir
-    this._skipWriteFile = skipWriteFile
     this._defineFile = `${this._docDir}/${defineDoc}`
     this._define = {}
     this._path = require(`path`)
     this._fs = require(`fs`)
-
-    this._unlinkDirRecursively(this._docDir)
   }
 
   _regDefine (name) {
@@ -35,15 +38,7 @@ class ApiDoc {
 
   _unlinkDirRecursively (filePath) {
     if (!this._fs.existsSync(filePath)) return
-    const stats = this._fs.statSync(filePath)
-    if (!stats.isDirectory()) {
-      return this._fs.unlinkSync(filePath)
-    }
-    const files = this._fs.readdirSync(filePath)
-    for (const file of files) {
-      const subPath = `${filePath}/${file}`
-      this._unlinkDirRecursively(subPath)
-    }
+
   }
 
   _write (filePath, data) {
@@ -139,7 +134,6 @@ class ApiDoc {
   }
 
   outputApi (opt = {}) {
-    if (this._skipWriteFile) return
     const apiSampleRequestStr = `@apiSampleRequest off`
     let str = `/**\n${apiSampleRequestStr}\n`
 
@@ -194,15 +188,24 @@ class ApiDoc {
   }
 
   outputDefine (name, data) {
-    if (this._skipWriteFile) return
     let str = `/**\n`
     str += this.genDefine({name, data}) + `\n`
     str += `*/`
     this._writeDefineFile(str)
   }
 
-  removeDefineFile () {
-    this._fs.unlinkSync(this._defineFile)
+  unlinkDocFiles () {
+    const files = this._fs.readdirSync(this._docDir)
+    for (const file of files) {
+      const subPath = `${this._docDir}/${file}`
+      this._unlinkDirRecursively(subPath)
+
+      const stats = this._fs.statSync(subPath)
+      if (!stats.isDirectory()) {
+        console.log(`subPath=`, subPath)
+        this._fs.unlinkSync(subPath)
+      }
+    }
   }
 }
 
