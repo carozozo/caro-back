@@ -3,8 +3,10 @@
 ## 資料夾結構
 ```
 ├── app                                   # app root
-│   ├── model                             # 資料函式庫, 實作每個獨立 DB-Table 所需的邏輯處理, 繼承自 ck.SequelizeModel/ck.MongoModel...等
-│   │   └── schema                        # DB 欄位定義
+│   ├── model                             # 資料函式庫, 實作每個獨立 DB-Table 所需的邏輯處理, 繼承自 ck.MariaModel/ck.MongoModel...等
+│   │   ├── maria                         # maria model
+│   │   ├── mongo                         # mongo model
+│   │   └── redis                         # redis model
 │   │
 │   ├── module                            # 專案函式庫
 │   │   ├── controller                    # 提供 route 對應的功能實作
