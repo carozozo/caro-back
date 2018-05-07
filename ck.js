@@ -155,10 +155,12 @@ class CaroBack {
     const host = config.host
     const port = config.port
     const database = config.database
+    const username = config.username
+    const pwd = config.pwd
     const schemaDir = opt.schemaDir || `app/model/mongo/schema`
     const modelDir = opt.modelDir || `app/model/mongo`
 
-    await mongoClient.connectDb(host, port, database)
+    await mongoClient.connectDb(host, port, database, username, pwd, opt)
 
     const requireOpt = {load: true, force: true}
     this.requireDir(schemaDir, requireOpt)
@@ -175,10 +177,8 @@ class CaroBack {
     const schemaDir = opt.schemaDir || `app/model/maria/schema`
     const modelDir = opt.modelDir || `app/model/maria`
 
-    await mariaClient.connectDb(host, port, database, username, pwd, {
-      dialect: `mysql`,
-      logging: false,
-    })
+    opt = _.assign({dialect: `mysql`, logging: false}, opt)
+    await mariaClient.connectDb(host, port, database, username, pwd, opt)
 
     const requireOpt = {load: true, force: true}
     this.requireDir(schemaDir, requireOpt)
