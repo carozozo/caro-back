@@ -60,3 +60,34 @@ ck.a.fn1()
 ck.b.fn3()
 ck.b.fn4()
 ```
+
+### DB 連線及 model 載入
+```
+// e.g. 連接 Redis
+const client = new ck.Redis()
+const redis = {host: `xxx`, port: 6379, database: 0}
+const opt = {
+  modelDir: `app/model/redis` // 連線後要載入的 model 路徑
+}
+ck.bootRedis(client, redis, opt)
+```
+```
+// e.g. 連接 Mongo
+const client = new ck.Mongo()
+const config = {host: `xxx`, port: 27017, database: `xxx`}
+const opt = {
+  schemaDir: `app/model/mongo/schema` // 連線後要載入的 schema 路徑
+  modelDir: `app/model/mongo` // 連線後要載入的 model 路徑
+}
+ck.bootRedis(client, config, opt)
+```
+```
+// e.g. 連接 Maria(MySQL)
+const client = new ck.Sequelize()
+const config = {host: `xxx`, port: 3306, database: `xxx`, username: `xxx`, pwd: `xxx`}
+const opt = {
+  schemaDir: `app/model/maria/schema` // 連線後要載入的 schema 路徑
+  modelDir: `app/model/maria` // 連線後要載入的 model 路徑
+}
+ck.bootRedis(client, config, opt)
+```

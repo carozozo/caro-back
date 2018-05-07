@@ -52,11 +52,11 @@ class Mongo {
     return this
   }
 
-  connectDb (host, port, database) {
+  connectDb (host, port, database, username, pwd, opt = {}) {
     return new Promise((resolve) => {
-      const url = `mongodb://${host}:${port}/${database}`
-      const connection = this._connection = this._mongoose.createConnection(url)
-      connection.$url = url
+      const loginUrl = (username && pwd) ? `${username}:${pwd}@` : ``
+      const url = `mongodb://${loginUrl}${host}:${port}/${database}`
+      const connection = this._connection = this._mongoose.createConnection(url, opt)
       connection.once(`open`, () => {
         this.host = host
         this.port = port
