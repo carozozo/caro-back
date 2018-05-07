@@ -1,4 +1,4 @@
-class $Sample$Mod extends ck.SequelizeModel {
+class $Sample$Mod extends ck.MariaModel {
   constructor () {
     const model = ck.mainDb.createModel(`$Sample$`, ck.$sample$Sch.fields)
 

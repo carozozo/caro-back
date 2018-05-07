@@ -1,4 +1,4 @@
-class UserMod extends ck.SequelizeModel {
+class UserMod extends ck.MariaModel {
   constructor () {
     const model = ck.mainDb.createModel(`User`, ck.userSch.fields)
     model.hasMany(ck.profileMod.model, {

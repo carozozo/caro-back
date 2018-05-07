@@ -1,5 +1,5 @@
 /* 提供 sequalize 客製化操作服務 */
-class Sequelize {
+class Maria {
   constructor () {
     this.Sequelize = require(`sequelize`)
     this._hookMap = {}
@@ -161,4 +161,4 @@ class Sequelize {
   }
 }
 
-module.exports = Sequelize
+module.exports = Maria

@@ -1,5 +1,5 @@
 /* 客製化 Sequelize 資料操作 */
-class SequelizeModel {
+class MariaModel {
   constructor (model) {
     this.model = model
     this._hookMap = {}
@@ -247,4 +247,4 @@ class SequelizeModel {
   }
 }
 
-module.exports = SequelizeModel
+module.exports = MariaModel
