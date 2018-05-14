@@ -1,6 +1,6 @@
 class UserMod extends ck.MariaModel {
   constructor () {
-    const model = ck.mainDb.createModel(`User`, ck.userSch.fields)
+    const model = ck.mainDb.createModel(`User`, ck.userSch.fields, {comment: ck.userSch.comment})
     model.hasMany(ck.profileMod.model, {
       sourceKey: `username`,
       foreignKey: {name: `user_username`, allowNull: false}

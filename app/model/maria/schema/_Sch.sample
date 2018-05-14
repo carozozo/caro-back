@@ -3,8 +3,19 @@ class $Sample$Sch {
     const db = ck.mainDb
     const Sequelize = db.Sequelize
 
-    this.fields = {
+    const name = `$Sample$Sch`
+    const comment = `這是 schema 的說明`
+    const fields = {
     }
+
+    this.comment = comment
+    this.fields = fields
+
+    ck.apiDoc.outputSchemaDoc({
+      name,
+      comment,
+      fields,
+    })
   }
 }
 

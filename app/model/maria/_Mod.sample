@@ -1,6 +1,6 @@
 class $Sample$Mod extends ck.MariaModel {
   constructor () {
-    const model = ck.mainDb.createModel(`$Sample$`, ck.$sample$Sch.fields)
+    const model = ck.mainDb.createModel(`$Sample$`, ck.$sample$Sch.fields, {comment: ck.$sample$Sch.comment})
 
     super(model)
   }
