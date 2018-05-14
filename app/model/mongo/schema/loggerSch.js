@@ -1,21 +1,35 @@
 class LoggerSch {
   constructor () {
-    this.fields = {
-      type: { // 寫入的 log 類型
+    const name = `LoggerSch`
+    const comment = `Log 紀錄`
+    const fields = {
+      type: {
         type: String,
         required: true,
-        default: ``
+        default: ``,
+        comment: `寫入的 log 類型`,
       },
-      path: { // 呼叫 log 的檔案路徑
+      path: {
         type: String,
         required: true,
-        default: ``
+        default: ``,
+        comment: `呼叫 log 的檔案路徑`,
       },
-      args: [{ // 寫入的 log 參數
+      args: [{
         type: ck.mongoSchema.Mixed,
-      }]
+        comment: `寫入的 log 參數`,
+      }],
     }
-    this.schema = ck.mongoSchema.createSchema(this.fields)
+
+    this.comment = comment
+    this.fields = fields
+    this.schema = ck.mongoSchema.createSchema(fields)
+
+    ck.apiDoc.outputSchemaDoc({
+      name,
+      comment,
+      fields,
+    })
   }
 }
 
