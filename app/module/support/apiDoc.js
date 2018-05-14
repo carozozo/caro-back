@@ -4,6 +4,7 @@ class ApiDoc extends ck.ApiDoc {
     super(`${process.env.PWD}/docs`, `defineDoc.js`)
 
     this._isOutputFile = process.env.DOC
+    this._defaultVersion = require(`package.json`).version
     if (this._isOutputFile) {
       super.unlinkDocFiles()
       this.outputDefineDoc()
@@ -37,7 +38,7 @@ class ApiDoc extends ck.ApiDoc {
 
     if (!sucArr) throw Error(`請輸入 sucArr`)
     if (!errArr) throw Error(`請輸入 errArr`)
-    docObj.version = docObj.version || require(`package.json`).version
+    docObj.version = docObj.version || this._defaultVersion
     docObj.success = (() => {
       const result = []
       _.reduce(sucArr, (result, suc, i) => {
@@ -54,6 +55,27 @@ class ApiDoc extends ck.ApiDoc {
       }, result)
       return result
     })()
+    this.outputApi(docObj)
+  }
+
+  outputSchemaDoc (param) {
+    const name = param.name
+    const comment = param.comment
+    const fields = param.fields
+    const version = param.version || this._defaultVersion
+
+    const docObj = {
+      api: {
+        method: `schema`,
+        path: name,
+        title: comment
+      },
+      version,
+      group: `schema`,
+      name,
+      success: [{name: `fields`, data: fields}],
+    }
+
     this.outputApi(docObj)
   }
 

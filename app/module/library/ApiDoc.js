@@ -61,7 +61,7 @@ class ApiDoc {
   genApi (opt) {
     if (!opt) return
     const path = opt.path || `-`
-    let method = opt.method
+    let method = opt.method || ``
     let title = opt.title || ``
     method = method.toUpperCase()
     title = _.upperFirst(title)
