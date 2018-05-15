@@ -21,7 +21,7 @@
     "cron:beta": "NODE_ENV=beta pm2 startOrRestart ecosystem.config.js --only caro-back-cron-beta;npm run log.cron:beta",
     "cron:alpha": "NODE_ENV=alpha pm2 startOrRestart ecosystem.config.js --only caro-back-cron-alpha;npm run log.cron:alpha",
     "cron:prod": "NODE_ENV=production pm2 startOrRestart ecosystem.config.js --only caro-back-cron-production;npm run log.cron.prod",
-    "lint": "./node_modules/.bin/eslint --fix '**/*.js'",
+    "lint": "./node_modules/.bin/eslint '**/*.js'",
     "log.app": "pm2 logs caro-back-dev --lines 100",
     "log.app:beta": "pm2 logs caro-back-beta --lines 100",
     "log.app:alpha": "pm2 logs caro-back-alpha --lines 100",
