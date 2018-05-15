@@ -18,11 +18,8 @@ class RequestSch {
       ip: {
         type: String, required: true, comment: `user ip`,
       },
-      baseUrl: {
+      originalUrl: {
         type: String, required: true, comment: `request url`,
-      },
-      path: {
-        type: String, required: true, comment: `request path`,
       },
       method: {
         type: String,
