@@ -61,8 +61,30 @@ class ApiDoc extends ck.ApiDoc {
   outputSchemaDoc (param) {
     const name = param.name
     const comment = param.comment
-    const fields = param.fields
+    const fields = _.cloneDeep(param.fields)
     const version = param.version || this._defaultVersion
+
+    // 把 schema 裡的 type 轉成字串
+    const convertType = (f) => {
+      for (const key in f) {
+        // e.g. f = {key: {type: String}}
+        let define = f[key]
+        // e.g. f = {key: [{type: String}]}
+        if (Array.isArray(define)) {
+          define = define[0]
+        }
+        const type = define.type
+
+        // e.g. f = {key: {key1: {type: String}, key2: {type: String}}}
+        if (!type) {
+          convertType(define)
+          continue
+        }
+        define.type = type.name || _.get(type, `constructor.name`, ``)
+      }
+    }
+
+    convertType(fields)
 
     const docObj = {
       api: {
