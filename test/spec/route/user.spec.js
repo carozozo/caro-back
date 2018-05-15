@@ -215,7 +215,7 @@ describe(groupPath, () => {
         }
       }
     })()
-    // customer 無法權限
+    // customer 無權限
     await (async () => {
       const response = await ck.poster.get(queryPath, `customer`)
       assert.apiWar(response)
