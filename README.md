@@ -88,5 +88,5 @@
 - `test.doc` 執行 Unit-Test 並且建立 API DOC 文件
 
 ## 一些五四三
-- 執行 `TARGET=xxx FOLDER=xxx sample` 產生出來的範例就是基本的 code style
+- 執行 `TARGET=xxx npm run sample` 產生出來的範例就是基本的 code style
 - route 的 response 做了最大的簡化, 只有 suc/war/err 三種狀態

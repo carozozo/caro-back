@@ -1,20 +1,20 @@
 /*
- `TARGET=xxx  npm run sample`
+ `TARGET=xxx npm run sample`
  找出所有 .sample 檔案, 並複製成 .js 檔案
 
- `TARGET=xxx  npm run sample:model`
+ `TARGET=xxx npm run sample:model`
  找出 model 相關的 .sample 檔案, 並複製成 .js 檔案
 
- `TARGET=xxx  npm run sample:route`
+ `TARGET=xxx npm run sample:route`
  找出 route 相關的 .sample 檔案, 並複製成 .js 檔案
 
- `TARGET=xxx  npm run sample.delete`
+ `TARGET=xxx npm run sample.delete`
  找出所有 .sample 對應的檔案, 並移除對應的 .js 檔案
 
- `TARGET=xxx  npm run sample.delete:model`
+ `TARGET=xxx npm run sample.delete:model`
  找出 model 相關的 .sample 檔案, 並移除對應的 .js 檔案
 
- `TARGET=xxx  npm run sample.delete:route`
+ `TARGET=xxx npm run sample.delete:route`
  找出 route 相關的 .sample 檔案, 並移除對應的 .js 檔案
 */
 const _ = require(`caro`)
