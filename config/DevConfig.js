@@ -16,6 +16,23 @@ class DevConfig {
     ]
   }
 
+  get reqSetting () {
+    return {
+      // 指定哪些 request path 不要寫入傳送的參數
+      pathArrForSkipLogArgs: [
+        `user/login`,
+      ]
+    }
+  }
+
+  get resSetting () {
+    return {
+      // 指定哪些 request path 不要寫入回傳的結果
+      pathArrForSkipLogResponse: [
+      ]
+    }
+  }
+
   get cron () {
     return {
       timezone: `Asia/Taipei`

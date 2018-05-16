@@ -1,15 +1,8 @@
 /* 提供處理 req 的函式 */
 class Req {
-  // 指定哪些 request path 不要寫入傳送的參數
-  get pathArrForSkipLogArgs () {
-    return [
-      `user/login`,
-    ]
-  }
-
   // 判斷路徑是否不要寫入 args
   ifPathInSkipLogArgs (path) {
-    return _.some(this.pathArrForSkipLogArgs, (skipPath) => {
+    return _.some(ck.config.reqSetting.pathArrForSkipLogArgs, (skipPath) => {
       return `${path}/`.includes(`/${skipPath}/`)
     })
   }

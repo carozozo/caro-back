@@ -1,13 +1,8 @@
 /* 提供處理 req 的函式 */
 class Req {
-  // 指定哪些 request path 不要寫入回傳的結果
-  get pathArrForSkipLogResponse () {
-    return []
-  }
-
   // 判斷路徑是否不要寫入 response
   ifPathInSkipLogResponse (path) {
-    return _.some(this.pathArrForSkipLogResponse, (skipPath) => {
+    return _.some(ck.config.resSetting.pathArrForSkipLogResponse, (skipPath) => {
       return `${path}/`.includes(`/${skipPath}/`)
     })
   }
@@ -34,7 +29,6 @@ class Req {
     if (_.isError(data)) return data.message + data.stack
     return data
   }
-
 
   // 檢查必要參數, 並回傳 client 傳送的參數
   validateRequired (req, keys) {
