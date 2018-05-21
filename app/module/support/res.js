@@ -25,6 +25,10 @@ class Req {
       return ret
     }
 
+    return response
+  }
+
+  convertResponseData (response) {
     if (_.isError(response)) {
       const ret = []
       const stacks = response.stack.split(`\n`)
@@ -36,13 +40,7 @@ class Req {
       }
       return ret
     }
-
     return response
-  }
-
-  convertResponseData (data) {
-    if (_.isError(data)) return data.message + data.stack
-    return data
   }
 
   // 檢查必要參數, 並回傳 client 傳送的參數

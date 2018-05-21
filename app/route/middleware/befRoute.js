@@ -9,11 +9,13 @@ const doResponse = (req, res, status, ret) => {
   const username = _.get(req, `reqUser.$data.username`)
   const userRole = _.get(req, `reqUser.$data.role`)
 
-  const responseData = ck.res.contractResponse(originalUrl, status, ret)
+  const responseData = ck.res.convertResponseData(ret)
+
+  const contractedResponse = ck.res.contractResponse(originalUrl, status, responseData)
   ck.req.writeRequestLog(req, {
     responseTime: new Date(),
     responseStatus: status,
-    responseData,
+    responseData: contractedResponse,
   })
 
   let msg = `[${method}] ${originalUrl}, requestTime= ${moment(requestTime).utc().format()}`
@@ -22,7 +24,7 @@ const doResponse = (req, res, status, ret) => {
   ck.logger[loggerMethod](msg)
 
   res.json({
-    [status]: ck.res.convertResponseData(ret)
+    [status]: responseData
   })
 }
 
