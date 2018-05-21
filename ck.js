@@ -10,7 +10,6 @@ class CaroBack {
     const prepareStackTrace = Error.prepareStackTrace
     try {
       const err = new Error()
-      Error.prepareStackTrace = prepareStackTrace
       let callerFile
       let currentFile
 
