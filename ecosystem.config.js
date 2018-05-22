@@ -7,7 +7,6 @@ const ignoreArr = [
   `**/*.log`,
   `**/*.md`,
   `[\\/\\\\]\\./`,
-  `cron`,
   `docs`,
   `migration`,
   `node_modules`,
