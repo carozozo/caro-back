@@ -1,7 +1,8 @@
 require(`ck`)
 
-require(`boot/connectDb`)
-require(`boot/loadModel`)
+require(`boot/startRedis`)
+require(`boot/startMongo`)
+require(`boot/startMaria`)
 
 ck.boot.on(`runStacks`, async () => {
   const target = process.env.TARGET || require(`package.json`).version
