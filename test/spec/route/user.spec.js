@@ -177,8 +177,8 @@ describe(groupPath, () => {
     })()
     // customer 無法更新別人的資料
     await (async () => {
-      const stuff = await ck.tester.getTester(`stuff`)
-      const body = {id: stuff.id, data}
+      const staff = await ck.tester.getTester(`staff`)
+      const body = {id: staff.id, data}
       const response = await ck.poster.post(path, body, `customer`)
       assert.apiWar(response)
       errArr.push({body, response})
@@ -211,7 +211,7 @@ describe(groupPath, () => {
     await (async () => {
       const query = {id: user.id, attributes: `id,username`}
       const queryPath = _.serializeUrl(path, query)
-      const response = await ck.poster.get(queryPath, `stuff`)
+      const response = await ck.poster.get(queryPath, `staff`)
       assert.apiSuc(response)
       sucArr.push({queryPath, response})
     })()
@@ -244,7 +244,7 @@ describe(groupPath, () => {
         method: `get`,
         path
       },
-      roles: [`stuff`, `manager`, `admin`],
+      roles: [`staff`, `manager`, `admin`],
       name,
       group,
       queryParam: ck.apiDoc.genOptForQueryOneParam(`profile`, [
@@ -262,7 +262,7 @@ describe(groupPath, () => {
     await (async () => {
       const query = {offset: 0, limit: 2}
       const queryPath = _.serializeUrl(path, query)
-      const response = await ck.poster.get(queryPath, `stuff`)
+      const response = await ck.poster.get(queryPath, `staff`)
       assert.apiSuc(response)
       sucArr.push({queryPath, response})
     })()
@@ -302,7 +302,7 @@ describe(groupPath, () => {
         method: `get`,
         path
       },
-      roles: [`stuff`, `manager`, `admin`],
+      roles: [`staff`, `manager`, `admin`],
       name,
       group,
       queryParam: ck.apiDoc.genOptForQueryListParam(`profile`),

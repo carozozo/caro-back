@@ -35,7 +35,7 @@ router.post(`/updateById`, ck.auth.authRole(), ck.apiServer.genRouteFn(async (re
   res.suc(result)
 }))
 
-router.get(`/getById`, ck.auth.authRole(`stuff`, `manager`, `admin`), ck.apiServer.genRouteFn(async (req, res) => {
+router.get(`/getById`, ck.auth.authRole(`staff`, `manager`, `admin`), ck.apiServer.genRouteFn(async (req, res) => {
   const args = ck.req.validateRequired(req, [`id`])
   const id = args.id
 
@@ -43,7 +43,7 @@ router.get(`/getById`, ck.auth.authRole(`stuff`, `manager`, `admin`), ck.apiServ
   res.suc(result)
 }))
 
-router.get(`/getList`, ck.auth.authRole(`stuff`, `manager`, `admin`), ck.apiServer.genRouteFn(async (req, res) => {
+router.get(`/getList`, ck.auth.authRole(`staff`, `manager`, `admin`), ck.apiServer.genRouteFn(async (req, res) => {
   const args = ck.req.validateRequired(req)
   const username = args.username
 

@@ -6,7 +6,7 @@ class ProfileMod extends ck.MariaModel {
   }
 
   get rolesNeedEmail () {
-    return [`customer`, `stuff`, `manager`]
+    return [`customer`, `staff`, `manager`]
   }
 
   async createProfile (role, data) {

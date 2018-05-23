@@ -16,7 +16,7 @@
     setProfile(_user)
   }
   for (let i = 0; i < 10; i++) {
-    const _user = userFak.genCreate(userFak.genCreate({username: `stuff${i + 1}`, role: `stuff`}))
+    const _user = userFak.genCreate(userFak.genCreate({username: `staff${i + 1}`, role: `staff`}))
     _userArr.push(_user)
     setProfile(_user)
   }

@@ -10,7 +10,7 @@ class DevConfig {
   get userRoles () {
     return [
       `customer`,
-      `stuff`,
+      `staff`,
       `manager`,
       `admin`
     ]

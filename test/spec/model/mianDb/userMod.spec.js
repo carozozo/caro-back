@@ -12,10 +12,10 @@ describe(`userMod`, () => {
       const user = await ck.userMod.create(data)
       assert.equal(user.role, `customer`)
     })
-    it(`stuff`, async () => {
-      const data = ck.userFak.genCreate({role: `stuff`})
+    it(`staff`, async () => {
+      const data = ck.userFak.genCreate({role: `staff`})
       const user = await ck.userMod.create(data)
-      assert.equal(user.role, `stuff`)
+      assert.equal(user.role, `staff`)
     })
     it(`manager`, async () => {
       const data = ck.userFak.genCreate({role: `manager`})

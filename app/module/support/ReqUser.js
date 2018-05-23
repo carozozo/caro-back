@@ -20,8 +20,8 @@ class ReqUser {
     return this._checkRole(`customer`)
   }
 
-  ifStuff () {
-    return this._checkRole(`stuff`)
+  ifStaff () {
+    return this._checkRole(`staff`)
   }
 
   ifManager () {

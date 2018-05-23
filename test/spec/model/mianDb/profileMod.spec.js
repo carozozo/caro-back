@@ -15,7 +15,7 @@ describe(`ck.profileMod`, () => {
         await ck.profileMod.createProfile(`admin`, _profile)
       })
     })
-    it(`should got error if no email when relative user role is customer/stuff/manager`, async () => {
+    it(`should got error if no email when relative user role is customer/staff/manager`, async () => {
       const rolesNeedEmail = ck.profileMod.rolesNeedEmail
       for (const role of rolesNeedEmail) {
         const $user = await ck.userFak.fake({role})
