@@ -209,16 +209,25 @@ describe(groupPath, () => {
     const errArr = []
 
     await (async () => {
-      const query = {id: user.id}
+      const query = {id: user.id, attributes: `id,username`}
       const queryPath = _.serializeUrl(path, query)
-      for (const role of [`stuff`, `manager`, `admin`]) {
-        const response = await ck.poster.get(queryPath, role)
-        assert.apiSuc(response)
-        if (sucArr.gotResult) continue
-
-        sucArr.gotResult = true
-        sucArr.push({queryPath, response})
-      }
+      const response = await ck.poster.get(queryPath, `stuff`)
+      assert.apiSuc(response)
+      sucArr.push({queryPath, response})
+    })()
+    await (async () => {
+      const query = {id: user.id, includes: `profile`}
+      const queryPath = _.serializeUrl(path, query)
+      const response = await ck.poster.get(queryPath, `manager`)
+      assert.apiSuc(response)
+      sucArr.push({queryPath, response})
+    })()
+    await (async () => {
+      const query = {id: user.id, includes: `profile-name,phone`}
+      const queryPath = _.serializeUrl(path, query)
+      const response = await ck.poster.get(queryPath, `admin`)
+      assert.apiSuc(response)
+      sucArr.push({queryPath, response})
     })()
     // customer 無權限
     await (async () => {
@@ -247,23 +256,41 @@ describe(groupPath, () => {
   it(`getList`, async () => {
     const name = `getList`
     const path = `${groupPath}/${name}`
-    const query = {offset: 0, limit: 2}
-    const queryPath = _.serializeUrl(path, query)
     const sucArr = []
     const errArr = []
 
     await (async () => {
-      for (const role of [`stuff`, `manager`, `admin`]) {
-        const response = await ck.poster.get(queryPath, role)
-        assert.apiSuc(response)
-        if (sucArr.gotResult) continue
-
-        sucArr.gotResult = true
-        sucArr.push({queryPath, response})
-      }
+      const query = {offset: 0, limit: 2}
+      const queryPath = _.serializeUrl(path, query)
+      const response = await ck.poster.get(queryPath, `stuff`)
+      assert.apiSuc(response)
+      sucArr.push({queryPath, response})
     })()
-    // customer 權限不足
     await (async () => {
+      const query = {offset: 0, limit: 2, attributes: `id,username`}
+      const queryPath = _.serializeUrl(path, query)
+      const response = await ck.poster.get(queryPath, `manager`)
+      assert.apiSuc(response)
+      sucArr.push({queryPath, response})
+    })()
+    await (async () => {
+      const query = {offset: 0, limit: 2, includes: `profile`}
+      const queryPath = _.serializeUrl(path, query)
+      const response = await ck.poster.get(queryPath, `admin`)
+      assert.apiSuc(response)
+      sucArr.push({queryPath, response})
+    })()
+    await (async () => {
+      const query = {offset: 0, limit: 2, includes: `profile-name,phone`}
+      const queryPath = _.serializeUrl(path, query)
+      const response = await ck.poster.get(queryPath, `admin`)
+      assert.apiSuc(response)
+      sucArr.push({queryPath, response})
+    })()
+    // customer 無權限
+    await (async () => {
+      const query = {}
+      const queryPath = _.serializeUrl(path, query)
       const response = await ck.poster.get(queryPath, `customer`)
       assert.apiWar(response)
       errArr.push({queryPath, response})
