@@ -202,7 +202,6 @@ class ApiDoc {
 
       const stats = this._fs.statSync(subPath)
       if (!stats.isDirectory()) {
-        console.log(`subPath=`, subPath)
         this._fs.unlinkSync(subPath)
       }
     }
