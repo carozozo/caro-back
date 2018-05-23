@@ -18,9 +18,12 @@ const doResponse = (req, res, status, ret) => {
     responseData: contractedResponse,
   })
 
-  let msg = `[${method}] ${originalUrl}, requestTime= ${moment(requestTime).utc().format()}`
-  if (username) msg += `, username= ${username}, userRole= ${userRole}`
-  const loggerMethod = status === `suc` ? `log` : `err`
+  const isSuccess = status === `suc`
+  let msg = `[${method}] ${originalUrl}, requestTime= ${moment(requestTime).utc().format(`YYYY-MM-DD HH:mm:ss.SSS`)};`
+  if (username) msg += ` username= ${username}, userRole= ${userRole};`
+  if (!isSuccess) msg += ` ${contractedResponse}`
+
+  const loggerMethod = isSuccess ? `log` : `err`
   ck.logger[loggerMethod](msg)
 
   res.json({
