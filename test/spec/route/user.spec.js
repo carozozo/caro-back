@@ -63,7 +63,10 @@ describe(groupPath, () => {
       },
       name,
       group,
-      param: [
+      header:[
+        {type: `string`, field: `authMethod`, desc: `驗證方式`},
+      ],
+      bodyParam: [
         {type: `string`, field: `authMethod`, desc: `驗證方式`},
         {type: `object`, field: `data`, desc: ``},
         {type: `string`, field: `data.username`, desc: `帳號`},
@@ -118,10 +121,9 @@ describe(groupPath, () => {
       },
       name,
       group,
-      param: [
-        {type: `object`, field: `data`, desc: ``},
-        {type: `string`, field: `data.username`, desc: `帳號`},
-        {type: `string`, field: `data.pwd`, desc: `密碼`}
+      bodyParam: [
+        {type: `string`, field: `username`, desc: `帳號`},
+        {type: `string`, field: `pwd`, desc: `密碼`}
       ],
       use: ck.apiDoc.commonHeaderUse
     }, sucArr, errArr)
@@ -155,7 +157,6 @@ describe(groupPath, () => {
       },
       name,
       group,
-      param: [],
       use: ck.apiDoc.commonHeaderUse
     }, sucArr, errArr)
   })
@@ -190,8 +191,11 @@ describe(groupPath, () => {
       },
       name,
       group,
-      param: [
-        {type: `id`, field: `id`, desc: `用戶 id`}
+      bodyParam: [
+        {type: `id`, field: `id`, desc: `用戶 id`},
+        {type: `object`, field: `data`, desc: ``},
+        {type: `string`, field: `data.username`, desc: `帳號`},
+        {type: `string`, field: `data.pwd`, desc: `密碼`},
       ],
       use: ck.apiDoc.commonHeaderUse
     }, sucArr, errArr)
@@ -231,7 +235,7 @@ describe(groupPath, () => {
       roles: [`stuff`, `manager`, `admin`],
       name,
       group,
-      param: ck.apiDoc.genOptForQueryOneParam(`profile`, [
+      queryParam: ck.apiDoc.genOptForQueryOneParam(`profile`, [
         {type: `id`, field: `id`, desc: `用戶 id`}
       ]),
       use: ck.apiDoc.commonHeaderUse
@@ -271,7 +275,7 @@ describe(groupPath, () => {
       roles: [`stuff`, `manager`, `admin`],
       name,
       group,
-      param: ck.apiDoc.genOptForQueryListParam(`profile`),
+      queryParam: ck.apiDoc.genOptForQueryListParam(`profile`),
       use: ck.apiDoc.commonHeaderUse
     }, sucArr, errArr)
   })

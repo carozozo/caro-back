@@ -15,15 +15,15 @@ class ApiDoc extends ck.ApiDoc {
     return [`authHeader`]
   }
 
-  genOptForQueryOneParam (tables, opt = []) {
-    return _.concat(opt, [
+  genOptForQueryOneParam (tables, settings = []) {
+    return _.concat(settings, [
       {type: `String=${tables}`, field: `[includes]`, desc: `要附加的資料表; e.g. 'table1,table2'`},
       {type: `String`, field: `[attributes]`, desc: `要篩選的欄位; e.g. 'field1,field2'`},
     ])
   }
 
-  genOptForQueryListParam (tables, opt = []) {
-    return _.concat(opt, [
+  genOptForQueryListParam (tables, settings = []) {
+    return _.concat(settings, [
       {type: `String=${tables}`, field: `[includes]`, desc: `要附加的資料表; e.g. 'table1,table2'`},
       {type: `String`, field: `[attributes]`, desc: `要篩選的欄位; e.g. 'field1,field2'`},
       {type: `Number`, field: `[offset=0]`, desc: `要跳過的數量`},
@@ -35,26 +35,39 @@ class ApiDoc extends ck.ApiDoc {
     this.outputDefine(`authHeader`, this.genHeader({
       type: `string`,
       field: `Authorization`,
-      desc: `CaroAuth token of each request`
+      desc: `CaroAuth token for request`
     }))
   }
 
-  outputApi (opt = {}) {
+  outputApi (settingMap = {}) {
     if (!this._isOutputFile) return
 
     // 額外支援參數 roles => @apiDescription 會顯示限制的 user 權限
-    const roles = opt.roles
-    if (roles) opt.description = _.addHead(opt.description || ``, `使用權限: ${roles}; `)
-    super.outputApi(opt)
+    const roles = settingMap.roles
+    if (roles) settingMap.description = _.addHead(settingMap.description || ``, `使用權限: ${roles}; `)
+
+    // 額外支援參數 pathParam/queryParam/bodyParam
+    const paramGroupArr = [`path`, `query`, `body`]
+    _.forEach(paramGroupArr, (paramGroup) => {
+      const setting = settingMap[`${paramGroup}Param`]
+      if (!setting) return
+
+      settingMap.param = (settingMap.param || []).concat(_.map(setting, (p) => {
+        p.group = paramGroup
+        return p
+      }))
+    })
+
+    super.outputApi(settingMap)
   }
 
-  outputResultDoc (docObj, sucArr, errArr) {
+  outputResultDoc (settingMap, sucArr, errArr) {
     if (!this._isOutputFile) return
 
     if (!sucArr) throw Error(`請輸入 sucArr`)
     if (!errArr) throw Error(`請輸入 errArr`)
-    docObj.version = docObj.version || this._defaultVersion
-    docObj.success = (() => {
+    settingMap.version = settingMap.version || this._defaultVersion
+    settingMap.success = (() => {
       const result = []
       _.reduce(sucArr, (result, suc, i) => {
         result.push({name: `success${i + 1}`, data: suc})
@@ -62,7 +75,7 @@ class ApiDoc extends ck.ApiDoc {
       }, result)
       return result
     })()
-    docObj.error = (() => {
+    settingMap.error = (() => {
       const result = []
       _.reduce(errArr, (result, err, i) => {
         result.push({name: `error${i + 1}`, data: err})
@@ -70,7 +83,7 @@ class ApiDoc extends ck.ApiDoc {
       }, result)
       return result
     })()
-    this.outputApi(docObj)
+    this.outputApi(settingMap)
   }
 
   outputSchemaDoc (param) {
@@ -101,7 +114,7 @@ class ApiDoc extends ck.ApiDoc {
 
     convertType(fields)
 
-    const docObj = {
+    const settingMap = {
       api: {
         method: `schema`,
         path: name,
@@ -113,7 +126,7 @@ class ApiDoc extends ck.ApiDoc {
       success: [{name: `fields`, data: fields}],
     }
 
-    this.outputApi(docObj)
+    this.outputApi(settingMap)
   }
 
   transSchemaFields (fields) {
