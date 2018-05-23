@@ -92,16 +92,17 @@ class ApiDoc {
     let desc = opt.desc
     type = _.upperFirst(type)
     desc = _.upperFirst(desc)
-    return `@apiHeader (HEADER) {${type}} ${field} ${desc}`
+    return `@apiHeader (Header) {${type}} ${field} ${desc}`
   }
 
   genParam (opt) {
     const field = opt.field
+    let group = `${opt.group ? _.upperFirst(opt.group) + ` ` : ``}Param`
     let type = opt.type
     let desc = opt.desc
     type = _.upperFirst(type)
     desc = _.upperFirst(desc)
-    return `@apiParam (PARAM) {${type}} ${field} ${desc}`
+    return `@apiParam (${group}) {${type}} ${field} ${desc}`
   }
 
   genSuccess (opt) {
@@ -133,58 +134,70 @@ class ApiDoc {
     return `@apiUse ${name}`
   }
 
-  outputApi (opt = {}) {
+  outputApi (settingMap = {}) {
     const apiSampleRequestStr = `@apiSampleRequest off`
-    let str = `/**\n${apiSampleRequestStr}\n`
+    const fnMap = {
+      version: (setting) => {
+        return this.genVersion(setting) + `\n`
+      },
+      api: (setting) => {
+        return this.genApi(setting) + `\n`
+      },
+      description: (setting) => {
+        return this.genDescription(setting) + `\n`
+      },
+      name: (setting) => {
+        return this.genName(setting) + `\n`
+      },
+      group: (setting) => {
+        return this.genGroup(setting) + `\n`
+      },
+      header: (settings) => {
+        let str = ``
+        for (const setting of settings) {
+          str += this.genHeader(setting) + `\n`
+        }
+        return str
+      },
+      param: (settings) => {
+        let str = ``
+        for (const setting of settings) {
+          str += this.genParam(setting) + `\n`
+        }
+        return str
+      },
+      success: (settings) => {
+        let str = ``
+        for (const setting of settings) {
+          str += this.genSuccess(setting) + `\n`
+        }
+        return str
+      },
+      error: (settings) => {
+        let str = ``
+        for (const setting of settings) {
+          str += this.genError(setting) + `\n`
+        }
+        return str
+      },
+      use: (settings) => {
+        let str = ``
+        for (const setting of settings) {
+          str += this.genUse(setting) + `\n`
+        }
+        return str
+      },
+    }
 
-    for (const key in opt) {
-      switch (key) {
-      case `version`:
-        str += this.genVersion(opt[key]) + `\n`
-        break
-      case `api`:
-        str += this.genApi(opt[key]) + `\n`
-        break
-      case `description`:
-        str += this.genDescription(opt[key]) + `\n`
-        break
-      case `name`:
-        str += this.genName(opt[key]) + `\n`
-        break
-      case `group`:
-        str += this.genGroup(opt[key]) + `\n`
-        break
-      case `header`:
-        for (const h of opt[key]) {
-          str += this.genHeader(h) + `\n`
-        }
-        break
-      case `param`:
-        for (const p of opt[key]) {
-          str += this.genParam(p) + `\n`
-        }
-        break
-      case `success`:
-        for (const s of opt[key]) {
-          str += this.genSuccess(s) + `\n`
-        }
-        break
-      case `error`:
-        for (const e of opt[key]) {
-          str += this.genError(e) + `\n`
-        }
-        break
-      case `use`:
-        for (const u of opt[key]) {
-          str += this.genUse(u) + `\n`
-        }
-        break
-      default:
-        break
-      }
+    let str = `/**\n${apiSampleRequestStr}\n`
+    for (const key in settingMap) {
+      const fn = fnMap[key]
+      if (!fn) continue
+      const setting = settingMap[key]
+      str += fn(setting)
     }
     str += `*/`
-    this._writeApiFile(opt.group, str)
+    this._writeApiFile(settingMap.group, str)
   }
 
   outputDefine (name, data) {
