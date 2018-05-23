@@ -1,11 +1,15 @@
 require(`ck`)
 
-const cupLength = require(`os`).cpus().length
+const cpuLength = require(`os`).cpus().length
 const cluster = require(`cluster`)
 
-if (cluster.isMaster && process.env.CLUSTER === `true`) {
+let clusterNum = parseInt(process.env.CLUSTER, 10)
+if (clusterNum <= 0) clusterNum = Math.max(cpuLength + clusterNum, 1)
+else Math.min(clusterNum, cpuLength)
+
+if (cluster.isMaster && clusterNum > 1) {
   console.log(`master #${process.pid} is running`)
-  for (let i = 0; i < Math.max(cupLength, 1); ++i) {
+  for (let i = 0; i < clusterNum; ++i) {
     console.log(`Start fork worker [${i}]`)
     process.env.WORKER_INDEX = i // 寫入 process.env 讓 fork 出來的 worker process 使用
     cluster.fork()
