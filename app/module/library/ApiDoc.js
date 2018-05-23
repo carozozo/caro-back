@@ -105,6 +105,14 @@ class ApiDoc {
     return `@apiParam (${group}) {${type}} ${field} ${desc}`
   }
 
+  genParamExample (opt) {
+    const data = opt.data
+    const str = this._toString(data)
+    let name = opt.name
+    name = _.upperFirst(name)
+    return `@apiParamExample ${name}\n${str}`
+  }
+
   genSuccess (opt) {
     const data = opt.data
     const str = this._toString(data)
@@ -163,6 +171,13 @@ class ApiDoc {
         let str = ``
         for (const setting of settings) {
           str += this.genParam(setting) + `\n`
+        }
+        return str
+      },
+      paramExample: (settings) => {
+        let str = ``
+        for (const setting of settings) {
+          str += this.genParamExample(setting) + `\n`
         }
         return str
       },
