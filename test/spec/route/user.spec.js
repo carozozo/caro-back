@@ -123,7 +123,7 @@ describe(groupPath, () => {
         {type: `string`, field: `data.username`, desc: `帳號`},
         {type: `string`, field: `data.pwd`, desc: `密碼`}
       ],
-      use: ck.apiDoc.commonUse
+      use: ck.apiDoc.commonHeaderUse
     }, sucArr, errArr)
   })
   it(`logout`, async () => {
@@ -156,7 +156,7 @@ describe(groupPath, () => {
       name,
       group,
       param: [],
-      use: ck.apiDoc.commonUse
+      use: ck.apiDoc.commonHeaderUse
     }, sucArr, errArr)
   })
   it(`updateById`, async () => {
@@ -193,7 +193,7 @@ describe(groupPath, () => {
       param: [
         {type: `id`, field: `id`, desc: `用戶 id`}
       ],
-      use: ck.apiDoc.commonUse
+      use: ck.apiDoc.commonHeaderUse
     }, sucArr, errArr)
   })
   it(`getById`, async () => {
@@ -231,10 +231,10 @@ describe(groupPath, () => {
       roles: [`stuff`, `manager`, `admin`],
       name,
       group,
-      param: [
+      param: ck.apiDoc.genOptForQueryOneParam(`profile`, [
         {type: `id`, field: `id`, desc: `用戶 id`}
-      ],
-      use: ck.apiDoc.commonUse
+      ]),
+      use: ck.apiDoc.commonHeaderUse
     }, sucArr, errArr)
   })
   it(`getList`, async () => {
@@ -271,10 +271,8 @@ describe(groupPath, () => {
       roles: [`stuff`, `manager`, `admin`],
       name,
       group,
-      param: [
-        {type: `id`, field: `id`, desc: `用戶 id`}
-      ],
-      use: ck.apiDoc.commonUse
+      param: ck.apiDoc.genOptForQueryListParam(`profile`),
+      use: ck.apiDoc.commonHeaderUse
     }, sucArr, errArr)
   })
 })

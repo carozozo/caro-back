@@ -11,13 +11,28 @@ class ApiDoc extends ck.ApiDoc {
     }
   }
 
-  get commonUse () {
+  get commonHeaderUse () {
     return [`authHeader`]
   }
 
+  genOptForQueryOneParam (tables, opt = []) {
+    return _.concat(opt, [
+      {type: `String=${tables}`, field: `[includes]`, desc: `要附加的資料表; e.g. 'table1,table2'`},
+      {type: `String`, field: `[attributes]`, desc: `要篩選的欄位; e.g. 'field1,field2'`},
+    ])
+  }
+
+  genOptForQueryListParam (tables, opt = []) {
+    return _.concat(opt, [
+      {type: `String=${tables}`, field: `[includes]`, desc: `要附加的資料表; e.g. 'table1,table2'`},
+      {type: `String`, field: `[attributes]`, desc: `要篩選的欄位; e.g. 'field1,field2'`},
+      {type: `Number`, field: `[offset=0]`, desc: `要跳過的數量`},
+      {type: `Number`, field: `[limit=50]`, desc: `要取得的最大數量`},
+    ])
+  }
+
   outputDefineDoc () {
-    const name = `authHeader`
-    this.outputDefine(name, this.genHeader({
+    this.outputDefine(`authHeader`, this.genHeader({
       type: `string`,
       field: `Authorization`,
       desc: `CaroAuth token of each request`
