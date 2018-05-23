@@ -11,6 +11,27 @@ class ApiDoc extends ck.ApiDoc {
     }
   }
 
+  // 把 schema fields 裡的 type 轉成字串
+  _convertTypeOfSchemaFields (fields) {
+    for (const key in fields) {
+      // e.g. fields = {key: {type: String}}
+      let define = fields[key]
+
+      // e.g. fields = {key: [{type: String}]}
+      if (Array.isArray(define)) {
+        define = define[0]
+      }
+      const type = define.type
+
+      // e.g. fields = {key: {key1: {type: String}, key2: {type: String}}}
+      if (!type) {
+        this._convertTypeOfSchemaFields(define)
+        continue
+      }
+      define.type = type.name || _.get(type, `constructor.name`, ``)
+    }
+  }
+
   get commonHeaderUse () {
     return [`authHeader`]
   }
@@ -92,27 +113,7 @@ class ApiDoc extends ck.ApiDoc {
     const fields = _.cloneDeep(param.fields)
     const version = param.version || this._defaultVersion
 
-    // 把 schema 裡的 type 轉成字串
-    const convertType = (f) => {
-      for (const key in f) {
-        // e.g. f = {key: {type: String}}
-        let define = f[key]
-        // e.g. f = {key: [{type: String}]}
-        if (Array.isArray(define)) {
-          define = define[0]
-        }
-        const type = define.type
-
-        // e.g. f = {key: {key1: {type: String}, key2: {type: String}}}
-        if (!type) {
-          convertType(define)
-          continue
-        }
-        define.type = type.name || _.get(type, `constructor.name`, ``)
-      }
-    }
-
-    convertType(fields)
+    this._convertTypeOfSchemaFields(fields)
 
     const settingMap = {
       api: {
@@ -127,22 +128,6 @@ class ApiDoc extends ck.ApiDoc {
     }
 
     this.outputApi(settingMap)
-  }
-
-  transSchemaFields (fields) {
-    const obj = {}
-    _.forEach(fields, (val, key) => {
-      if (typeof val === `function`) {
-        obj[key] = val.name
-        return
-      }
-      if (_.isPlainObject(val)) {
-        obj[key] = this.transSchemaFields(val)
-        return
-      }
-      obj[key] = val
-    })
-    return obj
   }
 }
 
