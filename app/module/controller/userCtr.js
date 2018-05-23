@@ -47,23 +47,18 @@ class UserCtr {
     return user
   }
 
-  async getById (id) {
-    const user = await ck.userMod.findById(id)
+  async getById (id, opt = {}) {
+    opt = ck.unit.genOptForQueryMaria(opt)
+    const user = await ck.userMod.findById(id, opt)
     user && delete user.pwd
     return user
   }
 
-  async getList (param = {}) {
-    const username = param.username
-    const offset = param.offset || 0
-    const limit = param.limit || 50
-
+  async getList ({username} = {}, opt = {}) {
     const where = {}
-    const opt = {
-      offset,
-      limit
-    }
     if (username) where.username = {$like: `%${username}%`}
+
+    opt = ck.unit.genOptForQueryMaria(opt)
     const list = await ck.userMod.find(where, opt)
     return _.map(list, (u) => {
       delete u.pwd

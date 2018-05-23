@@ -39,13 +39,14 @@ router.get(`/getById`, ck.auth.authRole(`stuff`, `manager`, `admin`), ck.apiServ
   const args = ck.req.validateRequired(req, [`id`])
   const id = args.id
 
-  const result = await ck.userCtr.getById(id)
+  const result = await ck.userCtr.getById(id, args)
   res.suc(result)
 }))
 
 router.get(`/getList`, ck.auth.authRole(`stuff`, `manager`, `admin`), ck.apiServer.genRouteFn(async (req, res) => {
   const args = ck.req.validateRequired(req)
+  const username = args.username
 
-  const result = await ck.userCtr.getList(args)
+  const result = await ck.userCtr.getList({username}, args)
   res.suc(result)
 }))

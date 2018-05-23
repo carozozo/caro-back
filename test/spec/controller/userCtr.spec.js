@@ -124,13 +124,13 @@ describe(`userCtr`, () => {
       assert.isAtLeast(userList.length, 1)
       assert.isTrue(userList[0].username.includes(username))
     })
-    it(`by limit and skip`, async () => {
+    it(`by limit and offset`, async () => {
       const userList = await ck.userCtr.getList()
-      const userListByLimit = await ck.userCtr.getList({limit: 2})
+      const userListByLimit = await ck.userCtr.getList({}, {limit: 2})
       assert.equal(userListByLimit.length, 2)
 
       const secondItem = userList[1]
-      const userListBySkip = await ck.userCtr.getList({offset: 1})
+      const userListBySkip = await ck.userCtr.getList({}, {offset: 1})
       assert.equal(userListBySkip[0].username, secondItem.username)
     })
   })
