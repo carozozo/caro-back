@@ -9,6 +9,7 @@ describe(groupPath, () => {
     const errArr = []
     const authMethod = `email`
     const usernameForSuc = `sucUser`
+
     await (async () => {
       const authMethod = `email`
       const data = ck.userFak.genCreate({username: usernameForSuc})
@@ -16,7 +17,7 @@ describe(groupPath, () => {
       const body = {data, profileData, authMethod}
       const response = await ck.poster.post(path, body)
       assert.apiSuc(response)
-      sucArr.push(response)
+      sucArr.push({body, response})
     })()
     // 重複註冊
     await (async () => {
@@ -25,7 +26,7 @@ describe(groupPath, () => {
       const body = {data, profileData, authMethod}
       const response = await ck.poster.post(path, body)
       assert.apiWar(response)
-      errArr.push(response)
+      errArr.push({body, response})
     })()
     // 沒有輸入帳號
     await (async () => {
@@ -34,7 +35,7 @@ describe(groupPath, () => {
       const body = {data, profileData, authMethod}
       const response = await ck.poster.post(path, body)
       assert.apiWar(response)
-      errArr.push(response)
+      errArr.push({body, response})
     })()
     // 沒有輸入密碼
     await (async () => {
@@ -43,7 +44,7 @@ describe(groupPath, () => {
       const body = {data, profileData, authMethod}
       const response = await ck.poster.post(path, body)
       assert.apiWar(response)
-      errArr.push(response)
+      errArr.push({body, response})
     })()
     // 基本資料沒有 email
     await (async () => {
@@ -52,7 +53,7 @@ describe(groupPath, () => {
       const body = {data, profileData, authMethod}
       const response = await ck.poster.post(path, body)
       assert.apiWar(response)
-      errArr.push(response)
+      errArr.push({body, response})
     })()
 
     ck.apiDoc.outputResultDoc({
@@ -63,7 +64,7 @@ describe(groupPath, () => {
       },
       name,
       group,
-      header:[
+      header: [
         {type: `string`, field: `authMethod`, desc: `驗證方式`},
       ],
       bodyParam: [
@@ -89,28 +90,28 @@ describe(groupPath, () => {
       const body = {username: `adminTest`, pwd: `adminTest`}
       const response = await ck.poster.post(path, body)
       assert.apiSuc(response)
-      sucArr.push(response)
+      sucArr.push({body, response})
     })()
     // 帳號不存在
     await (async () => {
       const body = {username: `notExists`, pwd: `notExists`}
       const response = await ck.poster.post(path, body)
       assert.apiWar(response)
-      errArr.push(response)
+      errArr.push({body, response})
     })()
     // 沒輸入密碼
     await (async () => {
       const body = {username: `adminTest`, pwd: ``}
       const response = await ck.poster.post(path, body)
       assert.apiWar(response)
-      errArr.push(response)
+      errArr.push({body, response})
     })()
     // 密碼錯誤
     await (async () => {
       const body = {username: `adminTest`, pwd: `wrongPwd`}
       const response = await ck.poster.post(path, body)
       assert.apiWar(response)
-      errArr.push(response)
+      errArr.push({body, response})
     })()
 
     ck.apiDoc.outputResultDoc({
@@ -139,14 +140,14 @@ describe(groupPath, () => {
       // 取得最後一個 customer 測試帳號用來登出
       const response = await ck.poster.post(path, body, `customer`, {roleIndex: ck.tester.roleAmount - 1})
       assert.apiSuc(response)
-      sucArr.push(response)
+      sucArr.push({body, response})
     })()
     // 沒有訪問權限
     await (async () => {
       const body = {}
       const response = await ck.poster.post(path, body)
       assert.apiWar(response)
-      errArr.push(response)
+      errArr.push({body, response})
     })()
 
     ck.apiDoc.outputResultDoc({
@@ -172,7 +173,7 @@ describe(groupPath, () => {
       const body = {id: customer.id, data}
       const response = await ck.poster.post(path, body, `customer`)
       assert.apiSuc(response)
-      sucArr.push(response)
+      sucArr.push({body, response})
     })()
     // customer 無法更新別人的資料
     await (async () => {
@@ -180,7 +181,7 @@ describe(groupPath, () => {
       const body = {id: stuff.id, data}
       const response = await ck.poster.post(path, body, `customer`)
       assert.apiWar(response)
-      errArr.push(response)
+      errArr.push({body, response})
     })()
 
     ck.apiDoc.outputResultDoc({
@@ -204,26 +205,28 @@ describe(groupPath, () => {
     const name = `getUserById`
     const user = await ck.userMod.findOne()
     const path = `${groupPath}/getById`
-    const query = {id: user.id}
-    const queryPath = _.serializeUrl(path, query)
     const sucArr = []
     const errArr = []
 
     await (async () => {
+      const query = {id: user.id}
+      const queryPath = _.serializeUrl(path, query)
       for (const role of [`stuff`, `manager`, `admin`]) {
         const response = await ck.poster.get(queryPath, role)
         assert.apiSuc(response)
-        if (!sucArr.gotResult) {
-          sucArr.gotResult = true
-          sucArr.push(response)
-        }
+        if (sucArr.gotResult) continue
+
+        sucArr.gotResult = true
+        sucArr.push({queryPath, response})
       }
     })()
     // customer 無權限
     await (async () => {
+      const query = {id: user.id}
+      const queryPath = _.serializeUrl(path, query)
       const response = await ck.poster.get(queryPath, `customer`)
       assert.apiWar(response)
-      errArr.push(response)
+      errArr.push({queryPath, response})
     })()
 
     ck.apiDoc.outputResultDoc({
@@ -253,17 +256,17 @@ describe(groupPath, () => {
       for (const role of [`stuff`, `manager`, `admin`]) {
         const response = await ck.poster.get(queryPath, role)
         assert.apiSuc(response)
-        if (!sucArr.gotResult) {
-          sucArr.gotResult = true
-          sucArr.push(response)
-        }
+        if (sucArr.gotResult) continue
+
+        sucArr.gotResult = true
+        sucArr.push({queryPath, response})
       }
     })()
     // customer 權限不足
     await (async () => {
       const response = await ck.poster.get(queryPath, `customer`)
       assert.apiWar(response)
-      errArr.push(response)
+      errArr.push({queryPath, response})
     })()
 
     ck.apiDoc.outputResultDoc({

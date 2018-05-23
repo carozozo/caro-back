@@ -32,6 +32,15 @@ class ApiDoc extends ck.ApiDoc {
     }
   }
 
+  _genDataForResultDoc (setting) {
+    let data = ``
+    if (setting.body) data += `body: ` + this._toString(setting.body) + `\n`
+    if (setting.queryPath) data += `queryPath: ` + this._toString(setting.queryPath) + `\n`
+    data += `response: ` + this._toString(setting.response)
+
+    return data
+  }
+
   get commonHeaderUse () {
     return [`authHeader`]
   }
@@ -82,24 +91,28 @@ class ApiDoc extends ck.ApiDoc {
     super.outputApi(settingMap)
   }
 
-  outputResultDoc (settingMap, sucArr, errArr) {
+  outputResultDoc (settingMap, sucArr = [], errArr = []) {
     if (!this._isOutputFile) return
 
-    if (!sucArr) throw Error(`請輸入 sucArr`)
-    if (!errArr) throw Error(`請輸入 errArr`)
     settingMap.version = settingMap.version || this._defaultVersion
     settingMap.success = (() => {
       const result = []
-      _.reduce(sucArr, (result, suc, i) => {
-        result.push({name: `success${i + 1}`, data: suc})
+      _.reduce(sucArr, (result, setting, i) => {
+        const name = setting.name || `success${i + 1}`
+        const data = this._genDataForResultDoc(setting)
+
+        result.push({name, data})
         return result
       }, result)
       return result
     })()
     settingMap.error = (() => {
       const result = []
-      _.reduce(errArr, (result, err, i) => {
-        result.push({name: `error${i + 1}`, data: err})
+      _.reduce(errArr, (result, setting, i) => {
+        const name = setting.name || `error${i + 1}`
+        const data = this._genDataForResultDoc(setting)
+
+        result.push({name, data})
         return result
       }, result)
       return result
