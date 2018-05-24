@@ -1,15 +1,46 @@
-describe.skip(`$sample$Ctr`, () => {
-  describe(`postSample`, () => {
+describe.skip(`xxxCtr`, () => {
+  describe(`createSample`, () => {
     it(async () => {
     })
     it(`other case`, async () => {
+    })
+    it(`error case`, async () => {
     })
   })
 
-  describe(`getSample`, () => {
+  describe(`getByIdSample`, () => {
     it(async () => {
     })
     it(`other case`, async () => {
+    })
+    it(`error case`, async () => {
+    })
+  })
+
+  describe(`getListSample`, () => {
+    it(async () => {
+    })
+    it(`other case`, async () => {
+    })
+    it(`error case`, async () => {
+    })
+  })
+
+  describe(`updateByIdSample`, () => {
+    it(async () => {
+    })
+    it(`other case`, async () => {
+    })
+    it(`error case`, async () => {
+    })
+  })
+
+  describe(`deleteByIdSample`, () => {
+    it(async () => {
+    })
+    it(`other case`, async () => {
+    })
+    it(`error case`, async () => {
     })
   })
 })

@@ -2,70 +2,207 @@ const group = `$sample$`
 const groupPath = ck.apiServer.getGroupPath(group)
 
 describe.skip(groupPath, () => {
-  it(`postSample`, async () => {
-    const name = `postSample`
-    const path = `${groupPath}/${name}`
+  it(`createSample`, async () => {
+    const name = `createSample`
+    const path = `${groupPath}`
     const sucArr = []
     const errArr = []
 
     await (async () => {
+      const role = `customer`
+      const desc = `成功的測試說明`
       const body = {arg1: 1}
-      const result = await ck.poster.post(path, body, `customer`)
-      assert.apiSuc(result)
-      sucArr.push(result)
+      const response = await ck.poster.post(path, body, role)
+      assert.apiSuc(response)
+      sucArr.push({desc, body, response, role})
     })()
+
     await (async () => {
+      const role = `customer`
+      const desc = `錯誤的測試說明`
       const body = {}
-      const result = await ck.poster.post(path, body, `customer`)
-      assert.apiErr(result)
-      errArr.push(result)
+      const response = await ck.poster.post(path, body, role)
+      assert.apiErr(response)
+      errArr.push({desc, body, response, role})
     })()
 
     ck.apiDoc.outputResultDoc({
       api: {
-        title: ``,
+        title: `post測試`,
         method: `post`,
         path,
       },
+      roles: [`customer`, `staff`, `manager`, `admin`],
       name,
       group,
-      param: [
-        {type: `string`, field: `sample`, desc: ``},
+      bodyParam: [
+        {type: `string`, field: `arg1`, desc: ``},
       ],
       use: ck.apiDoc.commonHeaderUse,
     }, sucArr, errArr)
   })
-  it(`getSample`, async () => {
-    const name = `getSample`
-    const path = `${groupPath}/${name}`
+  it(`getByIdSample`, async () => {
+    const name = `getByIdSample`
+    const path = `${groupPath}/:$sample$Id`
     const sucArr = []
     const errArr = []
 
     await (async () => {
-      const query = {arg1: 1}
-      const queryPath = _.serializeUrl(path, query)
-      const result = await ck.poster.get(queryPath, `customer`)
-      assert.apiSuc(result)
-      sucArr.push(result)
-    })()
-    await (async () => {
+      const role = `customer`
+      const desc = `成功的測試說明`
       const query = {}
       const queryPath = _.serializeUrl(path, query)
-      const result = await ck.poster.get(queryPath, `customer`)
-      assert.apiErr(result)
-      errArr.push(result)
+      const response = await ck.poster.get(queryPath, role)
+      assert.apiSuc(response)
+      sucArr.push({desc, queryPath, response, role})
+    })()
+
+    await (async () => {
+      const role = `customer`
+      const desc = `錯誤的測試說明`
+      const query = {}
+      const queryPath = _.serializeUrl(path, query)
+      const response = await ck.poster.get(queryPath, role)
+      assert.apiErr(response)
+      errArr.push({desc, queryPath, response, role})
     })()
 
     ck.apiDoc.outputResultDoc({
       api: {
-        title: ``,
+        title: `getOne測試`,
         method: `get`,
         path,
       },
+      roles: [`customer`, `staff`, `manager`, `admin`],
       name,
       group,
-      param: [
-        {type: `string`, field: `sample`, desc: ``},
+      pathParam: [
+        {type: `id`, field: `$sample$Id`, desc: `$sample$ id`},
+      ],
+      queryParam: ck.apiDoc.genOptForQueryOneParam(`附加的tableName`, [
+        {type: `string`, field: `arg1`, desc: ``},
+      ]),
+      use: ck.apiDoc.commonHeaderUse,
+    }, sucArr, errArr)
+  })
+  it(`getListSample`, async () => {
+    const name = `getListSample`
+    const path = `${groupPath}`
+    const sucArr = []
+    const errArr = []
+
+    await (async () => {
+      const role = `customer`
+      const desc = `成功的測試說明`
+      const query = {arg1: 1}
+      const queryPath = _.serializeUrl(path, query)
+      const response = await ck.poster.get(queryPath, role)
+      assert.apiSuc(response)
+      sucArr.push({desc, queryPath, response, role})
+    })()
+
+    await (async () => {
+      const role = `customer`
+      const desc = `錯誤的測試說明`
+      const query = {}
+      const queryPath = _.serializeUrl(path, query)
+      const response = await ck.poster.get(queryPath, role)
+      assert.apiErr(response)
+      errArr.push({desc, queryPath, response, role})
+    })()
+
+    ck.apiDoc.outputResultDoc({
+      api: {
+        title: `getList測試`,
+        method: `get`,
+        path,
+      },
+      roles: [`customer`, `staff`, `manager`, `admin`],
+      name,
+      group,
+      queryParam: ck.apiDoc.genOptForQueryListParam(`附加的tableName`, [
+        {type: `string`, field: `arg1`, desc: ``},
+      ]),
+      use: ck.apiDoc.commonHeaderUse,
+    }, sucArr, errArr)
+  })
+  it(`updateByIdSample`, async () => {
+    const name = `updateByIdSample`
+    const path = `${groupPath}/:$sample$Id`
+    const sucArr = []
+    const errArr = []
+
+    await (async () => {
+      const role = `customer`
+      const desc = `成功的測試說明`
+      const body = {arg1: 1}
+      const response = await ck.poster.put(path, body, role)
+      assert.apiSuc(response)
+      sucArr.push({desc, body, response, role})
+    })()
+
+    await (async () => {
+      const role = `customer`
+      const desc = `錯誤的測試說明`
+      const body = {}
+      const response = await ck.poster.put(path, body, role)
+      assert.apiErr(response)
+      errArr.push({desc, body, response, role})
+    })()
+
+    ck.apiDoc.outputResultDoc({
+      api: {
+        title: `put測試`,
+        method: `put`,
+        path,
+      },
+      roles: [`customer`, `staff`, `manager`, `admin`],
+      name,
+      group,
+      pathParam: [
+        {type: `id`, field: `$sample$Id`, desc: `$sample$ id`},
+      ],
+      bodyParam: [
+        {type: `string`, field: `arg1`, desc: ``},
+      ],
+      use: ck.apiDoc.commonHeaderUse,
+    }, sucArr, errArr)
+  })
+  it(`deleteByIdSample`, async () => {
+    const name = `deleteByIdSample`
+    const path = `${groupPath}/:$sample$Id`
+    const sucArr = []
+    const errArr = []
+
+    await (async () => {
+      const role = `customer`
+      const desc = `成功的測試說明`
+      const body = {arg1: 1}
+      const response = await ck.poster.delete(path, body, role)
+      assert.apiSuc(response)
+      sucArr.push({desc, body, response, role})
+    })()
+
+    await (async () => {
+      const role = `customer`
+      const desc = `錯誤的測試說明`
+      const body = {}
+      const response = await ck.poster.delete(path, body, role)
+      assert.apiErr(response)
+      errArr.push({desc, body, response, role})
+    })()
+
+    ck.apiDoc.outputResultDoc({
+      api: {
+        title: `delete測試`,
+        method: `delete`,
+        path,
+      },
+      roles: [`customer`, `staff`, `manager`, `admin`],
+      name,
+      group,
+      pathParam: [
+        {type: `id`, field: `$sample$Id`, desc: `$sample$ id`},
       ],
       use: ck.apiDoc.commonHeaderUse,
     }, sucArr, errArr)

@@ -1,6 +1,11 @@
 describe.skip(`sampleSer`, () => {
   describe(``, () => {
-    it(``, async () => {
+    it(async () => {
+    })
+    it(`other case`, async () => {
+    })
+
+    it(`error case`, async () => {
     })
   })
 })

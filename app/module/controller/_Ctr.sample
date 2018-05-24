@@ -1,9 +1,21 @@
 class $Sample$Ctr {
-  async postSample (reqUser, arg1) {
+  async createSample (arg1) {
     return arg1
   }
 
-  async getSample (reqUser, arg1) {
+  async getByIdSample (id, arg1) {
+    return arg1
+  }
+
+  async getListSample (arg1) {
+    return arg1
+  }
+
+  async updateByIdSample (id, arg1) {
+    return arg1
+  }
+
+  async deleteByIdSample (id, arg1) {
     return arg1
   }
 }
