@@ -11,49 +11,56 @@ describe(groupPath, () => {
     const usernameForSuc = `sucUser`
 
     await (async () => {
+      const role = ``
+      const desc = `註冊成功`
       const authMethod = `email`
       const data = ck.userFak.genCreate({username: usernameForSuc})
       const profileData = ck.profileFak.genCreate({name: data.username})
       const body = {data, profileData, authMethod}
       const response = await ck.poster.post(path, body)
       assert.apiSuc(response)
-      sucArr.push({body, response})
+      sucArr.push({desc, body, response, role})
     })()
-    // 重複註冊
+
     await (async () => {
+      const role = ``
+      const desc = `重複註冊`
       const data = ck.userFak.genCreate({username: usernameForSuc})
       const profileData = ck.profileFak.genCreate({name: data.username})
       const body = {data, profileData, authMethod}
       const response = await ck.poster.post(path, body)
       assert.apiWar(response)
-      errArr.push({body, response})
+      errArr.push({desc, body, response, role})
     })()
-    // 沒有輸入帳號
     await (async () => {
+      const role = ``
+      const desc = `沒有輸入帳號`
       const data = ck.userFak.genCreate({username: undefined})
       const profileData = ck.profileFak.genCreate({name: data.username})
       const body = {data, profileData, authMethod}
       const response = await ck.poster.post(path, body)
       assert.apiWar(response)
-      errArr.push({body, response})
+      errArr.push({desc, body, response, role})
     })()
-    // 沒有輸入密碼
     await (async () => {
+      const role = ``
+      const desc = `沒有輸入密碼`
       const data = ck.userFak.genCreate({pwd: undefined})
       const profileData = ck.profileFak.genCreate({name: data.username})
       const body = {data, profileData, authMethod}
       const response = await ck.poster.post(path, body)
       assert.apiWar(response)
-      errArr.push({body, response})
+      errArr.push({desc, body, response, role})
     })()
-    // 基本資料沒有 email
     await (async () => {
+      const role = ``
+      const desc = `基本資料沒有 email`
       const data = ck.userFak.genCreate({username: `noEmailUser`})
       const profileData = ck.profileFak.genCreate({name: data.username, email: undefined})
       const body = {data, profileData, authMethod}
       const response = await ck.poster.post(path, body)
       assert.apiWar(response)
-      errArr.push({body, response})
+      errArr.push({desc, body, response, role})
     })()
 
     ck.apiDoc.outputResultDoc({
@@ -87,31 +94,37 @@ describe(groupPath, () => {
     const errArr = []
 
     await (async () => {
+      const role = ``
+      const desc = `登入成功`
       const body = {username: `adminTest`, pwd: `adminTest`}
       const response = await ck.poster.post(path, body)
       assert.apiSuc(response)
-      sucArr.push({body, response})
+      sucArr.push({desc, body, response, role})
     })()
-    // 帳號不存在
+
     await (async () => {
+      const role = ``
+      const desc = `帳號不存在`
       const body = {username: `notExists`, pwd: `notExists`}
       const response = await ck.poster.post(path, body)
       assert.apiWar(response)
-      errArr.push({body, response})
+      errArr.push({desc, body, response, role})
     })()
-    // 沒輸入密碼
     await (async () => {
+      const role = ``
+      const desc = `沒輸入密碼`
       const body = {username: `adminTest`, pwd: ``}
       const response = await ck.poster.post(path, body)
       assert.apiWar(response)
-      errArr.push({body, response})
+      errArr.push({desc, body, response, role})
     })()
-    // 密碼錯誤
     await (async () => {
+      const role = ``
+      const desc = `密碼錯誤`
       const body = {username: `adminTest`, pwd: `wrongPwd`}
       const response = await ck.poster.post(path, body)
       assert.apiWar(response)
-      errArr.push({body, response})
+      errArr.push({desc, body, response, role})
     })()
 
     ck.apiDoc.outputResultDoc({
@@ -136,18 +149,22 @@ describe(groupPath, () => {
     const errArr = []
 
     await (async () => {
+      const role = `customer`
+      const desc = ``
       const body = {}
       // 取得最後一個 customer 測試帳號用來登出
-      const response = await ck.poster.post(path, body, `customer`, {roleIndex: ck.tester.roleAmount - 1})
+      const response = await ck.poster.post(path, body, role, {roleIndex: ck.tester.roleAmount - 1})
       assert.apiSuc(response)
-      sucArr.push({body, response})
+      sucArr.push({desc, body, response, role})
     })()
-    // 沒有訪問權限
+
     await (async () => {
+      const role = ``
+      const desc = `沒有訪問權限`
       const body = {}
       const response = await ck.poster.post(path, body)
       assert.apiWar(response)
-      errArr.push({body, response})
+      errArr.push({desc, body, response, role})
     })()
 
     ck.apiDoc.outputResultDoc({
@@ -169,19 +186,23 @@ describe(groupPath, () => {
     const errArr = []
 
     await (async () => {
+      const role = `customer`
+      const desc = `更新成功`
       const customer = await ck.tester.getTester()
       const body = {id: customer.id, data}
-      const response = await ck.poster.post(path, body, `customer`)
+      const response = await ck.poster.post(path, body, role)
       assert.apiSuc(response)
-      sucArr.push({body, response})
+      sucArr.push({desc, body, response, role})
     })()
-    // customer 無法更新別人的資料
+
     await (async () => {
+      const role = `customer`
+      const desc = `customer 無法更新別人的資料`
       const staff = await ck.tester.getTester(`staff`)
       const body = {id: staff.id, data}
-      const response = await ck.poster.post(path, body, `customer`)
+      const response = await ck.poster.post(path, body, role)
       assert.apiWar(response)
-      errArr.push({body, response})
+      errArr.push({desc, body, response, role})
     })()
 
     ck.apiDoc.outputResultDoc({
@@ -209,33 +230,41 @@ describe(groupPath, () => {
     const errArr = []
 
     await (async () => {
+      const role = `staff`
+      const desc = `參數 attributes 指定抓取出來的資料欄位`
       const query = {id: user.id, attributes: `id,username`}
       const queryPath = _.serializeUrl(path, query)
-      const response = await ck.poster.get(queryPath, `staff`)
+      const response = await ck.poster.get(queryPath, role)
       assert.apiSuc(response)
-      sucArr.push({queryPath, response})
+      sucArr.push({desc, queryPath, response, role})
     })()
     await (async () => {
+      const role = `manager`
+      const desc = `參數 includes 指定附加資料`
       const query = {id: user.id, includes: `profile`}
       const queryPath = _.serializeUrl(path, query)
-      const response = await ck.poster.get(queryPath, `manager`)
+      const response = await ck.poster.get(queryPath, role)
       assert.apiSuc(response)
-      sucArr.push({queryPath, response})
+      sucArr.push({desc, queryPath, response, role})
     })()
     await (async () => {
+      const role = `admin`
+      const desc = `參數 includes 指定附加資料, 並指定附加資料的欄位`
       const query = {id: user.id, includes: `profile-name,phone`}
       const queryPath = _.serializeUrl(path, query)
-      const response = await ck.poster.get(queryPath, `admin`)
+      const response = await ck.poster.get(queryPath, role)
       assert.apiSuc(response)
-      sucArr.push({queryPath, response})
+      sucArr.push({desc, queryPath, response, role})
     })()
-    // customer 無權限
+
     await (async () => {
+      const role = `customer`
+      const desc = `customer 無權限`
       const query = {id: user.id}
       const queryPath = _.serializeUrl(path, query)
-      const response = await ck.poster.get(queryPath, `customer`)
+      const response = await ck.poster.get(queryPath, role)
       assert.apiWar(response)
-      errArr.push({queryPath, response})
+      errArr.push({desc, queryPath, response, role})
     })()
 
     ck.apiDoc.outputResultDoc({
@@ -260,40 +289,50 @@ describe(groupPath, () => {
     const errArr = []
 
     await (async () => {
+      const role = `staff`
+      const desc = `一般的參數 offset limit`
       const query = {offset: 0, limit: 2}
       const queryPath = _.serializeUrl(path, query)
-      const response = await ck.poster.get(queryPath, `staff`)
+      const response = await ck.poster.get(queryPath, role)
       assert.apiSuc(response)
-      sucArr.push({queryPath, response})
+      sucArr.push({desc, queryPath, response, role})
     })()
     await (async () => {
+      const role = `manager`
+      const desc = `參數 attributes 指定抓取出來的資料欄位`
       const query = {offset: 0, limit: 2, attributes: `id,username`}
       const queryPath = _.serializeUrl(path, query)
-      const response = await ck.poster.get(queryPath, `manager`)
+      const response = await ck.poster.get(queryPath, role)
       assert.apiSuc(response)
-      sucArr.push({queryPath, response})
+      sucArr.push({desc, queryPath, response, role})
     })()
     await (async () => {
+      const role = `admin`
+      const desc = `參數 includes 指定附加資料`
       const query = {offset: 0, limit: 2, includes: `profile`}
       const queryPath = _.serializeUrl(path, query)
-      const response = await ck.poster.get(queryPath, `admin`)
+      const response = await ck.poster.get(queryPath, role)
       assert.apiSuc(response)
-      sucArr.push({queryPath, response})
+      sucArr.push({desc, queryPath, response, role})
     })()
     await (async () => {
+      const role = `admin`
+      const desc = `參數 includes 指定附加資料, 並指定附加資料的欄位`
       const query = {offset: 0, limit: 2, includes: `profile-name,phone`}
       const queryPath = _.serializeUrl(path, query)
-      const response = await ck.poster.get(queryPath, `admin`)
+      const response = await ck.poster.get(queryPath, role)
       assert.apiSuc(response)
-      sucArr.push({queryPath, response})
+      sucArr.push({desc, queryPath, response, role})
     })()
-    // customer 無權限
+
     await (async () => {
+      const role = `customer`
+      const desc = `customer 無權限`
       const query = {}
       const queryPath = _.serializeUrl(path, query)
-      const response = await ck.poster.get(queryPath, `customer`)
+      const response = await ck.poster.get(queryPath, role)
       assert.apiWar(response)
-      errArr.push({queryPath, response})
+      errArr.push({desc, queryPath, response, role})
     })()
 
     ck.apiDoc.outputResultDoc({

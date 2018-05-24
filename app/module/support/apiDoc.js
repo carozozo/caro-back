@@ -34,6 +34,8 @@ class ApiDoc extends ck.ApiDoc {
 
   _genDataForResultDoc (setting) {
     let data = ``
+    if (setting.role) data += `role: ` + this._toString(setting.role) + `\n`
+    if (setting.desc) data += `description: ` + this._toString(setting.desc) + `\n`
     if (setting.body) data += `body: ` + this._toString(setting.body) + `\n`
     if (setting.queryPath) data += `queryPath: ` + this._toString(setting.queryPath) + `\n`
     data += `response: ` + this._toString(setting.response)
@@ -97,8 +99,10 @@ class ApiDoc extends ck.ApiDoc {
     settingMap.version = settingMap.version || this._defaultVersion
     settingMap.success = (() => {
       const result = []
-      _.reduce(sucArr, (result, setting, i) => {
-        const name = setting.name || `success${i + 1}`
+      let count = 1
+
+      _.reduce(sucArr, (result, setting) => {
+        const name = `success-${setting.name || count++}`
         const data = this._genDataForResultDoc(setting)
 
         result.push({name, data})
@@ -108,8 +112,10 @@ class ApiDoc extends ck.ApiDoc {
     })()
     settingMap.error = (() => {
       const result = []
-      _.reduce(errArr, (result, setting, i) => {
-        const name = setting.name || `error${i + 1}`
+      let count = 1
+
+      _.reduce(errArr, (result, setting) => {
+        const name = `error-${setting.name || count++}`
         const data = this._genDataForResultDoc(setting)
 
         result.push({name, data})
