@@ -14,6 +14,6 @@ ck.boot.regStack(async () => {
       }
     }
   }
-  const port = process.env.PORT || ck.config.port
+  const port = process.env.APP_PORT
   await start(port)
 })

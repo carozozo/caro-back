@@ -1,3 +1,5 @@
+require(`dotenv`).config()
+
 const ignoreArr = [
   `.git`,
   `.gitignore`,
@@ -7,6 +9,7 @@ const ignoreArr = [
   `**/*.log`,
   `**/*.md`,
   `[\\/\\\\]\\./`,
+  `docker`,
   `docs`,
   `migration`,
   `node_modules`,
@@ -32,5 +35,5 @@ module.exports = {
     env: {
       NODE_PATH: nodePath
     }
-  }]
+  }],
 }

@@ -3,10 +3,6 @@ class DevConfig {
     require(`dotenv`).config()
   }
 
-  get port () {
-    return 3000
-  }
-
   get userRoles () {
     return [
       `customer`,

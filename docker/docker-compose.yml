@@ -1,0 +1,73 @@
+version: '3'
+
+networks:
+  local-net:
+    driver: bridge
+services:
+  caro-back:
+    container_name: ${APP_NAME}-${APP_ENV}
+    image: carozozo/${APP_NAME}:${APP_ENV}-${APP_VERSION}
+    restart: always
+    volumes:
+      - ../:/var/app/${APP_NAME}/
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    networks:
+      - local-net
+    depends_on:
+      - redis
+      - mongo
+      - mariadb
+    command: npm run app
+  caro-back-cron:
+    container_name: ${APP_NAME}-cron-${APP_ENV}
+    image: carozozo/${APP_NAME}:${APP_ENV}-${APP_VERSION}
+    restart: always
+    volumes:
+      - ../:/var/app/${APP_NAME}/
+    networks:
+      - local-net
+    depends_on:
+      - redis
+      - mongo
+      - mariadb
+    command: npm run cron
+  redis:
+    container_name: redis
+    image: redis
+    restart: always
+    volumes:
+      - ~/data/redis:/data
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - ${CACHE_DB_OUT_PORT}:${CACHE_DB_PORT}
+    networks:
+      - local-net
+    command: >
+      --requirepass ${CACHE_DB_PWD} 
+  mongo:
+    container_name: mongo
+    image: mongo
+    restart: always
+    volumes:
+      - ~/data/mongodb:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${LOG_DB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${LOG_DB_PWD}
+    ports:
+      - ${LOG_DB_OUT_PORT}:${LOG_DB_PORT}
+    networks:
+      - local-net
+  mariadb:
+    container_name: mariadb
+    image: mariadb
+    restart: always
+    volumes:
+      - ~/data/mariadb:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MAIN_DB_PWD}
+    ports:
+      - ${MAIN_DB_OUT_PORT}:${MAIN_DB_PORT}
+    networks:
+      - local-net
