@@ -88,14 +88,17 @@ class Maria {
         $values: Op.values,
         $col: Op.col
       }
-      this._connection = new this.Sequelize(database, username, pwd, opt)
-      this._connection.authenticate().then((err) => {
-        if (err) return reject(err)
-        this.host = host
-        this.port = port
-        this.database = database
-        resolve()
-        this._triggerByOn(`connectDb`)
+      const sequelize = new this.Sequelize(``, username, pwd, opt)
+      sequelize.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`).then(() => {
+        this._connection = new this.Sequelize(database, username, pwd, opt)
+        this._connection.authenticate().then((err) => {
+          if (err) return reject(err)
+          this.host = host
+          this.port = port
+          this.database = database
+          resolve()
+          this._triggerByOn(`connectDb`)
+        })
       })
     })
   }
