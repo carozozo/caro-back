@@ -56,6 +56,8 @@ class DevConfig {
       host: process.env.LOG_DB_HOST,
       port: process.env.LOG_DB_PORT,
       database: `${process.env.LOG_DB_DATABASE}${process.env.TEST_MODE ? `-test` : ``}`,
+      username: process.env.LOG_DB_USERNAME,
+      pwd: process.env.LOG_DB_PWD,
       excludes: [ // 不想被清空的 collection
         `Request`,
         `Logger`,

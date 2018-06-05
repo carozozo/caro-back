@@ -16,7 +16,7 @@ class Redis {
   connectDb (host = `127.0.0.1`, port = 6379, database = 0, opt = {}) {
     return new Promise((resolve, reject) => {
       opt = _.merge(opt, {host, port})
-      const client = this._client = this._redis.createClient.apply(this._redis, opt)
+      const client = this._client = this._redis.createClient(opt)
       client.on(`connect`, async () => {
         await this.selectDb(database)
         this.host = host
