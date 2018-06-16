@@ -141,9 +141,10 @@ class CaroBack {
     const host = config.host
     const port = config.port
     const database = config.database
+    const pwd = config.pwd
     const modelDir = opt.modelDir || `app/model/redis`
 
-    await redisClient.connectDb(host, port, database)
+    await redisClient.connectDb(host, port, database, pwd)
 
     const requireOpt = {load: true, force: true}
     this.requireDir(modelDir, requireOpt)
@@ -154,12 +155,10 @@ class CaroBack {
     const host = config.host
     const port = config.port
     const database = config.database
-    const username = config.username
-    const pwd = config.pwd
     const schemaDir = opt.schemaDir || `app/model/mongo/schema`
     const modelDir = opt.modelDir || `app/model/mongo`
 
-    await mongoClient.connectDb(host, port, database, username, pwd, opt)
+    await mongoClient.connectDb(host, port, database, opt)
 
     const requireOpt = {load: true, force: true}
     this.requireDir(schemaDir, requireOpt)

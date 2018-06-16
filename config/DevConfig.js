@@ -70,6 +70,7 @@ class DevConfig {
       host: process.env.CACHE_DB_HOST,
       port: process.env.CACHE_DB_PORT,
       database: process.env.CACHE_DB_DATABASE,
+      pwd: process.env.CACHE_DB_PWD,
     }
   }
 }
