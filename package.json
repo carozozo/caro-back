@@ -44,7 +44,6 @@
     "test.doc": "DOC=true npm run test; apidoc -i docs -o public/apidoc/v$npm_package_version/"
   },
   "dependencies": {
-    "bcrypt": "^2.0.1",
     "body-parser": "^1.18.3",
     "caro": "^2.1.0",
     "dotenv": "^5.0.1",

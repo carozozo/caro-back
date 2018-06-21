@@ -23,14 +23,18 @@ class UserMod extends ck.MariaModel {
     const user = await this.findByUsername(username)
     if (user) throw `帳號 ${username} 已存在`
 
-    const bcrypt = require(`bcrypt`)
-    data.pwd = bcrypt.hashSync(String(data.pwd), 1)
+    const crypto = require(`crypto`)
+    const hash = crypto.createHash(`sha256`)
+    hash.update(String(data.pwd))
+    data.pwd = hash.digest(`hex`)
   }
 
   async _preUpdate (where, data) {
     if (!data.pwd) return
-    const bcrypt = require(`bcrypt`)
-    data.pwd = bcrypt.hashSync(data.pwd, 1)
+    const crypto = require(`crypto`)
+    const hash = crypto.createHash(`sha256`)
+    hash.update(String(data.pwd))
+    data.pwd = hash.digest(`hex`)
   }
 
   async _preRemove (where) {
@@ -46,8 +50,11 @@ class UserMod extends ck.MariaModel {
   }
 
   async ifSamePwd (user, pwd) {
-    const bcrypt = require(`bcrypt`)
-    return bcrypt.compareSync(pwd, user.pwd)
+    const crypto = require(`crypto`)
+    const hash = crypto.createHash(`sha256`)
+    hash.update(String(pwd))
+    pwd = hash.digest(`hex`)
+    return user.pwd === pwd
   }
 }
 
