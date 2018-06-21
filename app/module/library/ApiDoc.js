@@ -3,7 +3,7 @@ class ApiDoc {
   constructor (docDir, defineDoc) {
     const fs = require(`fs`)
 
-    if (!fs.existsSync(docDir)) throw Error(`docDir 資料夾不存在`)
+    if (!fs.existsSync(docDir)) fs.mkdirSync(docDir)
     const stats = fs.statSync(docDir)
     if (!stats.isDirectory()) throw Error(`docDir 必須為資料夾`)
 
