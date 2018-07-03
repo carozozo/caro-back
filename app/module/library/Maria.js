@@ -1,6 +1,6 @@
 /* 提供 sequalize 客製化操作服務 */
 class Maria {
-  constructor () {
+  constructor() {
     this.Sequelize = require(`sequelize`)
     this._hookMap = {}
     this._connection = undefined
@@ -10,23 +10,23 @@ class Maria {
     this.database = null
   }
 
-  get connection () {
+  get connection() {
     if (!this._connection) throw Error(`請先建立連線`)
     return this._connection
   }
 
-  get QueryInterface () {
+  get QueryInterface() {
     return this.connection.queryInterface
   }
 
-  _getHook (fnName) {
+  _getHook(fnName) {
     const hookMap = this._hookMap
     const hook = hookMap[fnName] = hookMap[fnName] || {}
     hook.on = hook.on || []
     return hook
   }
 
-  async _triggerBy (triggerMethod, fnName, args) {
+  async _triggerBy(triggerMethod, fnName, args) {
     const hook = this._getHook(fnName)
     const fns = hook[triggerMethod]
     for (const fn of fns) {
@@ -34,11 +34,11 @@ class Maria {
     }
   }
 
-  async _triggerByOn (fnName, args) {
+  async _triggerByOn(fnName, args) {
     await this._triggerBy(`on`, fnName, args)
   }
 
-  on (fnName, fn, bindName) {
+  on(fnName, fn, bindName) {
     const hook = this._getHook(fnName)
     if (bindName) {
       hook.on[bindName] = fn
@@ -48,7 +48,7 @@ class Maria {
     return this
   }
 
-  connectDb (host, port, database, username, pwd, opt = {}) {
+  connectDb(host, port, database, username, pwd, opt = {}) {
     return new Promise((resolve, reject) => {
       const Op = this.Sequelize.Op
       opt = _.merge(opt, {host, port})
@@ -103,11 +103,11 @@ class Maria {
     })
   }
 
-  disconnect () {
+  disconnect() {
     this._connection.close()
   }
 
-  async dropTables (opt = {}) {
+  async dropTables(opt = {}) {
     const modelMap = this._modelMap
     const foreignFailedMap = {}
     let failedCount = 0
@@ -145,21 +145,23 @@ class Maria {
   }
 
   // 把定義的 model 建立成 table
-  async sync (opt) {
+  async sync(opt) {
     return this.connection.sync(opt)
   }
 
-  createModel (modelName, schema, opt = {}) {
+  createModel(modelName, schema, opt = {}) {
     opt = _.assign({
       paranoid: true, // 預設假刪除
       freezeTableName: true, // table 名稱和 modelName 一樣
+      charset: `utf8`,
+      collate: `utf8_unicode_ci`,
     }, opt)
     const model = this.connection.define(modelName, schema, opt)
     this._modelMap[modelName] = model
     return model
   }
 
-  async query (...args) {
+  async query(...args) {
     return this.connection.query.apply(this.connection, args)
   }
 }
