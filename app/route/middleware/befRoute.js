@@ -19,7 +19,7 @@ const doResponse = (req, res, status, ret) => {
   })
 
   const isSuccess = status === `suc`
-  let msg = `[${method}] ${originalUrl}, requestTime= ${moment(requestTime).utc().format(`YYYY-MM-DD HH:mm:ss.SSS`)};`
+  let msg = `[${moment(requestTime).utc().format(`YYYY-MM-DD HH:mm:ss.SSS`)}] [${method}] ${originalUrl};`
   if (username) msg += ` username= ${username}, userRole= ${userRole};`
   if (!isSuccess) msg += ` ${contractedResponse}`
 
