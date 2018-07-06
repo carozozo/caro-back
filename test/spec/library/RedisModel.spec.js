@@ -7,16 +7,11 @@ describe(`RedisModel`, () => {
   }
 
   before(async () => {
-    const keys = [`name`]
-    testMod = new ck.RedisModel(ck.cacheDb.client, `Test`, keys)
-    for (let i = 0; i < 5; i++) {
-      await createRow(i)
-    }
+    testMod = new ck.RedisModel(ck.cacheDb.client, `Test`)
   })
 
   after(async () => {
-    // TODO
-    // await testMod.remove()
+    await testMod.remove()
   })
 
   describe(`create`, () => {
