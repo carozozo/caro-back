@@ -1,4 +1,4 @@
-ck.cron.regJob(`每分鐘執行一次`, `*/1 * * * *`, async () => {
+ck.cron.regTask(`每分鐘執行一次`, `*/1 * * * *`, async () => {
   ck.logger.log(`內容開始`)
   // 故意延遲, 測試下次觸發 task 會不會執行
   await new Promise((r) => {
