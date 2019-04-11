@@ -1,5 +1,5 @@
 /* 提供 express 客製化操作服務 */
-class Api {
+class Express {
   constructor () {
     const express = require(`express`)
     this.port = null
@@ -81,4 +81,4 @@ class Api {
   }
 }
 
-module.exports = Api
+module.exports = Express
