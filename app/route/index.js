@@ -1,14 +1,14 @@
 const docRouter = ck.apiServer.createRouter(`/`)
 
-docRouter.get(`/apidoc/*`, ck.apiServer.genRouteFn(async (req, res) => {
+docRouter.get(`/apidoc/*`, async (req, res) => {
   const authorization = req.headers.authorization
-  const returnDeined = () => {
+  const returnDenied = () => {
     res.statusCode = 401
     res.setHeader(`WWW-Authenticate`, `Basic realm="apidoc"`)
     res.end(`Access denied`)
   }
 
-  if (!authorization) return returnDeined()
+  if (!authorization) return returnDenied()
 
   const ba = authorization.split(` `)
   const basic = ba[0]
@@ -16,25 +16,25 @@ docRouter.get(`/apidoc/*`, ck.apiServer.genRouteFn(async (req, res) => {
   const au = Buffer.from(base64, `base64`).toString(`ascii`).split(`:`)
   const username = au[0]
   const pwd = au[1]
-  if (username !== `admin`) return returnDeined()
+  if (username !== `admin`) return returnDenied()
   const user = await ck.userMod.findByUsername(username)
-  if (!(user && _.eq(`Basic`, basic))) return returnDeined()
+  if (!(user && _.eq(`Basic`, basic))) return returnDenied()
 
   try {
     await ck.userMod.ifSamePwd(user, pwd)
   } catch (e) {
-    return returnDeined()
+    return returnDenied()
   }
 
   const reqPath = req.path
   res.sendFile(`${process.env.PWD}/public${reqPath}`)
-}))
+})
 
 const group = ``
 const groupPath = ck.apiServer.getGroupPath(group)
 const router = ck.apiServer.createRouter(groupPath)
 
-router.post(`/batchRequest`, ck.apiServer.genRouteFn(async (req, res) => {
+router.post(`/batchRequest`, async (req, res) => {
   const protocol = req.protocol
   const host = req.headers.host
   const request = new ck.RequestPromise(`${protocol}://${host}`)
@@ -61,4 +61,4 @@ router.post(`/batchRequest`, ck.apiServer.genRouteFn(async (req, res) => {
     }
   }
   res.send(resultMap)
-}))
+})

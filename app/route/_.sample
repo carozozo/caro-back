@@ -2,45 +2,45 @@ const group = `xxx`
 const groupPath = ck.apiServer.getGroupPath(group)
 const router = ck.apiServer.createRouter(groupPath)
 
-router.post(`${groupPath}`, ck.auth.authRole(`customer`, `staff`, `manager`, `admin`), ck.apiServer.genRouteFn(async (req, res) => {
+router.post(`${groupPath}`, ck.auth.authRole(`customer`, `staff`, `manager`, `admin`), async (req, res) => {
   const args = ck.req.validateRequired(req, [`arg1`])
   const arg1 = args.arg1
 
   const result = await ck.xxxCtr.createSample(req.reqUser, arg1)
   res.suc(result)
-}))
+})
 
-router.get(`${groupPath}/:xxxId`, ck.auth.authRole(`customer`, `staff`, `manager`, `admin`), ck.apiServer.genRouteFn(async (req, res) => {
+router.get(`${groupPath}/:xxxId`, ck.auth.authRole(`customer`, `staff`, `manager`, `admin`), async (req, res) => {
   const args = ck.req.validateRequired(req, [`arg1`])
   const xxxId = args.xxxId
   const arg1 = args.arg1
 
   const result = await ck.xxxCtr.getByIdSample(xxxId, arg1)
   res.suc(result)
-}))
+})
 
-router.get(`${groupPath}`, ck.auth.authRole(`customer`, `staff`, `manager`, `admin`), ck.apiServer.genRouteFn(async (req, res) => {
+router.get(`${groupPath}`, ck.auth.authRole(`customer`, `staff`, `manager`, `admin`), async (req, res) => {
   const args = ck.req.validateRequired(req, [`arg1`])
   const arg1 = args.arg1
 
   const result = await ck.xxxCtr.getListSample(arg1)
   res.suc(result)
-}))
+})
 
-router.put(`${groupPath}/:xxxId`, ck.auth.authRole(`customer`, `staff`, `manager`, `admin`), ck.apiServer.genRouteFn(async (req, res) => {
+router.put(`${groupPath}/:xxxId`, ck.auth.authRole(`customer`, `staff`, `manager`, `admin`), async (req, res) => {
   const args = ck.req.validateRequired(req, [`arg1`])
   const xxxId = args.xxxId
   const arg1 = args.arg1
 
   const result = await ck.xxxCtr.updateByIdSample(xxxId, arg1)
   res.suc(result)
-}))
+})
 
-router.delete(`${groupPath}/:xxxId`, ck.auth.authRole(`customer`, `staff`, `manager`, `admin`), ck.apiServer.genRouteFn(async (req, res) => {
+router.delete(`${groupPath}/:xxxId`, ck.auth.authRole(`customer`, `staff`, `manager`, `admin`), async (req, res) => {
   const args = ck.req.validateRequired(req, [`arg1`])
   const xxxId = args.xxxId
   const arg1 = args.arg1
 
   const result = await ck.xxxCtr.deleteByIdSample(xxxId, arg1)
   res.suc(result)
-}))
+})
