@@ -17,25 +17,13 @@ class Cron {
   }
 
   // 註冊任務
-  async regTask (description, ...args) {
-    const taskName = args[0]
-    const syntax = args[1]
-    const fn = args[2]
-    const opt = _.assign(this._opt, args[3])
-    const isExecNow = args[4]
-
+  async regTask (taskName, syntax, fn, opt) {
     if (!taskName) throw Error(`請輸入 taskName`)
     if (this._taskMap[taskName]) throw Error(`Cron Job [${taskName}] 已被註冊`)
     if (!this._cron.validate(syntax)) throw Error(`時間格式不正確`)
     if (!_.isFunction(fn)) throw Error(`請輸入要執行的 function`)
 
     this._taskMap[taskName] = {syntax, fn, opt}
-    if (isExecNow) {
-      const cbParam = {taskName, syntax}
-      await Cron._runHooks(this._befTaskRunHooks, cbParam)
-      await fn()
-      await Cron._runHooks(this._aftTaskRunHooks, cbParam)
-    }
   }
 
   // 把註冊的任務排到 schedule
