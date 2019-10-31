@@ -60,7 +60,7 @@
     "redis": "^2.8.0",
     "request": "^2.87.0",
     "request-promise": "^4.2.2",
-    "sequelize": "^4.37.10",
+    "sequelize": "^5.15.1",
     "uniqid": "^4.1.1"
   },
   "devDependencies": {
