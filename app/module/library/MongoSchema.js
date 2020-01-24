@@ -13,7 +13,7 @@ class MongoSchema {
   }
 
   _preUpdate (next) {
-    const criteria = this.getUpdate()
+    const criteria = this.getUpdate() || {}
     criteria.$inc = criteria.$inc || {}
     criteria.$inc.__v = 1 // 資料修改次數
     next()
