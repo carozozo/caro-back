@@ -75,7 +75,6 @@ class MongoModel {
   }
 
   async $find (...args) {
-    args[0] = args[0] || {}
     return this.model.find(args[0], args[1], args[2]).lean().exec()
   }
 
@@ -93,7 +92,6 @@ class MongoModel {
   }
 
   async $findOne (...args) {
-    args[0] = args[0] || {}
     return this.model.findOne(args[0], args[1], args[2]).lean().exec()
   }
 
@@ -109,12 +107,8 @@ class MongoModel {
     return result
   }
 
-  async $findById (...args) {
-    args[0] = {_id: args[0]}
-    return this.$findOne.apply(this, args)
-  }
-
   async findById (...args) {
+    if (!args[0]) throw Error(`id 為必填`)
     args[0] = {_id: args[0]}
     return this.findOne.apply(this, args)
   }
@@ -153,22 +147,19 @@ class MongoModel {
     return result
   }
 
-  async $updateById (...args) {
-    args[0] = {_id: args[0]}
-    return this.$updateOne.apply(this, args)
-  }
-
   async updateById (...args) {
+    if (!args[0]) throw Error(`id 為必填`)
     args[0] = {_id: args[0]}
     return this.updateOne.apply(this, args)
   }
 
   async $remove (...args) {
-    return this.model.remove(args[0]).lean().exec()
+    return this.model.deleteMany(args[0]).lean().exec()
   }
 
   async remove (...args) {
     const triggerName = `remove`
+    args[0] = args[0] || {}
     await this._triggerBy(`pre`, triggerName, args)
     const result = await this.$find(args[0])
     await this.$remove.apply(this, args)
@@ -186,6 +177,7 @@ class MongoModel {
 
   async removeOne (...args) {
     const triggerName = `remove`
+    args[0] = args[0] || {}
     await this._triggerBy(`pre`, triggerName, args)
     const result = await this.$removeOne.apply(this, args)
     if (result) {
@@ -195,18 +187,14 @@ class MongoModel {
     return result
   }
 
-  async $removeById (...args) {
-    args[0] = {_id: args[0]}
-    return this.$removeOne.apply(this, args)
-  }
-
   async removeById (...args) {
+    if (!args[0]) throw Error(`id 為必填`)
     args[0] = {_id: args[0]}
     return this.removeOne.apply(this, args)
   }
 
   async $count (...args) {
-    return this.model.count(args[0]).lean().exec()
+    return this.model.countDocuments(args[0]).lean().exec()
   }
 
   async count (...args) {

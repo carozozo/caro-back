@@ -20,7 +20,7 @@ describe(`MongoModel`, () => {
   })
 
   after(async () => {
-    await model.remove()
+    await testMod.remove()
   })
 
   describe(`create`, () => {
