@@ -1,4 +1,4 @@
-FROM node:8
+FROM node:12.14.1
 MAINTAINER Caro carozzo@yahoo.com.tw
 
 ARG APP_ENV
