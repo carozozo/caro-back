@@ -52,18 +52,19 @@ class Mongo {
     return this
   }
 
-  connectDb (host, port, database, opt = {}) {
-    return new Promise((resolve) => {
-      const url = `mongodb://${host}:${port}/${database}`
-      const connection = this._connection = this._mongoose.createConnection(url, opt)
-      connection.once(`open`, () => {
-        this.host = host
-        this.port = port
-        this.database = database
-        resolve(connection)
-        this._triggerByOn(`connectDb`)
-      })
-    })
+  async connectDb (host, port, database, opt = {}) {
+    const url = `mongodb://${host}:${port}/${database}?authSource=admin`
+    opt = _.assign({
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+      useFindAndModify: false,
+    }, opt)
+    this._connection =  await this._mongoose.createConnection(url, opt)
+    this.host = host
+    this.port = port
+    this.database = database
+    this._triggerByOn(`connectDb`)
   }
 
   disconnect () {
