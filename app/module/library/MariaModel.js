@@ -125,12 +125,8 @@ class MariaModel {
     return result
   }
 
-  async $findById (...args) {
-    args[0] = {id: args[0]}
-    return this.$findOne.apply(this, args)
-  }
-
   async findById (...args) {
+    if (!args[0]) throw Error(`id 為必填`)
     args[0] = {id: args[0]}
     return this.findOne.apply(this, args)
   }
@@ -174,12 +170,8 @@ class MariaModel {
     return result
   }
 
-  async $updateById (...args) {
-    args[0] = {id: args[0]}
-    return this.$updateOne.apply(this, args)
-  }
-
   async updateById (...args) {
+    if (!args[0]) throw Error(`id 為必填`)
     args[0] = {id: args[0]}
     return this.updateOne.apply(this, args)
   }
@@ -193,6 +185,7 @@ class MariaModel {
 
   async remove (...args) {
     const triggerName = `remove`
+    args[0] = args[0] || {}
     await this._triggerBy(`pre`, triggerName, args)
     const result = await this.$find(args[0])
     await this.$remove.apply(this, args)
@@ -213,6 +206,7 @@ class MariaModel {
 
   async removeOne (...args) {
     const triggerName = `remove`
+    args[0] = args[0] || {}
     await this._triggerBy(`pre`, triggerName, args)
     const result = await this.$removeOne.apply(this, args)
     if (result) {
@@ -222,12 +216,8 @@ class MariaModel {
     return result
   }
 
-  async $removeById (...args) {
-    args[0] = {id: args[0]}
-    return this.$removeOne.apply(this, args)
-  }
-
   async removeById (...args) {
+    if (!args[0]) throw Error(`id 為必填`)
     args[0] = {id: args[0]}
     return this.removeOne.apply(this, args)
   }
