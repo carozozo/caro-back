@@ -12,7 +12,6 @@
   },
   "license": "MIT",
   "config": {
-    "test": "TEST_MODE=true NODE_PATH=./ node_modules/mocha/bin/mocha --timeout 5000 --exit test/app.js",
     "ssh_prod": "ssh -i ~/.ssh/caro_rsa -t ubuntu@52.197.183.24"
   },
   "scripts": {
@@ -25,7 +24,7 @@
     "log.cron": "docker logs -f caro-back-cron-dev",
     "log.cron:prod": "$npm_package_config_ssh_prod \"docker logs -f caro-back-cron-production\"",
     "migration": "NODE_ENV=dev TARGET=$TARGET NODE_PATH=./ node migration/app",
-    "migration:prod": "$npm_package_config_ssh_prod \"docker exec -it caro-back-cron-production bash -c 'NODE_ENV=production TARGET=$TARGET NODE_PATH=./ node migration/app'\"",
+    "migration:prod": "$npm_package_config_ssh_prod \"docker exec -it caro-back-cron-production bash -c \"NODE_ENV=production TARGET=$TARGET NODE_PATH=./ node migration/app\"\"",
     "build": "bash docker/build.sh dev $npm_package_version",
     "build:prod": "bash docker/build.sh production $npm_package_version",
     "up": "bash docker/up.sh dev $npm_package_version",
@@ -41,9 +40,9 @@
     "sample.delete": "TARGET=$TARGET IS_DELETE=true node ./sample.js",
     "sample.delete:model": "TARGET=$TARGET SAMPLE_TYPE=model IS_DELETE=true node ./sample.js",
     "sample.delete:route": "TARGET=$TARGET SAMPLE_TYPE=route IS_DELETE=true node ./sample.js",
-    "test": "docker exec -it caro-back-dev bash -c 'DOC=true TEST_MODE=true NODE_PATH=./ node_modules/mocha/bin/mocha --timeout 5000 --exit test/app.js'",
-    "test.doc": "docker exec -it caro-back-dev bash -c 'DOC=true TEST_MODE=true NODE_PATH=./ node_modules/mocha/bin/mocha --timeout 5000 --exit test/app.js; node_modules/apidoc/bin/apidoc -i docs -o public/apidoc/v$npm_package_version/'",
-    "lint": "./node_modules/.bin/eslint '**/*.js'"
+    "test": "docker exec -it caro-back-dev bash -c \"TEST_MODE=true NODE_PATH=./ node_modules/mocha/bin/mocha --timeout 5000 --exit test/app.js\"",
+    "test.doc": "docker exec -it caro-back-dev bash -c \"TEST_MODE=true NODE_PATH=./ node_modules/mocha/bin/mocha --timeout 5000 --exit test/app.js; node_modules/apidoc/bin/apidoc -i docs -o public/apidoc/v$npm_package_version/\"",
+    "lint": "./node_modules/.bin/eslint \"**/*.js\""
   },
   "dependencies": {
     "body-parser": "^1.19.0",
