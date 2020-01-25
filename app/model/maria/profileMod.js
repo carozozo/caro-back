@@ -1,6 +1,6 @@
 class ProfileMod extends ck.MariaModel {
   constructor () {
-    const model = ck.mainDb.createModel(`Profile`, ck.profileSch.fields, {comment: ck.userSch.comment})
+    const model = ck.mainDb.createModel(`Profile`, ck.profileSch.fields, {comment: ck.profileSch.comment})
 
     super(model)
   }
