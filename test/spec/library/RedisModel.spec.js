@@ -1,5 +1,5 @@
-describe(`RedisModel`, () => {
-  let testMod
+describe.only(`RedisModel`, () => {
+  let testMod, fakeId = `redis-fake-id`
   const createRow = async () => {
     this.count = this.count || 0
     const data = {name: `test${++this.count}`}
@@ -81,7 +81,7 @@ describe(`RedisModel`, () => {
       assert.equal(data.name, one.name)
     })
     it(`will return null when not found`, async () => {
-      const data = await testMod.findById(`12345`)
+      const data = await testMod.findById(fakeId)
       assert.isNull(data)
     })
   })
@@ -174,7 +174,7 @@ describe(`RedisModel`, () => {
     })
     it(`will return null when not found`, async () => {
       const _test = {name: `nameNotExistsUpdateOne`}
-      const result = await testMod.updateById(1111, _test)
+      const result = await testMod.updateById(fakeId, _test)
       const found = await testMod.findOne(_test)
       assert.isNull(result)
       assert.isNull(found)
@@ -250,7 +250,7 @@ describe(`RedisModel`, () => {
     })
     it(`no one will remove when not found`, async () => {
       const countBefRemove = await testMod.count()
-      await testMod.removeById(1111)
+      await testMod.removeById(fakeId)
       const countAftRemove = await testMod.count()
       assert.equal(countAftRemove, countBefRemove)
     })
@@ -297,12 +297,12 @@ describe(`RedisModel`, () => {
     it(async () => {
       const name = `testExpiredById`
       const test = await testMod.create({name})
-      await testMod.expiredById(test, 1)
+      await testMod.expiredById(test.id, 1)
       const count = await testMod.count({name})
       assert.equal(count, 1)
       await ck.unit.waiting(1001)
       const count2 = await testMod.count({name})
-      assert.equal(count2, 1)
+      assert.equal(count2, 0)
     })
   })
 })

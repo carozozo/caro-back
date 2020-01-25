@@ -107,6 +107,10 @@ class RedisModel extends RedisPromise {
     this._category = category // 分類名稱
   }
 
+  get _idPrefix () {
+    return `redis-`
+  }
+
   _genKey (id) {
     return `${this._category}:${id}`
   }
@@ -133,7 +137,7 @@ class RedisModel extends RedisPromise {
     const setNamesOfIndex = this._genSetForIndex(`*`, `*`)
     const setNames = await this.keys(setNamesOfIndex)
     for (const setName of setNames) {
-      this._removeIdFromIndex(setName, id)
+      await this._removeIdFromIndex(setName, id)
     }
   }
 
@@ -160,11 +164,13 @@ class RedisModel extends RedisPromise {
   async _remove (data) {
     const id = data.id
     const key = this._genKey(id)
+    let k, v, setName
+
     await this.del(key)
-    for (const k in data) {
+    for (k in data) {
       if (!data.hasOwnProperty(k)) continue
-      const v = data[k]
-      const setName = this._genSetForIndex(k, v)
+      v = data[k]
+      setName = this._genSetForIndex(k, v)
       await this._removeIdFromIndex(setName, id)
     }
   }
@@ -176,7 +182,8 @@ class RedisModel extends RedisPromise {
       const ret = []
       const keyForSearch = this._genKey(`*`)
       const keys = await this.keys(keyForSearch)
-      for (const key of keys) {
+      let key
+      for (key of keys) {
         const id = this._getIdFromKey(key)
         ret.push(id)
       }
@@ -194,7 +201,7 @@ class RedisModel extends RedisPromise {
   _genKeyByData (data) {
     if (!_.keys(data).includes(`id`)) {
       const uniqid = require(`uniqid`)
-      data.id = uniqid()
+      data.id = uniqid(this._idPrefix)
     }
     // e.g. data = {id: 'xxx', username: 'caro'}
     const id = data.id
@@ -211,18 +218,23 @@ class RedisModel extends RedisPromise {
   // 找出每一筆資料並直行 callback
   async _findEach (where, cb) {
     const ids = await this._getIdsByWhere(where)
-    for (let i in ids) {
+    let i, id, key, data
+    for (i in ids) {
       if (!ids.hasOwnProperty(i)) continue
       i = Number(i)
-      const id = ids[i]
-      const key = this._genKey(id)
-      const data = await this.hgetall(key)
+      id = ids[i]
+      key = this._genKey(id)
+      data = await this.hgetall(key)
       if (data) {
         if (await cb(data, key, i) === false) break
       } else {
         await this._removeIdFromAllIndex(id)
       }
     }
+  }
+
+  async validateId (id) {
+    if (!(_.isString(id) && id.indexOf(this._idPrefix) === 0)) throw Error(`id 格式不正確`)
   }
 
   async create (data) {
@@ -271,6 +283,7 @@ class RedisModel extends RedisPromise {
   }
 
   async updateById (id, updateObj) {
+    await this.validateId(id)
     const where = {id}
     return await this.updateOne(where, updateObj)
   }
@@ -295,6 +308,7 @@ class RedisModel extends RedisPromise {
   }
 
   async removeById (id) {
+    await this.validateId(id)
     const where = {id}
     await this.removeOne(where)
   }
@@ -324,6 +338,7 @@ class RedisModel extends RedisPromise {
   }
 
   async expiredById (id, seconds) {
+    await this.validateId(id)
     await this.expiredOne({id}, seconds)
   }
 }
